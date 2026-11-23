@@ -65,6 +65,34 @@ def main(onchain_dir, build_dir, opt_bin, out_path):
         else:
             diag = {"error": build.get("error") or "build produced no wasm"}
 
+    # Hardening evidence: network isolation of the build and static source checks.
+    sc_path = os.path.join(build_dir, "source_check.json")
+    sc = json.load(open(sc_path)) if os.path.exists(sc_path) else {}
+    iso = build.get("isolation") or {"network_isolated": False, "note": "build predates network isolation"}
+    committed = sc.pop("committed", {}) or {}
+    warnings = []
+    if not iso.get("network_isolated"):
+        warnings.append("network not isolated during the build: " + str(iso.get("note")))
+    if not sc:
+        warnings.append("source checks did not run")
+    for p in sc.get("build_rs", []):
+        warnings.append("build script: " + p)
+    for p in sc.get("includes", []):
+        warnings.append("embedded file: " + p)
+    for p in sc.get("blobs", []):
+        warnings.append("committed binary or large file: " + p)
+    for p in sc.get("patch_or_git", []):
+        warnings.append("dependency override: " + p)
+    for p in sc.get("scrubbed", []):
+        if "equals the on-chain binary" in p:
+            warnings.append("a copy of the on-chain binary is committed at " + p.split(" (")[0]
+                            + "; it was deleted before the build")
+    copied = [f for f, h in committed.items() if built_sha and h == built_sha and not any(s.startswith(f) for s in sc.get("scrubbed", []))]
+    if match and copied:
+        # The matching output is a file that stayed in the tree during the build: not a build.
+        match, mode = False, "no-match"
+        diag = {"error": "binary is committed in source: the matching output equals " + ", ".join(copied)}
+
     res = {
         "template": oc["template"], "name": oc["name"], "author_public_key": oc["author_public_key"],
         "onchain_sha256": target, "built_sha256": built_sha, "match": match,
@@ -72,6 +100,7 @@ def main(onchain_dir, build_dir, opt_bin, out_path):
         "toolchain": build.get("toolchain"), "recipe": recipe, "run_url": build.get("run_url") or os.environ.get("RUN_URL"),
         "runner_os": build.get("runner_os"), "verified_at": os.environ.get("VERIFIED_AT"),
         "tried": tried, "diagnostics": diag,
+        "isolation": iso, "source_check": sc, "warnings": warnings, "clean": match and not warnings,
         "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
     }
     json.dump(res, open(out_path, "w"), indent=2)

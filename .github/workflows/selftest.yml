@@ -1,0 +1,50 @@
+name: selftest
+# Negative test: a repo whose build.rs downloads the on-chain Lockbox binary must NOT verify.
+# The control run disables isolation (test-only switch) to prove the attack is real.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["verifier/build.sh", "verifier/compare.py", "verifier/srccheck.py", "tests/**", ".github/workflows/selftest.yml"]
+permissions:
+  contents: read
+jobs:
+  fetch-wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults: {run: {shell: bash}}
+    env:
+      LOCKBOX: template_968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: onescan, persist-credentials: false}
+      - name: Make the fixture a git repo
+        run: |
+          cp -r onescan/tests/fixtures/fetch-wasm "$RUNNER_TEMP/fixture"
+          cd "$RUNNER_TEMP/fixture"
+          git init -q && git add -A && git -c user.name=t -c user.email=t@t commit -qm fixture
+          echo "FIX_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Build with isolation, then without (control)
+        run: |
+          for kind in isolated control; do
+            mkdir -p "out/$kind"
+            python -I onescan/verifier/onchain.py "$LOCKBOX" "out/$kind"
+            ( [ "$kind" = control ] && export ONESCAN_SELFTEST_NO_ISOLATION=1
+              OUT="$PWD/out/$kind" SRC_DIR="$RUNNER_TEMP/src-$kind" R_REPO="$RUNNER_TEMP/fixture" R_COMMIT="$FIX_COMMIT" \
+              R_BUILDER=cargo R_RUSTC=stable R_REMAP=none R_TEMPLATE="$LOCKBOX" R_OPTIMIZER=off \
+              bash onescan/verifier/build.sh )
+            python -I onescan/verifier/compare.py "out/$kind" "out/$kind" - "out/$kind/result.json"
+          done
+      - name: Assert
+        run: |
+          python3 - <<'PY'
+          import json
+          iso = json.load(open("out/isolated/result.json")); ctl = json.load(open("out/control/result.json"))
+          print("isolated:", iso["match"], iso["isolation"], iso["warnings"])
+          print("control :", ctl["match"], ctl["isolation"])
+          assert ctl["match"], "control: the attack should have produced a fake match without isolation"
+          assert iso["isolation"]["network_isolated"], "isolated run did not isolate the network"
+          assert not iso["match"], "isolated run was fooled by the malicious build.rs"
+          assert any("build script" in w for w in iso["warnings"]), "build.rs was not flagged"
+          print("PASS: build.rs fetch blocked under isolation; it fakes a match without isolation")
+          PY

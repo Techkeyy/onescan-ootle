@@ -71,9 +71,23 @@ function badgeBlock(hx) {
     <pre class="cmd">${esc(md)}${copyBtn(md)}</pre></div>`;
 }
 
+function warningsBlock(rec) {
+  const w = rec.warnings || [];
+  if (!w.length) return "";
+  return `<div class="section"><h3>Warnings</h3><ul class="warns">${w.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p class="note">The bytes still match, but these weaken what the match proves. Build scripts and network access during a build could fetch or decode the on-chain binary instead of compiling it.</p></div>`;
+}
+
+function isolationFact(rec) {
+  const i = rec.isolation;
+  if (!i) return "not recorded (older run)";
+  return (i.network_isolated ? "no network during the build" : "network NOT isolated") + (i.note ? ` (${esc(i.note)})` : "");
+}
+
 function verified(hx, live, rec, liveErr) {
   const recorded = !live;
-  return `<div class="status s-ok"><div class="head"><span class="badge">VERIFIED</span><div>
+  const clean = rec.clean;
+  return `<div class="status ${clean ? "s-ok" : "s-warn"}"><div class="head"><span class="badge">${clean ? "VERIFIED" : "VERIFIED (WITH WARNINGS)"}</span><div>
       <div class="t">${esc(rec.name)}</div>
       <p>${recorded ? "The verifier run matched the on-chain bytes. A live re-check could not run in this browser, so the hash below is the recorded one." : "The bytes on chain right now are byte-identical to a reproducible build of this public commit."}</p></div></div>
     <div class="body">
@@ -83,8 +97,10 @@ function verified(hx, live, rec, liveErr) {
         <dt>Toolchain</dt><dd>${esc(rec.toolchain?.rustc || "")}${rec.toolchain?.tari_cli ? ", " + esc(rec.toolchain.tari_cli) : ""} on ${esc(rec.runner_os || "Linux")}</dd>
         <dt>Build mode</dt><dd>${esc(MODE[rec.mode] || rec.mode)}</dd>
         <dt>Verifier run</dt><dd><a href="${esc(rec.run_url)}">GitHub Actions run ${esc(rec.run_url.split("/").pop())}</a>, ${esc(rec.verified_at)}</dd>
+        <dt>Build isolation</dt><dd>${isolationFact(rec)}</dd>
         ${onchainFacts(hx, live)}
       </dl></div>
+      ${warningsBlock(rec)}
       <div class="section"><h3>Re-run it yourself</h3>
         <pre class="cmd">${esc(rerunCmd(rec))}${copyBtn(rerunCmd(rec))}</pre>
         <p class="note">Runs the same public workflow in your fork of <a href="https://github.com/${REPO}">onescan-ootle</a>; the run fetches the template from the indexer and compares hashes itself.</p></div>

@@ -8,13 +8,13 @@ try {
   const row = (r) => {
     const repo = (r.repo || "").replace("https://github.com/", "");
     return `<tr>
-      <td><span class="dot ${r.match ? "ok" : "warn"}"></span><strong>${r.match ? "Reproduced" : "Not reproduced"}</strong>${r.match ? `<div class="sig">${esc(r.mode)}</div>` : `<div class="sig">${esc(r.cause)}</div>`}</td>
+      <td><span class="dot ${r.clean ? "ok" : "warn"}"></span><strong>${r.clean ? "Reproduced" : r.match ? "Reproduced, with warnings" : "Not reproduced"}</strong>${r.match ? `<div class="sig">${esc(r.mode)}${r.warnings.length ? " · " + r.warnings.length + " warning" + (r.warnings.length > 1 ? "s" : "") : ""}</div>` : `<div class="sig">${esc(r.cause)}</div>`}</td>
       <td><a href="./?t=${r.template}"><strong>${esc(r.name)}</strong></a>${r.own ? " (OneScan author's own)" : ""}<div class="sig">${short(r.template)}</div></td>
       <td><span class="mono">${short(r.author_public_key, 16)}</span></td>
       <td><a href="${esc(r.repo)}/tree/${esc(r.commit)}">${esc(repo)}</a><div class="sig">@ ${esc((r.commit || "").slice(0, 10))}</div></td>
       <td><a href="${esc(r.run_url)}">run</a></td></tr>`;
   };
-  el.innerHTML = `<p class="headline"><span>${reg.reproduced} of ${reg.attempted}</span> third-party templates reproduced</p>
+  el.innerHTML = `<p class="headline"><span>${reg.reproduced} of ${reg.attempted}</span> third-party templates reproduced${reg.reproduced - reg.clean ? `, ${reg.reproduced - reg.clean} of them with warnings` : ""}</p>
     <p class="lede">Each row is a November mainnet template with public source that OneScan tried to rebuild. Reproduced means a fresh build from the named commit is byte-identical to the template binary on chain.${own.length ? ` Ootle Split, the OneScan author's own entry, is listed last and not counted.` : ""} Entries without public source are not listed yet.</p>
     <table class="board"><thead><tr><th>Status</th><th>Template</th><th>Author key</th><th>Source</th><th>Evidence</th></tr></thead>
     <tbody>${recs.map(row).join("")}</tbody></table>

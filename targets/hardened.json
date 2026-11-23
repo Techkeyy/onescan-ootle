@@ -1,0 +1,158 @@
+[
+ {
+  "template": "098accfc8e69ea08ea14e676ad0973fc1ccd6f3d8f677d5bb4cfc144049562b0",
+  "repo": "https://github.com/feitianbf751026-dotcom/tari-ootle-public-grant-ledger",
+  "commit": "b3e10dd4e08f",
+  "rustc": "1.100.0-x86_64-pc-windows-gnu",
+  "builder": "cargo",
+  "workdir": "templates/public-grant",
+  "remap": "C:/Program Files/Git/build/.cargo",
+  "rustflags": "--remap-path-prefix={CARGO_HOME}=C:\\Users\\czj\\.cargo",
+  "optimizer": "auto",
+  "name": "PublicGrant",
+  "os": "windows-latest"
+ },
+ {
+  "template": "4e58dcb438e1d69b99b6991d61f33cd26bd9866c59cdf86ef23e9f493f170f49",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d",
+  "rustc": "1.98.1",
+  "builder": "tari-cli",
+  "tari_cli": "0.35.1",
+  "workdir": "forecasts",
+  "remap": "none",
+  "optimizer": "auto",
+  "name": "SignalForecasts"
+ },
+ {
+  "template": "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983",
+  "repo": "https://github.com/Devendurance/steady",
+  "commit": "e298436e6f26",
+  "rustc": "1.100.0",
+  "builder": "cargo",
+  "remap": "/home/endy/.cargo",
+  "optimizer": "auto",
+  "name": "Payroll"
+ },
+ {
+  "template": "6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2",
+  "repo": "https://github.com/Techkeyy/ootle-split",
+  "commit": "93397bf",
+  "builder": "script",
+  "script": "scripts/build.sh",
+  "remap": "C:/Program Files/Git/build/.cargo",
+  "optimizer": "auto",
+  "name": "Split",
+  "os": "windows-latest"
+ },
+ {
+  "template": "65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d",
+  "rustc": "1.98.1",
+  "builder": "tari-cli",
+  "tari_cli": "0.35.1",
+  "remap": "none",
+  "optimizer": "auto",
+  "name": "SignalDesk"
+ },
+ {
+  "template": "67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309",
+  "repo": "https://github.com/xB0unty911/sealed-bid-auction",
+  "commit": "252320d",
+  "rustc": "1.99.0",
+  "builder": "tari-cli",
+  "tari_cli": "0.30.0",
+  "remap": "/build/.cargo",
+  "optimizer": "auto",
+  "name": "SealedBidAuction"
+ },
+ {
+  "template": "84f1d72f8b9e38d104e639de9fcce8d6f71098daa825c56ea0b2772d35f60580",
+  "repo": "https://github.com/emmaGH1/semvi",
+  "commit": "1896cde493fc",
+  "rustc": "1.99.0",
+  "builder": "cargo",
+  "remap": "/data/home/.cargo",
+  "optimizer": "auto",
+  "name": "Semvi"
+ },
+ {
+  "template": "968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72",
+  "repo": "https://github.com/ManishModak/ootle-lockbox",
+  "commit": "ed3ff374ac3e",
+  "rustc": "1.98.1",
+  "builder": "cargo",
+  "remap": "/home/manishm/.cargo",
+  "optimizer": "auto",
+  "name": "Lockbox"
+ },
+ {
+  "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
+  "repo": "https://github.com/yeziR4/specter-tari",
+  "commit": "77bda5ff5ca3",
+  "rustc": "1.97.1",
+  "builder": "cargo",
+  "workdir": "contracts/report-receipt",
+  "remap": "/home/yezir/.cargo",
+  "optimizer": "auto",
+  "name": "SpecterReportReceipt"
+ },
+ {
+  "template": "ae13cead3c34052116c49fc09e4645f3a62edf55857c0e2e45226dd7093cef9c",
+  "repo": "https://github.com/AduAkorful/ghostline",
+  "commit": "b9cf4ce77cb3",
+  "rustc": "1.97.1",
+  "builder": "cmd",
+  "remap": "/home/aduakorful/.cargo",
+  "optimizer": "auto",
+  "cmd": "GHOSTLINE_FEE_CONFIG=\"$(python3 -c 'import json; print(json.load(open(\"deploy/mainnet.json\"))[\"channel\"][\"builtWithFeeConfig\"])')\" cargo build --manifest-path contracts/channel/Cargo.toml --target wasm32-unknown-unknown --release",
+  "name": "GhostlineChannel"
+ },
+ {
+  "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",
+  "repo": "https://github.com/AduAkorful/ghostline",
+  "commit": "b9cf4ce77cb3",
+  "rustc": "1.97.1",
+  "builder": "cargo",
+  "workdir": "contracts/fee-config",
+  "remap": "/home/aduakorful/.cargo",
+  "optimizer": "auto",
+  "name": "GhostlineFeeConfig"
+ },
+ {
+  "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d",
+  "rustc": "1.98.1",
+  "builder": "tari-cli",
+  "tari_cli": "0.35.1",
+  "workdir": "follows",
+  "remap": "none",
+  "optimizer": "auto",
+  "name": "SignalFollows"
+ },
+ {
+  "template": "d4ed44d36e79e85ea7a8705170d0227a34b9fb3afba556b00112ff785b6da8c8",
+  "repo": "https://github.com/Seal-Clubber/MoonMail",
+  "commit": "df0da950b471",
+  "rustc": "1.98.1",
+  "builder": "cargo",
+  "workdir": "contracts/moonmail-v4",
+  "remap": "/home/seal/.cargo",
+  "optimizer": "auto",
+  "name": "MoonMail"
+ },
+ {
+  "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
+  "repo": "https://github.com/Mzee04/cursed-pumpkin",
+  "commit": "04c0f38af857",
+  "rustc": "1.99.1",
+  "builder": "tari-cli",
+  "tari_cli": "0.35.2",
+  "workdir": "templates/cursed_pumpkin",
+  "remap": "/Users/mzee/.cargo",
+  "optimizer": "auto",
+  "name": "CursedPumpkin"
+ }
+]

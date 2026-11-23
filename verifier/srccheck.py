@@ -16,7 +16,22 @@ import hashlib, json, os, re, subprocess, sys
 
 BIG = 50 * 1024
 NUL = bytes(1)
-TEXT_OK = {".rs", ".toml", ".lock", ".md", ".json", ".txt", ".ts", ".tsx", ".js", ".css", ".html", ".svg", ".yml", ".yaml"}
+WASM_MAGIC = b"\x00asm"
+# Media is not flagged when its content really is that format (a renamed wasm still is).
+MEDIA = {".png": [b"\x89PNG"], ".gif": [b"GIF8"], ".jpg": [b"\xff\xd8"], ".jpeg": [b"\xff\xd8"],
+         ".webp": [b"RIFF"], ".woff2": [b"wOF2"], ".woff": [b"wOFF"], ".pdf": [b"%PDF"], ".ico": [b"\x00\x00\x01"],
+         ".ttf": [b"\x00\x01\x00\x00", b"true"], ".otf": [b"OTTO"], ".mp4": [], ".mov": [], ".webm": [b"\x1aE\xdf\xa3"]}
+
+
+def media_ok(ext, data):
+    if ext not in MEDIA:
+        return False
+    if ext in (".mp4", ".mov"):
+        return data[4:8] == b"ftyp"
+    return any(data.startswith(m) for m in MEDIA[ext])
+
+
+TEXT_OK = {".rs", ".toml", ".lock", ".md", ".json", ".txt", ".ts", ".tsx", ".js", ".mjs", ".cjs", ".jsx", ".py", ".sh", ".css", ".html", ".svg", ".yml", ".yaml"}
 
 
 def git_files(src):
@@ -32,18 +47,28 @@ def is_binary(path):
         return False
 
 
-def metadata_build_rs(src, wd):
-    try:
-        r = subprocess.run(["cargo", "metadata", "--offline", "--format-version", "1"], cwd=wd,
-                           capture_output=True, text=True, timeout=300)
-        if r.returncode != 0:
-            return None, []
-        m = json.loads(r.stdout)
-    except Exception:
+def metadata_build_rs(src, wd, files):
+    """Build scripts of local packages, from cargo metadata run in the workdir and in every lockfile dir."""
+    dirs = [wd] + [os.path.join(src, os.path.dirname(f)) for f in files if os.path.basename(f) == "Cargo.lock"]
+    pkgs, ok = {}, False
+    for d in dict.fromkeys(os.path.normpath(x) for x in dirs):
+        if not os.path.isfile(os.path.join(d, "Cargo.toml")):
+            continue
+        try:
+            env = {k: v for k, v in os.environ.items() if k != "RUSTFLAGS"}
+            r = subprocess.run(["cargo", "metadata", "--offline", "--format-version", "1"], cwd=d, env=env,
+                               capture_output=True, text=True, timeout=300)
+            if r.returncode == 0:
+                ok = True
+                for p in json.loads(r.stdout).get("packages", []):
+                    pkgs[p["id"]] = p
+        except Exception:
+            pass
+    if not ok:
         return None, []
     root = os.path.realpath(src)
     found, git = [], []
-    for p in m.get("packages", []):
+    for p in pkgs.values():
         srcid = p.get("source") or ""
         if srcid.startswith("git+"):
             git.append(f"{p['name']} from {srcid.split('#')[0]}")
@@ -52,7 +77,7 @@ def metadata_build_rs(src, wd):
                 if "custom-build" in t.get("kind", []):
                     rel = os.path.relpath(os.path.realpath(t["src_path"]), root).replace("\\", "/")
                     found.append(f"{rel} (package {p['name']})")
-    return found, git
+    return sorted(set(found)), sorted(set(git))
 
 
 INC = re.compile(r"include_(bytes|str)!\s*\(\s*([^)]*)\)")
@@ -72,11 +97,13 @@ def main(src, wd, onchain_json, out_path):
         h = hashlib.sha256(data).hexdigest()
         committed[rel] = h
         ext = os.path.splitext(rel)[1].lower()
-        if ext == ".wasm":
+        if ext == ".wasm" or data[:4] == WASM_MAGIC:
             blobs.append(f"{rel} ({len(data)} bytes, wasm)")
-        elif len(data) > BIG and (NUL in data[:8192] or ext not in TEXT_OK):
-            kind = "binary" if NUL in data[:8192] else "large file"
-            blobs.append(f"{rel} ({len(data)} bytes, {kind})")
+        elif len(data) > BIG and not media_ok(ext, data):
+            if NUL in data[:8192] or ext not in TEXT_OK:
+                blobs.append(f"{rel} ({len(data)} bytes, binary)")
+            elif re.search(rb"[A-Za-z0-9+/=]{2000}|[0-9a-fA-F]{2000}", data):
+                blobs.append(f"{rel} ({len(data)} bytes, contains a long base64/hex run)")
         if os.path.basename(rel) == "build.rs":
             all_build_rs.append(rel)
         if ext == ".rs":
@@ -106,7 +133,7 @@ def main(src, wd, onchain_json, out_path):
             os.remove(os.path.join(src, s.split(" (")[0]))
         except OSError:
             pass
-    build_rs, git_deps = metadata_build_rs(src, wd)
+    build_rs, git_deps = metadata_build_rs(src, wd, files)
     scope = "template crate and its path dependencies (cargo metadata)"
     if build_rs is None:
         build_rs, scope = all_build_rs, "every committed build.rs (cargo metadata unavailable for this recipe)"

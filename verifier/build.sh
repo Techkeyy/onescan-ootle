@@ -58,7 +58,7 @@ while IFS= read -r l; do FETCH_DIRS="$FETCH_DIRS"$'\n'"$SRC/$(dirname "$l")"; do
 if [ -z "$err" ]; then
   while IFS= read -r d; do
     [ -f "$d/Cargo.toml" ] || continue
-    (cd "$d" && cargo fetch --locked) >>"$LOG" 2>&1 || { LOCK_OK="no"; (cd "$d" && cargo fetch) >>"$LOG" 2>&1 || echo "cargo fetch failed in $d" | tee -a "$LOG"; }
+    (cd "$d" && env -u RUSTFLAGS cargo fetch --locked) >>"$LOG" 2>&1 || { LOCK_OK="no"; (cd "$d" && env -u RUSTFLAGS cargo fetch) >>"$LOG" 2>&1 || echo "cargo fetch failed in $d" | tee -a "$LOG"; }
   done < <(printf '%s\n' "$FETCH_DIRS" | sort -u)
 fi
 

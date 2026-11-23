@@ -1,6 +1,6 @@
 # OneScan verification summary
 
-Third-party templates reproduced: **8 / 13** (plus Ootle Split, our own)
+Third-party templates reproduced: **9 / 14** (plus Ootle Split, our own)
 
 A match means the sha256 of a fresh build from the named commit equals the template binary in the on-chain substate. It is not an audit.
 
@@ -9,6 +9,7 @@ A match means the sha256 of a fresh build from the named commit equals the templ
 | `098accfc8e69…` | PublicGrant | feitianbf751026-dotcom/tari-ootle-public-grant-ledger @ `b3e10dd4e0` | walletd-optimized | `8f33a6f4ca34…` | `8f33a6f4ca34…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `4e58dcb438e1…` | SignalForecasts | ogboy92ii/signal-desk @ `b57767562e` | no-match | `7fca4a52b859…` | `4a2a625300a9…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 126505 vs built 126544) | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `54d64fdd5af8…` | Payroll | Devendurance/steady @ `e298436e6f` | walletd-optimized | `f12b2c930bd9…` | `f12b2c930bd9…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
+| `5b0efecc709c…` | SourceRegistry | Techkeyy/onescan-ootle @ `29a076b8d0` | walletd-optimized | `fa009b0af34c…` | `fa009b0af34c…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45205039012) |
 | `6494a4fe7ea2…` | Split (own) | Techkeyy/ootle-split @ `93397bf9eb` | walletd-optimized | `67b42d684ee0…` | `67b42d684ee0…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `65d9bbc931d3…` | SignalDesk | ogboy92ii/signal-desk @ `b57767562e` | no-match | `c00777517c54…` | `e61cc2ae3ad2…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 197198 vs built 197274) | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `67a658cc6c9e…` | SealedBidAuction | xB0unty911/sealed-bid-auction @ `252320dbca` | raw | `30e204257582…` | `30e204257582…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |

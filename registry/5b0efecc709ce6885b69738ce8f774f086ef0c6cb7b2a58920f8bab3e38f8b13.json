@@ -1,0 +1,66 @@
+{
+  "template": "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
+  "name": "SourceRegistry",
+  "author_public_key": "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
+  "onchain_sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae",
+  "built_sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae",
+  "match": true,
+  "mode": "walletd-optimized",
+  "repo": "https://github.com/Techkeyy/onescan-ootle",
+  "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/build/.cargo --remap-path-prefix=/home/runner/work/_temp/src=/build/src",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
+    "repo": "https://github.com/Techkeyy/onescan-ootle",
+    "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
+    "rustc": "1.97.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "registry-template",
+    "remap": "/build/.cargo",
+    "rustflags": "--remap-path-prefix={CARGO_HOME}=/build/.cargo --remap-path-prefix={SRC}=/build/src",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45205039012",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T15:26:09Z",
+  "tried": [
+    {
+      "file": "onescan_registry__1.wasm",
+      "variant": "raw",
+      "sha256": "a5d24edf32f6fb6185010ffd788891eac6684dbeb9a85bd3416c06e3099ec1af"
+    },
+    {
+      "file": "onescan_registry__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae"
+    }
+  ],
+  "diagnostics": null,
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [],
+    "patch_or_git": [],
+    "scrubbed": [],
+    "committed_count": 55
+  },
+  "warnings": [],
+  "clean": true,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

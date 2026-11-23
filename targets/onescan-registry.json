@@ -1,7 +1,7 @@
 [
  {
   "name": "OneScanSourceRegistry",
-  "template": "REPLACE_WITH_PUBLISHED_TEMPLATE_HEX",
+  "template": "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
   "repo": "https://github.com/Techkeyy/onescan-ootle",
   "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
   "rustc": "1.97.1",

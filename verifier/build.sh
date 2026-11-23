@@ -71,7 +71,9 @@ ISOLATED="no"; ISO_NOTE=""
 iso() { "$@"; }
 if [ "${RUNNER_OS:-}" = "Linux" ] && [ -z "${ONESCAN_SELFTEST_NO_ISOLATION:-}" ]; then
   _U="$(id -u)"; _G="$(id -g)"
-  iso() { sudo -E env "PATH=$PATH" "HOME=$HOME" unshare --net -- setpriv --reuid="$_U" --regid="$_G" --init-groups -- "$@"; }
+  ENVF="${RUNNER_TEMP:-/tmp}/onescan-build-env.sh"
+  # sudo drops the environment, so snapshot the exported variables and restore them inside the namespace.
+  iso() { export -p > "$ENVF"; sudo unshare --net -- setpriv --reuid="$_U" --regid="$_G" --init-groups --           bash -c 'source "$1" 2>/dev/null; shift; exec "$@"' _ "$ENVF" "$@"; }
   if ! iso true 2>>"$LOG"; then
     iso() { "$@"; }; ISO_NOTE="could not create a network namespace on this runner"
   elif iso curl -sS --max-time 8 -o /dev/null https://indexer-a.ootle.tari.com/ 2>/dev/null; then

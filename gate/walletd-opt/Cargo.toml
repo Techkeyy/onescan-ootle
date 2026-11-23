@@ -1,0 +1,12 @@
+[package]
+name = "walletd-opt"
+version = "0.1.0"
+edition = "2021"
+
+# Mirrors tari_walletd v0.55.0 (b7c964c) applications/tari_walletd/src/services/wasm_optimizer.rs
+[dependencies]
+wasm-opt = "=0.116.1"   # walletd: wasm-opt = "0.116.1", default features
+wasm-opt-sys = "=0.116.0"
+wasm-opt-cxx-sys = "=0.116.0"
+
+[workspace]

@@ -1,0 +1,13 @@
+[
+ {
+  "name": "OneScanSourceRegistry",
+  "template": "REPLACE_WITH_PUBLISHED_TEMPLATE_HEX",
+  "repo": "https://github.com/Techkeyy/onescan-ootle",
+  "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
+  "rustc": "1.97.1",
+  "builder": "cargo",
+  "workdir": "registry-template",
+  "rustflags": "--remap-path-prefix={CARGO_HOME}=/build/.cargo --remap-path-prefix={SRC}=/build/src",
+  "optimizer": "auto"
+ }
+]

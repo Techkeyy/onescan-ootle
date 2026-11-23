@@ -3,9 +3,9 @@
   "name": "Lockbox",
   "author_public_key": "1acc86fb7551e278a16f9560801946f0699a672d3b249890d2b56ba3ff029245",
   "onchain_sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0",
+  "match": true,
+  "mode": "raw",
   "repo": "https://github.com/ManishModak/ootle-lockbox",
   "commit": "ed3ff374ac3e9d8794e96357240aa6b8ecce5f37",
   "toolchain": {
@@ -29,13 +29,17 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:22:11Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "cargo build failed"
-  },
+  "verified_at": "2026-11-23T12:25:13Z",
+  "tried": [
+    {
+      "file": "ootle_lockbox__1.wasm",
+      "variant": "raw",
+      "sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
     "network_isolated": true,
     "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
@@ -52,6 +56,6 @@
     "committed_count": 65
   },
   "warnings": [],
-  "clean": false,
+  "clean": true,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

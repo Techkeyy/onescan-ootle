@@ -3,9 +3,9 @@
   "name": "GhostlineChannel",
   "author_public_key": "728870aee9b9fb66e69fcf45510440e54b59387a7efe3816713e054014d3b230",
   "onchain_sha256": "273ffbfb4b7f1980c39da77b97d270ad50578f3af37a44a1052221591eb81028",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "273ffbfb4b7f1980c39da77b97d270ad50578f3af37a44a1052221591eb81028",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/AduAkorful/ghostline",
   "commit": "b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
   "toolchain": {
@@ -29,13 +29,22 @@
     "optimizer": "auto",
     "cmd": "GHOSTLINE_FEE_CONFIG=\"$(python3 -c 'import json; print(json.load(open(\"deploy/mainnet.json\"))[\"channel\"][\"builtWithFeeConfig\"])')\" cargo build --manifest-path contracts/channel/Cargo.toml --target wasm32-unknown-unknown --release"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:22:11Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build command failed"
-  },
+  "verified_at": "2026-11-23T12:25:13Z",
+  "tried": [
+    {
+      "file": "ghostline_channel__1.wasm",
+      "variant": "raw",
+      "sha256": "2aede4428350a13069362e9d6ace3270a43ea7f7835f9cc707759d6c7347cfd6"
+    },
+    {
+      "file": "ghostline_channel__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "273ffbfb4b7f1980c39da77b97d270ad50578f3af37a44a1052221591eb81028"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
     "network_isolated": true,
     "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",

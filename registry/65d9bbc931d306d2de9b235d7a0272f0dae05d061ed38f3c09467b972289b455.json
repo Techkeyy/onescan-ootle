@@ -3,7 +3,7 @@
   "name": "SignalDesk",
   "author_public_key": "66fb73201ee4eb423cf5e5c1c31e6520c576f1e6d1041e72ccd026593025e354",
   "onchain_sha256": "c00777517c5401852486dd53296168e43bda0dabdfcb6b871fde678cffec7f2a",
-  "built_sha256": null,
+  "built_sha256": "e61cc2ae3ad2d5489c8c9a0457b9ae56a6470787c5241b7a7daf3dbef7a65e5b",
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/ogboy92ii/signal-desk",
@@ -29,12 +29,138 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:22:11Z",
-  "tried": [],
+  "verified_at": "2026-11-23T12:25:13Z",
+  "tried": [
+    {
+      "file": "signal_desk__1.wasm",
+      "variant": "raw",
+      "sha256": "7e2cd33dda1df8bd0571c8ee040f0852923eddc8ebf14a14ab3905711e0c1a31"
+    },
+    {
+      "file": "signal_desk__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "e61cc2ae3ad2d5489c8c9a0457b9ae56a6470787c5241b7a7daf3dbef7a65e5b"
+    }
+  ],
   "diagnostics": {
-    "error": "tari build failed"
+    "closest": "signal_desk__1.wasm.opt",
+    "closest_sha256": "e61cc2ae3ad2d5489c8c9a0457b9ae56a6470787c5241b7a7daf3dbef7a65e5b",
+    "closest_size": 197274,
+    "onchain_size": 197198,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "built_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "onchain_paths": [
+      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "built_paths": [
+      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        218
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        265
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        55
+      ],
+      [
+        "element",
+        92
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        174585
+      ],
+      [
+        "data",
+        20467
+      ],
+      [
+        "custom:tari_tdef",
+        1425
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        218
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        265
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        55
+      ],
+      [
+        "element",
+        92
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        174661
+      ],
+      [
+        "data",
+        20467
+      ],
+      [
+        "custom:tari_tdef",
+        1425
+      ]
+    ]
   },
   "isolation": {
     "network_isolated": true,

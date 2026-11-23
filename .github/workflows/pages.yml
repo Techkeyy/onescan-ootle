@@ -1,0 +1,32 @@
+name: pages
+# Builds web/ plus data and badges from registry/ and deploys to GitHub Pages.
+# verify.yml pushes registry results with GITHUB_TOKEN, which does not trigger push workflows,
+# so this also runs when a verify run completes.
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "registry/**", "verifier/request.py", ".github/workflows/pages.yml"]
+  workflow_run:
+    workflows: [verify]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: {name: github-pages, url: "${{ steps.d.outputs.page_url }}"}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main, persist-credentials: false}
+      - run: python3 -I web/build.py _site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: {path: _site}
+      - id: d
+        uses: actions/deploy-pages@v4

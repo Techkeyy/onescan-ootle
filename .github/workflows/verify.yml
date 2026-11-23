@@ -42,6 +42,8 @@ jobs:
 
   build:
     needs: plan
+    # builds run third-party code (build.rs, scripts): give them a read-only token that is not kept on disk
+    permissions: {contents: read}
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
@@ -50,7 +52,7 @@ jobs:
     defaults: {run: {shell: bash}}
     steps:
       - uses: actions/checkout@v4
-        with: {path: onescan}
+        with: {path: onescan, persist-credentials: false}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - name: Fetch on-chain template from the indexer

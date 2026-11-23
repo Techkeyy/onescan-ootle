@@ -1,0 +1,45 @@
+name: Verify a template
+description: Ask OneScan to rebuild an Ootle template from source and compare it with the on-chain bytes.
+title: "Verify template_"
+labels: [verify-request]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A GitHub Actions run rebuilds the template from the commit below and compares its sha256 with the template binary on Ootle mainnet. The result is posted here as a comment, usually within 10 to 20 minutes. Only the first line of each field is used.
+  - type: input
+    id: address
+    attributes: {label: Template address, placeholder: "template_<64 hex characters>"}
+    validations: {required: true}
+  - type: input
+    id: repo
+    attributes: {label: Source repository, placeholder: "https://github.com/owner/repo"}
+    validations: {required: true}
+  - type: input
+    id: commit
+    attributes: {label: Commit, description: "The commit the template was published from (7 to 40 hex characters).", placeholder: "a1b2c3d"}
+    validations: {required: true}
+  - type: input
+    id: workdir
+    attributes: {label: Crate sub-directory, description: "Optional. Folder holding the template's Cargo.toml, if not the repo root."}
+  - type: input
+    id: rustc
+    attributes: {label: Rust toolchain, description: "Optional. For example 1.98.1. Defaults to the repo's rust-toolchain file, else stable."}
+  - type: dropdown
+    id: builder
+    attributes: {label: Builder, options: [auto, cargo, tari-cli], default: 0}
+  - type: input
+    id: tari_cli
+    attributes: {label: tari-ootle-cli version, description: "Optional, for the tari-cli builder. For example 0.35.1."}
+  - type: input
+    id: remap
+    attributes: {label: CARGO_HOME remap, description: "Optional. The cargo home path that leaked into the binary (for example /home/you/.cargo), or none."}
+  - type: dropdown
+    id: optimizer
+    attributes: {label: walletd optimizer, options: [auto, "on", "off"], default: 0}
+  - type: dropdown
+    id: os
+    attributes: {label: Runner OS, options: [ubuntu-latest, windows-latest], default: 0}
+  - type: textarea
+    id: notes
+    attributes: {label: Notes, description: "Optional. Anything else about how it was built. Not used by the automatic run."}

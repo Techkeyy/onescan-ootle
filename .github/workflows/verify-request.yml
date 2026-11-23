@@ -1,0 +1,90 @@
+name: verify-request
+run-name: verify-request issue ${{ github.event.issue.number }}
+# An issue labelled verify-request (opened from the issue form or the website) starts verify.yml with the
+# validated fields, waits for it, and comments the result on the issue.
+on:
+  issues:
+    types: [labeled]
+permissions:
+  contents: read
+  issues: write
+  actions: write
+concurrency:
+  group: verify-request-${{ github.event.issue.number }}
+jobs:
+  run:
+    if: github.event.label.name == 'verify-request' && github.event.issue.state == 'open'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - name: Parse and validate the request
+        id: p
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: python3 -I verifier/request.py parse
+      - name: Reject an invalid request
+        if: steps.p.outputs.error != ''
+        env:
+          ERR: ${{ steps.p.outputs.error }}
+        run: |
+          printf 'OneScan could not start a run: %s\n\nEdit the issue, then remove and re-add the `verify-request` label to retry.\n' "$ERR" > c.md
+          gh issue comment "$ISSUE" --body-file c.md
+          exit 1
+      - name: Start verify.yml and wait for it
+        id: v
+        env:
+          T: ${{ steps.p.outputs.template }}
+          R_REPO: ${{ steps.p.outputs.repo }}
+          R_COMMIT: ${{ steps.p.outputs.commit }}
+          R_WORKDIR: ${{ steps.p.outputs.workdir }}
+          R_RUSTC: ${{ steps.p.outputs.rustc }}
+          R_BUILDER: ${{ steps.p.outputs.builder }}
+          R_TARI_CLI: ${{ steps.p.outputs.tari_cli }}
+          R_REMAP: ${{ steps.p.outputs.remap }}
+          R_OPTIMIZER: ${{ steps.p.outputs.optimizer }}
+          R_OS: ${{ steps.p.outputs.os }}
+        run: |
+          start="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          args=(-f "template=template_$T" -f "repo=$R_REPO" -f "commit=$R_COMMIT")
+          [ -n "$R_WORKDIR" ] && args+=(-f "workdir=$R_WORKDIR")
+          [ -n "$R_RUSTC" ] && args+=(-f "rustc=$R_RUSTC")
+          [ -n "$R_BUILDER" ] && args+=(-f "builder=$R_BUILDER")
+          [ -n "$R_TARI_CLI" ] && args+=(-f "tari_cli=$R_TARI_CLI")
+          [ -n "$R_REMAP" ] && args+=(-f "remap=$R_REMAP")
+          [ -n "$R_OPTIMIZER" ] && args+=(-f "optimizer=$R_OPTIMIZER")
+          [ -n "$R_OS" ] && args+=(-f "os=$R_OS")
+          gh workflow run verify.yml --ref main "${args[@]}"
+          id=""
+          for i in $(seq 1 30); do
+            sleep 10
+            id="$(gh run list --workflow verify.yml --event workflow_dispatch --limit 20 \
+                  --json databaseId,createdAt,displayTitle \
+                  --jq "[.[] | select(.createdAt >= \"$start\" and (.displayTitle | contains(\"$T\")))] | last | .databaseId // empty")"
+            [ -n "$id" ] && break
+          done
+          [ -n "$id" ] || { echo "verify run not found"; exit 1; }
+          url="$GITHUB_SERVER_URL/$GH_REPO/actions/runs/$id"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          gh issue comment "$ISSUE" --body "Started a verification run: $url"
+          gh run watch "$id" --interval 30 > /dev/null || true
+          echo "conclusion=$(gh run view "$id" --json conclusion --jq .conclusion)" >> "$GITHUB_OUTPUT"
+      - name: Comment the result
+        if: steps.v.outputs.url != ''
+        env:
+          T: ${{ steps.p.outputs.template }}
+          URL: ${{ steps.v.outputs.url }}
+          CONCLUSION: ${{ steps.v.outputs.conclusion }}
+        run: |
+          git fetch -q origin main
+          if git show "origin/main:registry/$T.json" > rec.json 2>/dev/null && grep -q "${URL##*/}" rec.json; then
+            python3 -I verifier/request.py report rec.json "$URL" > c.md
+          else
+            printf 'The run finished (%s) without writing a result for this template. See the logs: %s\n' "$CONCLUSION" "$URL" > c.md
+          fi
+          gh issue comment "$ISSUE" --body-file c.md

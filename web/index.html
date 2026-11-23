@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OneScan: verified source for Ootle templates</title>
+<meta name="description" content="Paste an Ootle template address and see which public commit builds those exact on-chain bytes.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6z' fill='%233fb950'/%3E%3Cpath d='m8 12 3 3 5-6' stroke='%230d1117' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6z" fill="currentColor" opacity=".18"/><path d="M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m8 12 3 3 5-6" stroke="var(--ok)" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>OneScan</a>
+  <nav class="links"><a href="./" aria-current="page">Lookup</a><a href="board.html">Board</a><a href="https://github.com/Techkeyy/onescan-ootle">GitHub</a></nav>
+</div></header>
+<main><div class="wrap">
+  <h1>Verified source for Ootle templates</h1>
+  <p class="lede">Paste a template address. OneScan reads the template's bytes live from the Ootle mainnet indexer, hashes them in your browser, and checks them against a reproducible build from public source.</p>
+  <form class="lookup" id="lookup" autocomplete="off">
+    <div class="field"><label class="sr" for="addr" hidden>Template address</label>
+      <input id="addr" type="text" name="t" spellcheck="false" placeholder="template_67a658cc…" aria-label="Template address"></div>
+    <button id="go" type="submit">Check source</button>
+  </form>
+  <p class="try">Try: <button type="button" data-t="67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309">Sealed Bids</button> · <button type="button" data-t="65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455">Signal Desk</button> · <button type="button" data-t="968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72">Lockbox</button></p>
+  <div id="result" aria-live="polite"></div>
+</div></main>
+<footer><div class="wrap">
+  <span>OneScan</span><a href="https://github.com/Techkeyy/onescan-ootle">Source on GitHub</a><a href="board.html">Contest board</a><span>Not affiliated with Tari Labs.</span>
+</div></footer>
+<script type="module" src="lookup.js"></script>
+</body>
+</html>

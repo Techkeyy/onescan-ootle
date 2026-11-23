@@ -3,7 +3,7 @@
   "name": "MoonMail",
   "author_public_key": "5226aff1b60ae773ff4d7d1c44060176c73d6b80acd10ea2e2eb1cfdb9ff7128",
   "onchain_sha256": "aff9e0c17b3ad6b6ecfb72a57059b0185e3a176768681276154283cac4027de0",
-  "built_sha256": "821be5e7db42889fdba5a3313fe43fdc89b9198e965c6ec61801d04816ff7ec9",
+  "built_sha256": null,
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/Seal-Clubber/MoonMail",
@@ -29,134 +29,33 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:16:03Z",
-  "tried": [
-    {
-      "file": "moonmail_v4__1.wasm",
-      "variant": "raw",
-      "sha256": "821be5e7db42889fdba5a3313fe43fdc89b9198e965c6ec61801d04816ff7ec9"
-    },
-    {
-      "file": "moonmail_v4__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "11ae16ce9c5e272971ccd612df37ff5ccc18b40add1d45bc8911fc19ad786bad"
-    }
-  ],
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
   "diagnostics": {
-    "closest": "moonmail_v4__1.wasm",
-    "closest_sha256": "821be5e7db42889fdba5a3313fe43fdc89b9198e965c6ec61801d04816ff7ec9",
-    "closest_size": 544562,
-    "onchain_size": 451979,
-    "tari_tdef_equal": false,
-    "rustc_commit_equal": true,
-    "onchain_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-    "built_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-    "onchain_paths": [
-      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
-      "/home/seal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "built_paths": [
-      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
-      "/home/seal/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "onchain_sections": [
-      [
-        "type",
-        186
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        723
-      ],
-      [
-        "table",
-        7
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        53
-      ],
-      [
-        "element",
-        339
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        404100
-      ],
-      [
-        "data",
-        45163
-      ],
-      [
-        "custom:tari_tdef",
-        1321
-      ]
-    ],
-    "built_sections": [
-      [
-        "type",
-        375
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        1594
-      ],
-      [
-        "table",
-        7
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        54
-      ],
-      [
-        "element",
-        373
-      ],
-      [
-        "code",
-        494179
-      ],
-      [
-        "data",
-        46019
-      ],
-      [
-        "custom:tari_tdef",
-        1877
-      ]
-    ]
+    "error": "cargo build failed"
   },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [
+      "public/fonts/InterVariable.woff2 (352240 bytes, binary)"
+    ],
+    "patch_or_git": [],
+    "scrubbed": [],
+    "committed_count": 317
+  },
+  "warnings": [
+    "committed binary or large file: public/fonts/InterVariable.woff2 (352240 bytes, binary)"
+  ],
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

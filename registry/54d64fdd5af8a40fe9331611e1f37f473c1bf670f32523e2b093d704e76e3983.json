@@ -3,9 +3,9 @@
   "name": "Payroll",
   "author_public_key": "beec685a3e606bc04676fd4c807e0c1b72b68e7a31d34584e9a3e6297ca73d27",
   "onchain_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
-  "built_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
-  "match": true,
-  "mode": "walletd-optimized",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
   "repo": "https://github.com/Devendurance/steady",
   "commit": "e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
   "toolchain": {
@@ -29,21 +29,29 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:16:03Z",
-  "tried": [
-    {
-      "file": "steady__1.wasm",
-      "variant": "raw",
-      "sha256": "4739c0ead6c5ae2461404a8b97823bfa8a465da5d6502b1a63952bb6e5167f53"
-    },
-    {
-      "file": "steady__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc"
-    }
-  ],
-  "diagnostics": null,
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "cargo build failed"
+  },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [],
+    "patch_or_git": [],
+    "scrubbed": [],
+    "committed_count": 66
+  },
+  "warnings": [],
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

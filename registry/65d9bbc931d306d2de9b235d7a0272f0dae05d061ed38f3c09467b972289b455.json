@@ -3,7 +3,7 @@
   "name": "SignalDesk",
   "author_public_key": "66fb73201ee4eb423cf5e5c1c31e6520c576f1e6d1041e72ccd026593025e354",
   "onchain_sha256": "c00777517c5401852486dd53296168e43bda0dabdfcb6b871fde678cffec7f2a",
-  "built_sha256": "e61cc2ae3ad2d5489c8c9a0457b9ae56a6470787c5241b7a7daf3dbef7a65e5b",
+  "built_sha256": null,
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/ogboy92ii/signal-desk",
@@ -29,138 +29,46 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163985791",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:30:56Z",
-  "tried": [
-    {
-      "file": "signal_desk__1.wasm",
-      "variant": "raw",
-      "sha256": "7e2cd33dda1df8bd0571c8ee040f0852923eddc8ebf14a14ab3905711e0c1a31"
-    },
-    {
-      "file": "signal_desk__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "e61cc2ae3ad2d5489c8c9a0457b9ae56a6470787c5241b7a7daf3dbef7a65e5b"
-    }
-  ],
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
   "diagnostics": {
-    "closest": "signal_desk__1.wasm.opt",
-    "closest_sha256": "e61cc2ae3ad2d5489c8c9a0457b9ae56a6470787c5241b7a7daf3dbef7a65e5b",
-    "closest_size": 197274,
-    "onchain_size": 197198,
-    "tari_tdef_equal": true,
-    "rustc_commit_equal": true,
-    "onchain_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-    "built_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-    "onchain_paths": [
-      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
-      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "built_paths": [
-      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
-      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "onchain_sections": [
-      [
-        "type",
-        218
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        265
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        55
-      ],
-      [
-        "element",
-        92
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        174585
-      ],
-      [
-        "data",
-        20467
-      ],
-      [
-        "custom:tari_tdef",
-        1425
-      ]
-    ],
-    "built_sections": [
-      [
-        "type",
-        218
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        265
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        55
-      ],
-      [
-        "element",
-        92
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        174661
-      ],
-      [
-        "data",
-        20467
-      ],
-      [
-        "custom:tari_tdef",
-        1425
-      ]
-    ]
+    "error": "tari build failed"
   },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": false
+  },
+  "source_check": {
+    "build_rs": [
+      "build.rs (package signal_desk)"
+    ],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [
+      "maquettes/fonts/Geist-Variable.woff2 (69492 bytes, binary)",
+      "maquettes/fonts/GeistMono-Variable.woff2 (71236 bytes, binary)",
+      "maquettes/img/live.webp (111204 bytes, binary)",
+      "maquettes/img/pol.webp (70620 bytes, binary)",
+      "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)"
+    ],
+    "patch_or_git": [],
+    "scrubbed": [
+      "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm"
+    ],
+    "committed_count": 345
+  },
+  "warnings": [
+    "build script: build.rs (package signal_desk)",
+    "committed binary or large file: maquettes/fonts/Geist-Variable.woff2 (69492 bytes, binary)",
+    "committed binary or large file: maquettes/fonts/GeistMono-Variable.woff2 (71236 bytes, binary)",
+    "committed binary or large file: maquettes/img/live.webp (111204 bytes, binary)",
+    "committed binary or large file: maquettes/img/pol.webp (70620 bytes, binary)",
+    "committed binary or large file: maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)"
+  ],
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

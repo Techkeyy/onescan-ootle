@@ -29,9 +29,9 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45162487226",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Windows",
-  "verified_at": "2026-11-23T11:10:19Z",
+  "verified_at": "2026-11-23T12:22:11Z",
   "tried": [
     {
       "file": "public_grant__1.wasm",
@@ -45,5 +45,24 @@
     }
   ],
   "diagnostics": null,
+  "isolation": {
+    "network_isolated": false,
+    "note": "Windows runner: build ran with cargo offline but without network isolation",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "every committed build.rs (cargo metadata unavailable for this recipe)",
+    "includes": [],
+    "blobs": [],
+    "patch_or_git": [],
+    "scrubbed": [],
+    "committed_count": 95
+  },
+  "warnings": [
+    "network not isolated during the build: Windows runner: build ran with cargo offline but without network isolation"
+  ],
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

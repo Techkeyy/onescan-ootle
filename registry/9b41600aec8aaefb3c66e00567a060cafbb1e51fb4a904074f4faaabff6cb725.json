@@ -3,9 +3,9 @@
   "name": "SpecterReportReceipt",
   "author_public_key": "da8b317049487cc2097430891b3d6761c6d693e61bdd7ee3ccc2e0f3c17f222c",
   "onchain_sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f",
-  "built_sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f",
-  "match": true,
-  "mode": "walletd-optimized",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
   "repo": "https://github.com/yeziR4/specter-tari",
   "commit": "77bda5ff5ca30dfba570d5652a160dc7ce792a36",
   "toolchain": {
@@ -29,21 +29,40 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163985791",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:30:56Z",
-  "tried": [
-    {
-      "file": "specter_report_receipt__1.wasm",
-      "variant": "raw",
-      "sha256": "4f50c43bd463a57a3101745d42ee6f794ca10c691f5888f28476fcb0e479b83f"
-    },
-    {
-      "file": "specter_report_receipt__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f"
-    }
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "cargo build failed"
+  },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [
+      "contracts/report-receipt/specter_report_receipt.wasm (96767 bytes, wasm)",
+      "dist/downloads/specter-source.zip (153921 bytes, binary)",
+      "dist/downloads/specter_report_receipt.wasm (96767 bytes, wasm)"
+    ],
+    "patch_or_git": [],
+    "scrubbed": [
+      "contracts/report-receipt/specter_report_receipt.wasm",
+      "dist/downloads/specter_report_receipt.wasm"
+    ],
+    "committed_count": 133
+  },
+  "warnings": [
+    "committed binary or large file: contracts/report-receipt/specter_report_receipt.wasm (96767 bytes, wasm)",
+    "committed binary or large file: dist/downloads/specter-source.zip (153921 bytes, binary)",
+    "committed binary or large file: dist/downloads/specter_report_receipt.wasm (96767 bytes, wasm)"
   ],
-  "diagnostics": null,
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

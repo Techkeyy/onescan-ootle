@@ -3,9 +3,9 @@
   "name": "SealedBidAuction",
   "author_public_key": "4c8f96e9f794fbc217a1879348616e088ef8cb529dbaa26aa872a3d426c1b535",
   "onchain_sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7",
-  "built_sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7",
-  "match": true,
-  "mode": "raw",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
   "repo": "https://github.com/xB0unty911/sealed-bid-auction",
   "commit": "252320dbca6eb86b43a7d511b3ae72285c04ebd5",
   "toolchain": {
@@ -29,16 +29,35 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45165847862",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:31:40Z",
-  "tried": [
-    {
-      "file": "sealed_bid__1.wasm",
-      "variant": "raw",
-      "sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7"
-    }
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "tari build failed"
+  },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [
+      "docs/demo-final-frame.png (124571 bytes, binary)",
+      "docs/demo.gif (857033 bytes, binary)"
+    ],
+    "patch_or_git": [],
+    "scrubbed": [],
+    "committed_count": 17
+  },
+  "warnings": [
+    "committed binary or large file: docs/demo-final-frame.png (124571 bytes, binary)",
+    "committed binary or large file: docs/demo.gif (857033 bytes, binary)"
   ],
-  "diagnostics": null,
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

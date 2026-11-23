@@ -3,9 +3,9 @@
   "name": "Semvi",
   "author_public_key": "10595ea2a8484dcb957bed589919aac8dd5f0d363766aec8e9ac8d73deb6f157",
   "onchain_sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c",
-  "built_sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c",
-  "match": true,
-  "mode": "walletd-optimized",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
   "repo": "https://github.com/emmaGH1/semvi",
   "commit": "1896cde493fc556fb44f0c5c9b5faed8102f85c4",
   "toolchain": {
@@ -29,21 +29,57 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:16:03Z",
-  "tried": [
-    {
-      "file": "semvi__1.wasm",
-      "variant": "raw",
-      "sha256": "02b3b126d0e5d5d2e43c7d28bc6a118f1926dce8560bd7c8b8baaefba37c2769"
-    },
-    {
-      "file": "semvi__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c"
-    }
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "cargo build failed"
+  },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [
+      "evidence/2026-11-20/desktop.png (158711 bytes, binary)",
+      "evidence/2026-11-20/inspect-desktop.png (119130 bytes, binary)",
+      "evidence/2026-11-20/inspect-mobile.png (90824 bytes, binary)",
+      "evidence/2026-11-20/mainnet-first-1440.png (196660 bytes, binary)",
+      "evidence/2026-11-20/mainnet-first-390.png (155949 bytes, binary)",
+      "evidence/2026-11-20/mainnet-first-768.png (186044 bytes, binary)",
+      "evidence/2026-11-20/mainnet-proof-1440.png (163693 bytes, binary)",
+      "evidence/2026-11-20/mainnet-proof-390.png (109432 bytes, binary)",
+      "evidence/2026-11-20/mobile.png (103970 bytes, binary)",
+      "evidence/2026-11-20/run-desktop.png (159808 bytes, binary)",
+      "evidence/2026-11-20/run-mobile.png (113519 bytes, binary)",
+      "web/fonts/bricolage.woff2 (76888 bytes, binary)",
+      "web/fonts/public-sans.ttf (103316 bytes, binary)"
+    ],
+    "patch_or_git": [],
+    "scrubbed": [],
+    "committed_count": 178
+  },
+  "warnings": [
+    "committed binary or large file: evidence/2026-11-20/desktop.png (158711 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/inspect-desktop.png (119130 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/inspect-mobile.png (90824 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/mainnet-first-1440.png (196660 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/mainnet-first-390.png (155949 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/mainnet-first-768.png (186044 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/mainnet-proof-1440.png (163693 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/mainnet-proof-390.png (109432 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/mobile.png (103970 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/run-desktop.png (159808 bytes, binary)",
+    "committed binary or large file: evidence/2026-11-20/run-mobile.png (113519 bytes, binary)",
+    "committed binary or large file: web/fonts/bricolage.woff2 (76888 bytes, binary)",
+    "committed binary or large file: web/fonts/public-sans.ttf (103316 bytes, binary)"
   ],
-  "diagnostics": null,
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

@@ -3,7 +3,7 @@
   "name": "CursedPumpkin",
   "author_public_key": "66ff4b83d0c720c1e309d1fd385335a9f28605a033f67e767546db0536dbf22b",
   "onchain_sha256": "256af3d167652fb99039e890af3b833445e089c8e32a8b4b2940d31f7b1b531a",
-  "built_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
+  "built_sha256": null,
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/Mzee04/cursed-pumpkin",
@@ -29,138 +29,39 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163985791",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173340424",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:30:56Z",
-  "tried": [
-    {
-      "file": "cursed_pumpkin__1.wasm",
-      "variant": "raw",
-      "sha256": "92238434aeb856ce6be8d620432fa0fc6c9587a71c451e84cbe8dff67171f255"
-    },
-    {
-      "file": "cursed_pumpkin__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611"
-    }
-  ],
+  "verified_at": "2026-11-23T12:22:11Z",
+  "tried": [],
   "diagnostics": {
-    "closest": "cursed_pumpkin__1.wasm.opt",
-    "closest_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
-    "closest_size": 275591,
-    "onchain_size": 275605,
-    "tari_tdef_equal": true,
-    "rustc_commit_equal": true,
-    "onchain_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
-    "built_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
-    "onchain_paths": [
-      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
-      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "built_paths": [
-      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
-      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "onchain_sections": [
-      [
-        "type",
-        186
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        420
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        58
-      ],
-      [
-        "element",
-        139
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        253604
-      ],
-      [
-        "data",
-        20171
-      ],
-      [
-        "custom:tari_tdef",
-        935
-      ]
-    ],
-    "built_sections": [
-      [
-        "type",
-        186
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        420
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        58
-      ],
-      [
-        "element",
-        139
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        253588
-      ],
-      [
-        "data",
-        20173
-      ],
-      [
-        "custom:tari_tdef",
-        935
-      ]
-    ]
+    "error": "tari build failed"
   },
+  "isolation": {
+    "network_isolated": true,
+    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
+    "cargo_offline": true,
+    "lockfile_honoured": true
+  },
+  "source_check": {
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "includes": [],
+    "blobs": [
+      "web-preview-mobile.png (231602 bytes, binary)",
+      "web-preview.png (370861 bytes, binary)",
+      "web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
+    ],
+    "patch_or_git": [],
+    "scrubbed": [
+      "web/bor/ootle_wasm_bor_bg.wasm"
+    ],
+    "committed_count": 30
+  },
+  "warnings": [
+    "committed binary or large file: web-preview-mobile.png (231602 bytes, binary)",
+    "committed binary or large file: web-preview.png (370861 bytes, binary)",
+    "committed binary or large file: web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
+  ],
+  "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

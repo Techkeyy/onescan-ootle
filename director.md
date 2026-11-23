@@ -48,3 +48,4 @@ template address (+repo/commit) → fetch on-chain WASM from the indexer → inf
 ## Log
 - 2026-11-23: Project created. Name: Tari Scanner (user's choice). Director brief written.
 - 2026-11-23: G1 run. A PASS (walletd 0.55.0 / wasm-opt 0.116.1 reproduces 67b42d68 byte-identical), C PASS (author key at .state.up.substate CBOR [1][0][1]), B BLOCKED (C: disk full mid tari-ootle-cli install). See gate/RESULTS.md. Product renamed OneScan.
+- 2026-11-23: G1-B PASS (Sealed Bids raw match in Actions, run 45165847862). Repo Techkeyy/onescan-ootle public with verify.yml + build-tools.yml (walletd-opt built once, release asset). G2: 8/13 third-party templates reproduced (registry/SUMMARY.md). Ootle Split re-run on windows-latest pending (run 45166403297).

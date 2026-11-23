@@ -17,7 +17,6 @@ on:
       targets: {description: "batch: JSON list of recipes, or a path like targets/g2.json", required: false, default: ""}
 permissions:
   contents: write
-concurrency: {group: verify-record, cancel-in-progress: false}
 jobs:
   plan:
     runs-on: ubuntu-latest

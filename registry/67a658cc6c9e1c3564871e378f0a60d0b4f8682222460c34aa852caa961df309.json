@@ -3,16 +3,16 @@
   "name": "SealedBidAuction",
   "author_public_key": "4c8f96e9f794fbc217a1879348616e088ef8cb529dbaa26aa872a3d426c1b535",
   "onchain_sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7",
+  "match": true,
+  "mode": "raw",
   "repo": "https://github.com/xB0unty911/sealed-bid-auction",
   "commit": "252320dbca6eb86b43a7d511b3ae72285c04ebd5",
   "toolchain": {
     "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
     "rustup_toolchain": "1.99.0",
     "tari_cli": "tari-ootle-cli 0.30.0",
-    "rustflags": "--remap-path-prefix=/home/runner/.cargo=C:/Program Files/Git/build/.cargo",
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/build/.cargo",
     "cargo_lock_in_repo": true
   },
   "recipe": {
@@ -24,17 +24,21 @@
     "tari_cli": "0.30.0",
     "script": "",
     "workdir": "",
-    "remap": "C:/Program Files/Git/build/.cargo",
+    "remap": "/build/.cargo",
     "rustflags": "",
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163428931",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45165847862",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:29:40Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "tari build failed"
-  },
+  "verified_at": "2026-11-23T11:31:40Z",
+  "tried": [
+    {
+      "file": "sealed_bid__1.wasm",
+      "variant": "raw",
+      "sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7"
+    }
+  ],
+  "diagnostics": null,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

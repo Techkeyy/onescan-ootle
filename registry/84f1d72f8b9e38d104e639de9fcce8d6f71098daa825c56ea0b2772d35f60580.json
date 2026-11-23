@@ -1,0 +1,49 @@
+{
+  "template": "84f1d72f8b9e38d104e639de9fcce8d6f71098daa825c56ea0b2772d35f60580",
+  "name": "Semvi",
+  "author_public_key": "10595ea2a8484dcb957bed589919aac8dd5f0d363766aec8e9ac8d73deb6f157",
+  "onchain_sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c",
+  "built_sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c",
+  "match": true,
+  "mode": "walletd-optimized",
+  "repo": "https://github.com/emmaGH1/semvi",
+  "commit": "1896cde493fc556fb44f0c5c9b5faed8102f85c4",
+  "toolchain": {
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "rustup_toolchain": "1.99.0",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/data/home/.cargo",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "84f1d72f8b9e38d104e639de9fcce8d6f71098daa825c56ea0b2772d35f60580",
+    "repo": "https://github.com/emmaGH1/semvi",
+    "commit": "1896cde493fc",
+    "rustc": "1.99.0",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "/data/home/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "semvi__1.wasm",
+      "variant": "raw",
+      "sha256": "02b3b126d0e5d5d2e43c7d28bc6a118f1926dce8560bd7c8b8baaefba37c2769"
+    },
+    {
+      "file": "semvi__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c"
+    }
+  ],
+  "diagnostics": null,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

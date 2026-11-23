@@ -1,0 +1,166 @@
+{
+  "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
+  "name": "SignalFollows",
+  "author_public_key": "66fb73201ee4eb423cf5e5c1c31e6520c576f1e6d1041e72ccd026593025e354",
+  "onchain_sha256": "f3073726e7c3622f2dd8abf4c541717c71d7c37e54017d3cbd6a9c7425f7bbc8",
+  "built_sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa",
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
+  "toolchain": {
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "rustup_toolchain": "1.98.1",
+    "tari_cli": null,
+    "rustflags": "",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
+    "repo": "https://github.com/ogboy92ii/signal-desk",
+    "commit": "b57767562e5d",
+    "rustc": "1.98.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "follows",
+    "remap": "none",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "signal_follows__1.wasm",
+      "variant": "raw",
+      "sha256": "079fef5084f1e088e47758e4ca3f627d92cfd281b0d4e2a2d7b4b2751b39c606"
+    },
+    {
+      "file": "signal_follows__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa"
+    }
+  ],
+  "diagnostics": {
+    "closest": "signal_follows__1.wasm.opt",
+    "closest_sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa",
+    "closest_size": 93124,
+    "onchain_size": 93069,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "built_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "onchain_paths": [
+      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "built_paths": [
+      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        119
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        171
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        66
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        81727
+      ],
+      [
+        "data",
+        10480
+      ],
+      [
+        "custom:tari_tdef",
+        359
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        119
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        171
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        66
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        81782
+      ],
+      [
+        "data",
+        10480
+      ],
+      [
+        "custom:tari_tdef",
+        359
+      ]
+    ]
+  },
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

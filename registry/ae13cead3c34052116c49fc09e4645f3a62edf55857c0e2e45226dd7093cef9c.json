@@ -1,0 +1,166 @@
+{
+  "template": "ae13cead3c34052116c49fc09e4645f3a62edf55857c0e2e45226dd7093cef9c",
+  "name": "GhostlineChannel",
+  "author_public_key": "728870aee9b9fb66e69fcf45510440e54b59387a7efe3816713e054014d3b230",
+  "onchain_sha256": "273ffbfb4b7f1980c39da77b97d270ad50578f3af37a44a1052221591eb81028",
+  "built_sha256": "8e48a93994769ec343eb33a5080df144f0b8d989503a9c9a5edac57692da570e",
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/AduAkorful/ghostline",
+  "commit": "b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "ae13cead3c34052116c49fc09e4645f3a62edf55857c0e2e45226dd7093cef9c",
+    "repo": "https://github.com/AduAkorful/ghostline",
+    "commit": "b9cf4ce77cb3",
+    "rustc": "1.97.1",
+    "builder": "cmd",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "none",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "GHOSTLINE_FEE_CONFIG=\"$(python3 -c 'import json; print(json.load(open(\"deploy/mainnet.json\"))[\"channel\"][\"builtWithFeeConfig\"])')\" cargo build --manifest-path contracts/channel/Cargo.toml --target wasm32-unknown-unknown --release"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "ghostline_channel__1.wasm",
+      "variant": "raw",
+      "sha256": "f950074239735d1868f1a0c2eb0ef04e8580425a82c9f2ce421244bc8b5a9609"
+    },
+    {
+      "file": "ghostline_channel__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "8e48a93994769ec343eb33a5080df144f0b8d989503a9c9a5edac57692da570e"
+    }
+  ],
+  "diagnostics": {
+    "closest": "ghostline_channel__1.wasm.opt",
+    "closest_sha256": "8e48a93994769ec343eb33a5080df144f0b8d989503a9c9a5edac57692da570e",
+    "closest_size": 130214,
+    "onchain_size": 130254,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "8bab26f4f68e0e26f0bb7960be334d5b520ea452",
+    "built_rustc_commit": "8bab26f4f68e0e26f0bb7960be334d5b520ea452",
+    "onchain_paths": [
+      "/home/aduakorful/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f",
+      "/rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452"
+    ],
+    "built_paths": [
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f",
+      "/rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        126
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        278
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        60
+      ],
+      [
+        "element",
+        97
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        115064
+      ],
+      [
+        "data",
+        14290
+      ],
+      [
+        "custom:tari_tdef",
+        250
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        126
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        278
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        60
+      ],
+      [
+        "element",
+        97
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        115064
+      ],
+      [
+        "data",
+        14250
+      ],
+      [
+        "custom:tari_tdef",
+        250
+      ]
+    ]
+  },
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

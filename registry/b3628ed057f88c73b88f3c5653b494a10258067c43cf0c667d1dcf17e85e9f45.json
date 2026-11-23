@@ -1,0 +1,49 @@
+{
+  "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",
+  "name": "GhostlineFeeConfig",
+  "author_public_key": "728870aee9b9fb66e69fcf45510440e54b59387a7efe3816713e054014d3b230",
+  "onchain_sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c",
+  "built_sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c",
+  "match": true,
+  "mode": "walletd-optimized",
+  "repo": "https://github.com/AduAkorful/ghostline",
+  "commit": "b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/home/aduakorful/.cargo",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",
+    "repo": "https://github.com/AduAkorful/ghostline",
+    "commit": "b9cf4ce77cb3",
+    "rustc": "1.97.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "contracts/fee-config",
+    "remap": "/home/aduakorful/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "ghostline_fee_config__1.wasm",
+      "variant": "raw",
+      "sha256": "766a60e8108e5856b03d24a1bae6b6eca39df5b2eac9df2de7186fdd15eae311"
+    },
+    {
+      "file": "ghostline_fee_config__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c"
+    }
+  ],
+  "diagnostics": null,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

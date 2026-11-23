@@ -1,0 +1,166 @@
+{
+  "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
+  "name": "CursedPumpkin",
+  "author_public_key": "66ff4b83d0c720c1e309d1fd385335a9f28605a033f67e767546db0536dbf22b",
+  "onchain_sha256": "256af3d167652fb99039e890af3b833445e089c8e32a8b4b2940d31f7b1b531a",
+  "built_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/Mzee04/cursed-pumpkin",
+  "commit": "04c0f38af8578b94dbc352615578b31429d6b4e9",
+  "toolchain": {
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "rustup_toolchain": "1.99.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/Users/mzee/.cargo",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
+    "repo": "https://github.com/Mzee04/cursed-pumpkin",
+    "commit": "04c0f38af857",
+    "rustc": "1.99.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "templates/cursed_pumpkin",
+    "remap": "/Users/mzee/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "cursed_pumpkin__1.wasm",
+      "variant": "raw",
+      "sha256": "92238434aeb856ce6be8d620432fa0fc6c9587a71c451e84cbe8dff67171f255"
+    },
+    {
+      "file": "cursed_pumpkin__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611"
+    }
+  ],
+  "diagnostics": {
+    "closest": "cursed_pumpkin__1.wasm.opt",
+    "closest_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
+    "closest_size": 275591,
+    "onchain_size": 275605,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
+    "built_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
+    "onchain_paths": [
+      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
+      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "built_paths": [
+      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
+      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        186
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        420
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        139
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        253604
+      ],
+      [
+        "data",
+        20171
+      ],
+      [
+        "custom:tari_tdef",
+        935
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        186
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        420
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        139
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        253588
+      ],
+      [
+        "data",
+        20173
+      ],
+      [
+        "custom:tari_tdef",
+        935
+      ]
+    ]
+  },
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

@@ -1,0 +1,49 @@
+{
+  "template": "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983",
+  "name": "Payroll",
+  "author_public_key": "beec685a3e606bc04676fd4c807e0c1b72b68e7a31d34584e9a3e6297ca73d27",
+  "onchain_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
+  "built_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
+  "match": true,
+  "mode": "walletd-optimized",
+  "repo": "https://github.com/Devendurance/steady",
+  "commit": "e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
+  "toolchain": {
+    "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+    "rustup_toolchain": "1.100.0",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/home/endy/.cargo",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983",
+    "repo": "https://github.com/Devendurance/steady",
+    "commit": "e298436e6f26",
+    "rustc": "1.100.0",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "/home/endy/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "steady__1.wasm",
+      "variant": "raw",
+      "sha256": "4739c0ead6c5ae2461404a8b97823bfa8a465da5d6502b1a63952bb6e5167f53"
+    },
+    {
+      "file": "steady__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc"
+    }
+  ],
+  "diagnostics": null,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

@@ -1,0 +1,44 @@
+{
+  "template": "968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72",
+  "name": "Lockbox",
+  "author_public_key": "1acc86fb7551e278a16f9560801946f0699a672d3b249890d2b56ba3ff029245",
+  "onchain_sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0",
+  "built_sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0",
+  "match": true,
+  "mode": "raw",
+  "repo": "https://github.com/ManishModak/ootle-lockbox",
+  "commit": "ed3ff374ac3e9d8794e96357240aa6b8ecce5f37",
+  "toolchain": {
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "rustup_toolchain": "1.98.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/home/manishm/.cargo",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72",
+    "repo": "https://github.com/ManishModak/ootle-lockbox",
+    "commit": "ed3ff374ac3e",
+    "rustc": "1.98.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "/home/manishm/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "ootle_lockbox__1.wasm",
+      "variant": "raw",
+      "sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0"
+    }
+  ],
+  "diagnostics": null,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

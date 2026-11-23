@@ -1,0 +1,166 @@
+{
+  "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
+  "name": "SpecterReportReceipt",
+  "author_public_key": "da8b317049487cc2097430891b3d6761c6d693e61bdd7ee3ccc2e0f3c17f222c",
+  "onchain_sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f",
+  "built_sha256": "d45942e48a1a9bc53cbe088711ee85cae81e77057c3de3b064a2c1d72bf0a6c8",
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/yeziR4/specter-tari",
+  "commit": "77bda5ff5ca30dfba570d5652a160dc7ce792a36",
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "",
+    "cargo_lock_in_repo": true
+  },
+  "recipe": {
+    "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
+    "repo": "https://github.com/yeziR4/specter-tari",
+    "commit": "77bda5ff5ca3",
+    "rustc": "1.97.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "contracts/report-receipt",
+    "remap": "none",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-23T11:16:03Z",
+  "tried": [
+    {
+      "file": "specter_report_receipt__1.wasm",
+      "variant": "raw",
+      "sha256": "ae0a73137eda85d342290f7f8a2e418c5b40a2ffdce446c087cf44590c0545ea"
+    },
+    {
+      "file": "specter_report_receipt__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "d45942e48a1a9bc53cbe088711ee85cae81e77057c3de3b064a2c1d72bf0a6c8"
+    }
+  ],
+  "diagnostics": {
+    "closest": "specter_report_receipt__1.wasm.opt",
+    "closest_sha256": "d45942e48a1a9bc53cbe088711ee85cae81e77057c3de3b064a2c1d72bf0a6c8",
+    "closest_size": 83133,
+    "onchain_size": 83125,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "8bab26f4f68e0e26f0bb7960be334d5b520ea452",
+    "built_rustc_commit": "8bab26f4f68e0e26f0bb7960be334d5b520ea452",
+    "onchain_paths": [
+      "/home/yezir/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f",
+      "/rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452"
+    ],
+    "built_paths": [
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f",
+      "/rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        121
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        206
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        64
+      ],
+      [
+        "element",
+        75
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        72965
+      ],
+      [
+        "data",
+        9369
+      ],
+      [
+        "custom:tari_tdef",
+        236
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        121
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        206
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        64
+      ],
+      [
+        "element",
+        75
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        72965
+      ],
+      [
+        "data",
+        9377
+      ],
+      [
+        "custom:tari_tdef",
+        236
+      ]
+    ]
+  },
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

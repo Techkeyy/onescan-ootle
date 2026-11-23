@@ -75,6 +75,7 @@ jobs:
           R_REMAP: ${{ matrix.remap }}
           R_RUSTFLAGS: ${{ matrix.rustflags }}
           R_OPTIMIZER: ${{ matrix.optimizer }}
+          R_CMD: ${{ matrix.cmd }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           export OUT="$PWD/$OUT"

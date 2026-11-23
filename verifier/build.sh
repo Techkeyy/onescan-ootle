@@ -39,7 +39,7 @@ CH="${CARGO_HOME:-$HOME/.cargo}"
 CH_NATIVE="$(cygpath -w "$CH" 2>/dev/null || echo "$CH")"
 SRC_NATIVE="$(cygpath -w "$SRC" 2>/dev/null || echo "$SRC")"
 if [ -n "${R_RUSTFLAGS:-}" ]; then
-  RF="${R_RUSTFLAGS//\{CARGO_HOME\}/$CH_NATIVE}"; RF="${RF//\{SRC\}/$SRC_NATIVE}"
+  RF="${R_RUSTFLAGS//\{CARGO_HOME\}/"$CH_NATIVE"}"; RF="${RF//\{SRC\}/"$SRC_NATIVE"}"
   export RUSTFLAGS="$RF"
 elif [ "${R_REMAP:-/build/.cargo}" != "none" ]; then
   export RUSTFLAGS="--remap-path-prefix=$CH_NATIVE=${R_REMAP:-/build/.cargo}"
@@ -61,6 +61,9 @@ if [ -z "$err" ]; then
     script)
       (cd "$SRC" && bash "$R_SCRIPT") 2>&1 | tee -a "$LOG"
       [ "${PIPESTATUS[0]}" = 0 ] || fail "build script $R_SCRIPT failed" ;;
+    cmd)
+      (cd "$SRC" && bash -c "$R_CMD") 2>&1 | tee -a "$LOG"
+      [ "${PIPESTATUS[0]}" = 0 ] || fail "build command failed" ;;
     *) fail "unknown builder $R_BUILDER" ;;
   esac
 fi
@@ -78,7 +81,7 @@ python -I - "$OUT/build.json" <<'PY'
 import json, os, sys
 e = os.environ
 recipe = {k: e.get("R_" + k.upper(), "") for k in
-          ["template", "repo", "commit", "rustc", "builder", "tari_cli", "script", "workdir", "remap", "rustflags", "optimizer"]}
+          ["template", "repo", "commit", "rustc", "builder", "tari_cli", "script", "workdir", "remap", "rustflags", "optimizer", "cmd"]}
 json.dump({"recipe": recipe, "commit_full": e.get("COMMIT_FULL"),
            "toolchain": {"rustc": e.get("RUSTC_V"), "rustup_toolchain": e.get("RUSTUP_TOOLCHAIN"),
                          "tari_cli": e.get("TARI_V") or None, "rustflags": e.get("RUSTFLAGS", ""),

@@ -9,7 +9,7 @@ try {
     const repo = (r.repo || "").replace("https://github.com/", "");
     return `<tr>
       <td><span class="dot ${r.match ? "ok" : "warn"}"></span><strong>${r.match ? "Reproduced" : "Not reproduced"}</strong>${r.match ? `<div class="sig">${esc(r.mode)}</div>` : `<div class="sig">${esc(r.cause)}</div>`}</td>
-      <td><a href="./?t=${r.template}"><strong>${esc(r.name)}</strong></a>${r.own ? " (OneScan author's own)" : ""}<div class="sig">template_${short(r.template)}</div></td>
+      <td><a href="./?t=${r.template}"><strong>${esc(r.name)}</strong></a>${r.own ? " (OneScan author's own)" : ""}<div class="sig">${short(r.template)}</div></td>
       <td><span class="mono">${short(r.author_public_key, 16)}</span></td>
       <td><a href="${esc(r.repo)}/tree/${esc(r.commit)}">${esc(repo)}</a><div class="sig">@ ${esc((r.commit || "").slice(0, 10))}</div></td>
       <td><a href="${esc(r.run_url)}">run</a></td></tr>`;

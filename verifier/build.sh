@@ -4,6 +4,7 @@
 set -uo pipefail
 OUT="${OUT:?}"; mkdir -p "$OUT/candidates"
 SRC="${SRC_DIR:-$RUNNER_TEMP/src}"
+SRC="$(cygpath -u "$SRC" 2>/dev/null || echo "$SRC")"
 LOG="$OUT/build.log"
 err=""
 fail() { err="$1"; echo "ERROR: $1" >&2; }
@@ -13,13 +14,14 @@ if [ -z "$err" ]; then
   git -C "$SRC" checkout --quiet "$R_COMMIT" || fail "commit $R_COMMIT not found in $R_REPO"
 fi
 COMMIT_FULL="$(git -C "$SRC" rev-parse HEAD 2>/dev/null || echo "")"
-WD="$SRC/${R_WORKDIR:-}"
+WD="$SRC${R_WORKDIR:+/$R_WORKDIR}"
 
 # Toolchain: recipe override, else rust-toolchain(.toml) found upward from the workdir, else stable.
 TC="${R_RUSTC:-}"
 if [ -z "$TC" ]; then
-  d="$WD"
-  while [ -n "$d" ] && [ "$d" != "/" ]; do
+  d="$WD"; n=0
+  while [ -n "$d" ] && [ "$d" != "/" ] && [ "$d" != "." ] && [ $n -lt 20 ]; do
+    n=$((n+1))
     for f in "$d/rust-toolchain.toml" "$d/rust-toolchain"; do
       if [ -f "$f" ] && [ -z "$TC" ]; then
         TC="$(grep -E '^\s*channel' "$f" | sed -E 's/.*"([^"]+)".*/\1/' | head -1)"

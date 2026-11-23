@@ -31,8 +31,8 @@ struct Attestation {
 
 const T1: &str = "template_67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309";
 const T2: &str = "template_968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72";
-const H1: &str = "30e204257582aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-const H2: &str = "58033cf4255ebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+const H1: &str = "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7";
+const H2: &str = "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0";
 
 struct Fixture {
     engine: TemplateTest,

@@ -1,6 +1,6 @@
 # OneScan verification summary
 
-Third-party templates reproduced: **5 / 12**
+Third-party templates reproduced: **5 / 13**
 
 A match means the sha256 of a fresh build from the named commit equals the template binary in the on-chain substate. It is not an audit.
 
@@ -10,6 +10,7 @@ A match means the sha256 of a fresh build from the named commit equals the templ
 | `4e58dcb438e1…` | SignalForecasts | ogboy92ii/signal-desk @ `b57767562e` | no-match | `7fca4a52b859…` | `4a2a625300a9…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 126505 vs built 126544) | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051) |
 | `54d64fdd5af8…` | Payroll | Devendurance/steady @ `e298436e6f` | walletd-optimized | `f12b2c930bd9…` | `f12b2c930bd9…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051) |
 | `65d9bbc931d3…` | SignalDesk | ogboy92ii/signal-desk @ `b57767562e` | no-match | `c00777517c54…` | `e61cc2ae3ad2…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 197198 vs built 197274) | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051) |
+| `67a658cc6c9e…` | SealedBidAuction | xB0unty911/sealed-bid-auction @ `252320dbca` | no-match | `30e204257582…` | `-…` | miss: tari build failed | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163428931) |
 | `84f1d72f8b9e…` | Semvi | emmaGH1/semvi @ `1896cde493` | walletd-optimized | `7f582b4e3133…` | `7f582b4e3133…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051) |
 | `968740ec9a0f…` | Lockbox | ManishModak/ootle-lockbox @ `ed3ff374ac` | raw | `58033cf4255e…` | `58033cf4255e…` | MATCH | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051) |
 | `9b41600aec8a…` | SpecterReportReceipt | yeziR4/specter-tari @ `77bda5ff5c` | no-match | `03efc5252d65…` | `d45942e48a1a…` | miss: leaked paths differ (sizes on-chain 83125 vs built 83133) | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051) |

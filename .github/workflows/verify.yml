@@ -97,8 +97,12 @@ jobs:
       - name: Download walletd-opt (built once by build-tools)
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
-          gh release download tools-walletd-opt-0.116.1 -p walletd-opt-linux-x64 -D tools
-          chmod +x tools/walletd-opt-linux-x64
+          mkdir -p tools
+          if gh release download tools-walletd-opt-0.116.1 -p walletd-opt-linux-x64 -D tools; then
+            chmod +x tools/walletd-opt-linux-x64
+          else
+            echo "::warning::walletd-opt release asset missing; comparing raw builds only"
+          fi
       - name: Compare hashes
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

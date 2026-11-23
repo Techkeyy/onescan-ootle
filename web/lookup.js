@@ -1,4 +1,4 @@
-import { SITE, REPO, esc, short, parseAddress, fetchTemplate, parseTdef } from "./lib.js";
+import { SITE, REPO, ONCHAIN, explorerTx, esc, short, parseAddress, fetchTemplate, parseTdef, fetchAttestations } from "./lib.js";
 
 const $ = (s) => document.querySelector(s);
 const out = $("#result");
@@ -84,7 +84,20 @@ function isolationFact(rec) {
   return (i.network_isolated ? "no network during the build" : "network NOT isolated") + (i.note ? ` (${esc(i.note)})` : "");
 }
 
-function verified(hx, live, rec, liveErr) {
+// "Attested on-chain" row: read live from the SourceRegistry component; only the trusted verifier key counts,
+// and only when the attested on-chain hash equals the hash of the bytes the indexer returns right now.
+function attestedFact(hx, live, att) {
+  if (!att) return "";
+  if (att.error) return `<dt>Attested on-chain</dt><dd>Could not read the registry component live: ${esc(att.error)}</dd>`;
+  const a = att.byTemplate.get(hx)?.[0];
+  if (!a) return `<dt>Attested on-chain</dt><dd>No attestation by the trusted verifier in registry <span class="mono">${esc(short(ONCHAIN.registry, 22))}</span> yet.</dd>`;
+  if (!live) return `<dt>Attested on-chain</dt><dd>An attestation exists, but the live template bytes could not be read, so its hash was not compared. Not counted.</dd>`;
+  if (a.onchain_sha256 !== live.sha256) return `<dt>Attested on-chain</dt><dd><span class="eq bad">hash differs</span>: the attestation names <span class="mono">${esc(short(a.onchain_sha256, 16))}</span>, the live bytes hash differently. Not counted.</dd>`;
+  const tx = ONCHAIN.attestTxTemplates.has(hx) ? `<a class="mono" href="${explorerTx(ONCHAIN.attestTx)}">tx ${esc(short(ONCHAIN.attestTx, 12))}</a>` : "transaction not recorded here";
+  return `<dt>Attested on-chain</dt><dd><span class="eq ok">yes</span>, read live from registry <span class="mono" title="${esc(ONCHAIN.registry)}">${esc(short(ONCHAIN.registry, 22))}</span> (epoch ${esc(a.epoch)}), ${tx}; verifier <span class="mono" title="${esc(a.verifier)}">${esc(short(a.verifier, 16))}</span> <span class="flag info">trusted</span>, attested hash equals the live hash.</dd>`;
+}
+
+function verified(hx, live, rec, liveErr, att) {
   const recorded = !live;
   const clean = rec.clean;
   return `<div class="status ${clean ? "s-ok" : "s-warn"}"><div class="head"><span class="badge">${clean ? "VERIFIED" : "VERIFIED (WITH WARNINGS)"}</span><div>
@@ -98,6 +111,7 @@ function verified(hx, live, rec, liveErr) {
         <dt>Build mode</dt><dd>${esc(MODE[rec.mode] || rec.mode)}</dd>
         <dt>Verifier run</dt><dd><a href="${esc(rec.run_url)}">GitHub Actions run ${esc(rec.run_url.split("/").pop())}</a>, ${esc(rec.verified_at)}</dd>
         <dt>Build isolation</dt><dd>${isolationFact(rec)}</dd>
+        ${attestedFact(hx, live, att)}
         ${onchainFacts(hx, live)}
       </dl></div>
       ${warningsBlock(rec)}
@@ -174,7 +188,8 @@ async function lookup(raw) {
   $("#addr").value = `template_${hx}`;
   $("#go").disabled = true;
   out.innerHTML = `<p class="loading">Reading template_${short(hx)} from the indexer and hashing it…</p>`;
-  const [reg, liveRes] = await Promise.all([loadRegistry(), fetchTemplate(hx).then((v) => ({ v }), (e) => ({ e }))]);
+  const [reg, liveRes, att] = await Promise.all([loadRegistry(), fetchTemplate(hx).then((v) => ({ v }), (e) => ({ e })),
+    fetchAttestations().catch((e) => ({ error: String(e && e.message || e) }))]);
   $("#go").disabled = false;
   const rec = reg?.records?.[hx];
   const live = liveRes.v;
@@ -190,7 +205,7 @@ async function lookup(raw) {
   }
   if (!rec) out.innerHTML = unverified(hx, live);
   else if (rec.match && live && live.sha256 !== rec.built_sha256) out.innerHTML = mismatch(hx, live, rec);
-  else if (rec.match) out.innerHTML = verified(hx, live, rec, liveErr);
+  else if (rec.match) out.innerHTML = verified(hx, live, rec, liveErr, att);
   else out.innerHTML = notReproduced(hx, live, rec, liveErr);
 }
 

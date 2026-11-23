@@ -1,5 +1,23 @@
 # Publishing the OneScan SourceRegistry on mainnet
 
+## Mainnet deployment (done, all transactions Accepted)
+
+| What | Value |
+|---|---|
+| SourceRegistry template | `template_5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13` (publish tx [`eda11d8d…`](https://explorer.tari.mw/tx/eda11d8d940fe6080bf3d6f1dee2b88a2fb4af99f1f663589f30b672819e1004)) |
+| Registry component | `component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea` (instantiate tx [`485a8662…`](https://explorer.tari.mw/tx/485a86626c42397ac09a197d5cc55439cdadeb61be965fbad5d6eb0f6e23f2b9)) |
+| Attestations tx | [`c86b139b…`](https://explorer.tari.mw/tx/c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec): 10 `SourceAttested` events (PublicGrant, Payroll, SourceRegistry, Split, SealedBidAuction, Semvi, Lockbox, SpecterReportReceipt, GhostlineChannel, GhostlineFeeConfig) |
+| Trusted verifier public key | `1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862` |
+
+OneScan verified its own registry: `registry/5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json`
+(match, walletd-optimized, run 45205039012).
+
+The website reads the registry component live from the indexer (`web/lib.js`, `ONCHAIN` and
+`fetchAttestations`), decodes its state in the browser, and only counts attestations whose verifier is the
+trusted key and whose `onchain_sha256` equals the hash of the template bytes the indexer returns.
+
+## Steps (for reference)
+
 These are the human steps. Nothing here is automated, and no script submits a transaction unless you
 run it with `--rpc --submit`.
 

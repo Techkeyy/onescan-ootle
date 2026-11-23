@@ -8,7 +8,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "verifier"))
 from request import cause  # noqa: E402
 
-OWN = {"6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2"}  # Ootle Split, the project author's own
+OWN = {"6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2",  # Ootle Split, the project author's own
+       "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13"}  # OneScan SourceRegistry (self-verified)
 KEEP = ["template", "name", "author_public_key", "onchain_sha256", "built_sha256", "match", "mode", "repo",
         "commit", "toolchain", "recipe", "run_url", "runner_os", "verified_at", "isolation", "warnings"]
 

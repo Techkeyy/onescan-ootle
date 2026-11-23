@@ -123,3 +123,49 @@ function flagsFor(name, kind, args, out) {
   if (kind === "function" && /Component</.test(out)) f.push(["constructor", "info"]);
   return f;
 }
+
+// On-chain attestations (Ootle mainnet). The registry accepts attestations from anyone; OneScan only
+// counts entries whose verifier is the trusted key below.
+export const ONCHAIN = {
+  registryTemplate: "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
+  registry: "component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea",
+  trustedVerifier: "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
+  attestTx: "c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec",
+  // templates whose SourceAttested event is in attestTx (checked against the tx result)
+  attestTxTemplates: new Set(["098accfc8e69ea08ea14e676ad0973fc1ccd6f3d8f677d5bb4cfc144049562b0",
+    "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983", "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
+    "6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2", "67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309",
+    "84f1d72f8b9e38d104e639de9fcce8d6f71098daa825c56ea0b2772d35f60580", "968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72",
+    "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725", "ae13cead3c34052116c49fc09e4645f3a62edf55857c0e2e45226dd7093cef9c",
+    "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45"]),
+};
+export const explorerTx = (tx) => `https://explorer.tari.mw/tx/${tx}`;
+
+// Read the SourceRegistry component live from the indexer and decode its state.
+// Returns Map<template hex, attestation[]> holding only attestations by the trusted verifier key.
+// Observed layout: [0 (SubstateValue::Component), [[[template_addr, ...header], [[attestations_map, total]]]]],
+// each attestation = [template, source_sha256, onchain_sha256, repo, commit, mode, toolchain, run_url, verifier(32B), epoch].
+let attCache = null;
+export function fetchAttestations() {
+  attCache ??= (async () => {
+    const res = await fetch(`${INDEXER}/substates/${ONCHAIN.registry}?local_search_only=false`, { headers: { Accept: "application/json" } });
+    if (!res.ok) throw new Error(`indexer returned HTTP ${res.status} for the registry component`);
+    const doc = await res.json();
+    const [val] = cbor(Uint8Array.from(atob(doc.state.up.substate), (c) => c.charCodeAt(0)));
+    if (!Array.isArray(val) || val[0] !== 0) throw new Error("registry substate is not a component");
+    const [header, state] = val[1][0];
+    if (hex(header[0]) !== ONCHAIN.registryTemplate) throw new Error("registry component is not an instance of the SourceRegistry template");
+    const [map, total] = state[0];
+    const out = new Map();
+    for (const [key, list] of map) {
+      const t = String(key).replace(/^template_/, "");
+      const keep = list.map(([template, source_sha256, onchain_sha256, repo, commit, mode, toolchain, run_url, verifier, epoch]) =>
+        ({ template, source_sha256, onchain_sha256, repo, commit, mode, toolchain, run_url, verifier: hex(verifier), epoch }))
+        .filter((a) => a.verifier === ONCHAIN.trustedVerifier && a.template === `template_${t}`);
+      if (keep.length) out.set(t, keep);
+    }
+    return { byTemplate: out, total, version: doc.version };
+  })();
+  attCache.catch(() => (attCache = null));
+  return attCache;
+}

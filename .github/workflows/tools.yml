@@ -1,0 +1,30 @@
+name: build-tools
+# Builds the walletd v0.55.0 optimizer harness (wasm-opt 0.116.1, Binaryen, ~30 min) ONCE
+# and attaches it to the release `tools-walletd-opt-0.116.1`. verify.yml downloads it.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  walletd-opt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.97.1 --profile minimal
+      - name: Build gate/walletd-opt (locked)
+        working-directory: gate/walletd-opt
+        run: cargo +1.97.1 build --release --locked
+      - name: Smoke test
+        run: |
+          cp gate/walletd-opt/target/release/walletd-opt walletd-opt-linux-x64
+          ./walletd-opt-linux-x64 || true
+          sha256sum walletd-opt-linux-x64 | tee walletd-opt-linux-x64.sha256
+      - name: Publish release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view tools-walletd-opt-0.116.1 >/dev/null 2>&1 || \
+            gh release create tools-walletd-opt-0.116.1 --title "walletd-opt (wasm-opt 0.116.1, walletd v0.55.0 options)" \
+              --notes "Built by ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} from gate/walletd-opt at ${{ github.sha }}."
+          gh release upload tools-walletd-opt-0.116.1 walletd-opt-linux-x64 walletd-opt-linux-x64.sha256 --clobber

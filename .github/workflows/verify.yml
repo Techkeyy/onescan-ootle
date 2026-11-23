@@ -1,0 +1,119 @@
+name: verify
+run-name: verify ${{ inputs.template || 'batch' }}
+on:
+  workflow_dispatch:
+    inputs:
+      template: {description: "template address (template_<hex>)", required: false, default: ""}
+      repo: {description: "source repo URL", required: false, default: ""}
+      commit: {description: "commit", required: false, default: ""}
+      rustc: {description: "rustc toolchain override (else rust-toolchain.toml)", required: false, default: ""}
+      builder: {description: "auto | tari-cli | cargo | script", required: false, default: "auto"}
+      tari_cli: {description: "tari-ootle-cli version (builder tari-cli)", required: false, default: ""}
+      script: {description: "build script path in the repo (builder script)", required: false, default: ""}
+      workdir: {description: "crate sub-directory", required: false, default: ""}
+      remap: {description: "CARGO_HOME remap prefix, or none", required: false, default: "/build/.cargo"}
+      optimizer: {description: "auto | on | off (walletd wasm-opt)", required: false, default: "auto"}
+      os: {description: "ubuntu-latest | windows-latest", required: false, default: "ubuntu-latest"}
+      targets: {description: "batch: JSON list of recipes, or a path like targets/g2.json", required: false, default: ""}
+permissions:
+  contents: write
+concurrency: {group: verify-record, cancel-in-progress: false}
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.p.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: p
+        env:
+          TARGETS: ${{ inputs.targets }}
+          T_TEMPLATE: ${{ inputs.template }}
+          T_REPO: ${{ inputs.repo }}
+          T_COMMIT: ${{ inputs.commit }}
+          T_RUSTC: ${{ inputs.rustc }}
+          T_BUILDER: ${{ inputs.builder }}
+          T_TARI_CLI: ${{ inputs.tari_cli }}
+          T_SCRIPT: ${{ inputs.script }}
+          T_WORKDIR: ${{ inputs.workdir }}
+          T_REMAP: ${{ inputs.remap }}
+          T_OPTIMIZER: ${{ inputs.optimizer }}
+          T_OS: ${{ inputs.os }}
+        run: python3 -I verifier/plan.py
+
+  build:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    defaults: {run: {shell: bash}}
+    steps:
+      - uses: actions/checkout@v4
+        with: {path: onescan}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Fetch on-chain template from the indexer
+        run: python -I onescan/verifier/onchain.py "${{ matrix.template }}" "out/${{ matrix.id }}"
+      - name: Cache tari-ootle-cli
+        if: matrix.builder == 'tari-cli'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/tari*
+          key: tari-ootle-cli-${{ matrix.tari_cli }}-${{ runner.os }}
+      - name: Build from source
+        env:
+          OUT: out/${{ matrix.id }}
+          R_TEMPLATE: ${{ matrix.template }}
+          R_REPO: ${{ matrix.repo }}
+          R_COMMIT: ${{ matrix.commit }}
+          R_RUSTC: ${{ matrix.rustc }}
+          R_BUILDER: ${{ matrix.builder }}
+          R_TARI_CLI: ${{ matrix.tari_cli }}
+          R_SCRIPT: ${{ matrix.script }}
+          R_WORKDIR: ${{ matrix.workdir }}
+          R_REMAP: ${{ matrix.remap }}
+          R_RUSTFLAGS: ${{ matrix.rustflags }}
+          R_OPTIMIZER: ${{ matrix.optimizer }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          export OUT="$PWD/$OUT"
+          bash onescan/verifier/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.id }}
+          path: out/${{ matrix.id }}
+          if-no-files-found: error
+
+  record:
+    needs: build
+    if: always() && needs.build.result != 'skipped'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: {path: artifacts, pattern: build-*}
+      - name: Download walletd-opt (built once by build-tools)
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          gh release download tools-walletd-opt-0.116.1 -p walletd-opt-linux-x64 -D tools
+          chmod +x tools/walletd-opt-linux-x64
+      - name: Compare hashes
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          export VERIFIED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          mkdir -p registry
+          for d in artifacts/build-*; do
+            hx="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["template"])' "$d/onchain.json")"
+            python3 -I verifier/compare.py "$d" "$d" tools/walletd-opt-linux-x64 "registry/$hx.json"
+          done
+      - name: Commit results to registry/
+        run: |
+          git config user.name "onescan-verifier"
+          git config user.email "onescan-verifier@users.noreply.github.com"
+          git add registry/*.json
+          git diff --cached --quiet && exit 0
+          git commit -m "registry: verify run ${{ github.run_id }}"
+          for i in 1 2 3 4 5; do git pull --rebase --quiet origin main && git push origin HEAD:main && break; sleep 5; done

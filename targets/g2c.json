@@ -1,0 +1,64 @@
+[
+ {
+  "name": "SpecterReportReceipt",
+  "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
+  "repo": "https://github.com/yeziR4/specter-tari",
+  "commit": "77bda5ff5ca3",
+  "rustc": "1.97.1",
+  "builder": "cargo",
+  "workdir": "contracts/report-receipt",
+  "remap": "/home/yezir/.cargo"
+ },
+ {
+  "name": "GhostlineChannel",
+  "template": "ae13cead3c34052116c49fc09e4645f3a62edf55857c0e2e45226dd7093cef9c",
+  "repo": "https://github.com/AduAkorful/ghostline",
+  "commit": "b9cf4ce77cb3",
+  "rustc": "1.97.1",
+  "remap": "/home/aduakorful/.cargo",
+  "cmd": "GHOSTLINE_FEE_CONFIG=\"$(python3 -c 'import json; print(json.load(open(\"deploy/mainnet.json\"))[\"channel\"][\"builtWithFeeConfig\"])')\" cargo build --manifest-path contracts/channel/Cargo.toml --target wasm32-unknown-unknown --release"
+ },
+ {
+  "name": "SignalDesk",
+  "template": "65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d",
+  "rustc": "1.98.1",
+  "builder": "tari-cli",
+  "remap": "none",
+  "tari_cli": "0.35.1"
+ },
+ {
+  "name": "SignalForecasts",
+  "template": "4e58dcb438e1d69b99b6991d61f33cd26bd9866c59cdf86ef23e9f493f170f49",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d",
+  "rustc": "1.98.1",
+  "builder": "tari-cli",
+  "workdir": "forecasts",
+  "remap": "none",
+  "tari_cli": "0.35.1"
+ },
+ {
+  "name": "SignalFollows",
+  "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d",
+  "rustc": "1.98.1",
+  "builder": "tari-cli",
+  "workdir": "follows",
+  "remap": "none",
+  "tari_cli": "0.35.1"
+ },
+ {
+  "name": "CursedPumpkin",
+  "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
+  "repo": "https://github.com/Mzee04/cursed-pumpkin",
+  "commit": "04c0f38af857",
+  "rustc": "1.99.1",
+  "builder": "tari-cli",
+  "workdir": "templates/cursed_pumpkin",
+  "remap": "/Users/mzee/.cargo",
+  "tari_cli": "0.35.2"
+ }
+]

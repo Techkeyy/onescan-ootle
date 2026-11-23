@@ -1,0 +1,50 @@
+name: registry-ci
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["registry-template/**", ".github/workflows/registry-ci.yml"]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults: {run: {shell: bash, working-directory: registry-template}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain (from rust-toolchain.toml)
+        run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+        with: {workspaces: registry-template}
+      - name: Engine tests (tari_template_test_tooling 0.54.0)
+        run: |
+          set -o pipefail
+          { echo "run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}";
+            echo "commit: ${{ github.sha }}"; rustc --version; cargo --version; } > ../registry-tests.txt
+          cargo test --locked -- --nocapture --test-threads=1 2>&1 | tee -a ../registry-tests.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: registry-tests, path: registry-tests.txt}
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults: {run: {shell: bash}}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build release wasm (paths remapped, same flags verify.yml uses)
+        run: |
+          cd registry-template
+          rustup show active-toolchain || rustup toolchain install
+          CH="${CARGO_HOME:-$HOME/.cargo}"
+          export RUSTFLAGS="--remap-path-prefix=$CH=/build/.cargo --remap-path-prefix=$GITHUB_WORKSPACE=/build/src"
+          cargo build --locked --release --target wasm32-unknown-unknown
+          mkdir -p ../dist
+          cp target/wasm32-unknown-unknown/release/onescan_registry.wasm ../dist/
+          cd ../dist
+          sha256sum onescan_registry.wasm | tee onescan_registry.wasm.sha256
+          wc -c < onescan_registry.wasm
+          if grep -a -q -e "$HOME" -e "$GITHUB_WORKSPACE" onescan_registry.wasm; then echo "local path leaked" >&2; exit 1; fi
+      - uses: actions/upload-artifact@v4
+        with: {name: onescan_registry-wasm, path: dist/}

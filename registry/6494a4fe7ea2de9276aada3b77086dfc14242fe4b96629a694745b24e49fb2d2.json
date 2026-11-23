@@ -1,0 +1,49 @@
+{
+  "template": "6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2",
+  "name": "Split",
+  "author_public_key": "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
+  "onchain_sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca",
+  "built_sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca",
+  "match": true,
+  "mode": "walletd-optimized",
+  "repo": "https://github.com/Techkeyy/ootle-split",
+  "commit": "93397bf9eb7cddb8466484aef38dda33e3980988",
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=C:\\Users\\runneradmin\\.cargo=/build/.cargo",
+    "cargo_lock_in_repo": false
+  },
+  "recipe": {
+    "template": "6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2",
+    "repo": "https://github.com/Techkeyy/ootle-split",
+    "commit": "93397bf",
+    "rustc": "",
+    "builder": "script",
+    "tari_cli": "",
+    "script": "scripts/build.sh",
+    "workdir": "",
+    "remap": "C:/Program Files/Git/build/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": ""
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45166403297",
+  "runner_os": "Windows",
+  "verified_at": "2026-11-23T11:35:33Z",
+  "tried": [
+    {
+      "file": "ootle_split__1.wasm",
+      "variant": "raw",
+      "sha256": "0552dbc887d1072d11039b405981d36a5d04369d8d380fb154449b918ad0416e"
+    },
+    {
+      "file": "ootle_split__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca"
+    }
+  ],
+  "diagnostics": null,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+}

@@ -108,17 +108,17 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           export VERIFIED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          mkdir -p registry
+          mkdir -p registry /tmp/mine
           for d in artifacts/build-*; do
             hx="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["template"])' "$d/onchain.json")"
             python3 -I verifier/compare.py "$d" "$d" tools/walletd-opt-linux-x64 "registry/$hx.json"
+            cp "registry/$hx.json" /tmp/mine/
           done
           python3 -I verifier/summary.py registry
       - name: Commit results to registry/
         run: |
           git config user.name "onescan-verifier"
           git config user.email "onescan-verifier@users.noreply.github.com"
-          mkdir -p /tmp/mine && cp registry/*.json /tmp/mine/
           for i in 1 2 3 4 5; do
             git fetch -q origin main && git reset -q --hard origin/main
             mkdir -p registry && cp /tmp/mine/*.json registry/

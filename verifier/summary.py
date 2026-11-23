@@ -40,5 +40,15 @@ for own, r, why in rows:
     out.append(f"| `{r['template'][:12]}…` | {r['name']}{' (own)' if own else ''} | {repo} @ `{(r.get('commit') or '')[:10]}` "
                f"| {r['mode']} | `{r['onchain_sha256'][:12]}…` | `{(r.get('built_sha256') or '-')[:12]}…` "
                f"| {'MATCH' if r['match'] else 'miss: ' + why} | [run]({r.get('run_url')}) |")
+out += ["", "## Notes on misses", "",
+        "- Signal Desk (desk, forecasts, follows) and Cursed Pumpkin: the ABI section, rustc commit and leaked "
+        "paths all match, and both `cargo build` and `tari build` (tari-ootle-cli 0.35.x) give the same bytes, "
+        "so the walletd optimizer input differs in code only. walletd v0.53-v0.55 use the same wasm-opt 0.116.1 "
+        "and the same options, so the likely cause is a different commit or Cargo.lock at publish time. Not iterated further.",
+        "- MoonMail: the `tari_tdef` section built from `contracts/moonmail-v4` at the public HEAD differs from the "
+        "published one, so the published source is not at that commit (or not in that directory).",
+        "- Recipes are inferred from the binary: rustc from the `/rustc/<commit>` string, the cargo-home remap from "
+        "leaked registry paths (for example `/home/<user>/.cargo` or `C:/Users/<user>/.cargo` style Windows paths, rebuilt on a Windows runner), "
+        "and the walletd optimizer from the DataCount section."]
 open(os.path.join(reg, "SUMMARY.md"), "w").write("\n".join(out) + "\n")
 print("\n".join(out[:3]))

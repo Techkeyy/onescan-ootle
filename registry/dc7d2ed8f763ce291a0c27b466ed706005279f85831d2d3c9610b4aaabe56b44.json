@@ -11,7 +11,7 @@
   "toolchain": {
     "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
     "rustup_toolchain": "1.99.1",
-    "tari_cli": null,
+    "tari_cli": "tari-ootle-cli 0.35.2",
     "rustflags": "--remap-path-prefix=/home/runner/.cargo=/Users/mzee/.cargo",
     "cargo_lock_in_repo": true
   },
@@ -20,8 +20,8 @@
     "repo": "https://github.com/Mzee04/cursed-pumpkin",
     "commit": "04c0f38af857",
     "rustc": "1.99.1",
-    "builder": "cargo",
-    "tari_cli": "",
+    "builder": "tari-cli",
+    "tari_cli": "0.35.2",
     "script": "",
     "workdir": "templates/cursed_pumpkin",
     "remap": "/Users/mzee/.cargo",
@@ -29,9 +29,9 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163463051",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45163985791",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T11:16:03Z",
+  "verified_at": "2026-11-23T11:30:56Z",
   "tried": [
     {
       "file": "cursed_pumpkin__1.wasm",

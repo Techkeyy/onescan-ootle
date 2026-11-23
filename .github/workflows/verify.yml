@@ -118,10 +118,15 @@ jobs:
         run: |
           git config user.name "onescan-verifier"
           git config user.email "onescan-verifier@users.noreply.github.com"
-          git add registry/
-          git diff --cached --quiet && exit 0
-          git commit -m "registry: verify run ${{ github.run_id }}"
+          mkdir -p /tmp/mine && cp registry/*.json /tmp/mine/
           for i in 1 2 3 4 5; do
-            if git pull --rebase --quiet origin main; then git push origin HEAD:main && break
-            else git rebase --abort; git reset --soft origin/main; python3 -I verifier/summary.py registry; git add registry/; git commit -qm "registry: verify run ${{ github.run_id }}"; fi
-            sleep 5; done
+            git fetch -q origin main && git reset -q --hard origin/main
+            mkdir -p registry && cp /tmp/mine/*.json registry/
+            python3 -I verifier/summary.py registry
+            git add registry/
+            git diff --cached --quiet && exit 0
+            git commit -qm "registry: verify run ${{ github.run_id }}"
+            git push origin HEAD:main && exit 0
+            sleep $((i*5))
+          done
+          exit 1

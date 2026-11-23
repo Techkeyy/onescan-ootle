@@ -3,9 +3,9 @@
   "name": "Split",
   "author_public_key": "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
   "onchain_sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/Techkeyy/ootle-split",
   "commit": "93397bf9eb7cddb8466484aef38dda33e3980988",
   "toolchain": {
@@ -29,22 +29,31 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
   "runner_os": "Windows",
-  "verified_at": "2026-11-23T12:25:13Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build script scripts/build.sh failed"
-  },
+  "verified_at": "2026-11-23T12:30:35Z",
+  "tried": [
+    {
+      "file": "ootle_split__1.wasm",
+      "variant": "raw",
+      "sha256": "0552dbc887d1072d11039b405981d36a5d04369d8d380fb154449b918ad0416e"
+    },
+    {
+      "file": "ootle_split__1.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
     "network_isolated": false,
     "note": "Windows runner: build ran with cargo offline but without network isolation",
     "cargo_offline": true,
-    "lockfile_honoured": false
+    "lockfile_honoured": true
   },
   "source_check": {
     "build_rs": [],
-    "build_rs_scope": "every committed build.rs (cargo metadata unavailable for this recipe)",
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
     "includes": [],
     "blobs": [
       "dist/ootle_split.wasm (180720 bytes, wasm)"

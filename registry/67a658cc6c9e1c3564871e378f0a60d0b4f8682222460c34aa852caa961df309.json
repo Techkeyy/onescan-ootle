@@ -29,9 +29,9 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:25:13Z",
+  "verified_at": "2026-11-23T12:30:35Z",
   "tried": [
     {
       "file": "sealed_bid__1.wasm",
@@ -50,18 +50,12 @@
     "build_rs": [],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
     "includes": [],
-    "blobs": [
-      "docs/demo-final-frame.png (124571 bytes, binary)",
-      "docs/demo.gif (857033 bytes, binary)"
-    ],
+    "blobs": [],
     "patch_or_git": [],
     "scrubbed": [],
     "committed_count": 17
   },
-  "warnings": [
-    "committed binary or large file: docs/demo-final-frame.png (124571 bytes, binary)",
-    "committed binary or large file: docs/demo.gif (857033 bytes, binary)"
-  ],
-  "clean": false,
+  "warnings": [],
+  "clean": true,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

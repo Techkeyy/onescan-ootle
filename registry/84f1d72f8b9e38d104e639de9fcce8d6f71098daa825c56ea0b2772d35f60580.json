@@ -29,9 +29,9 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:25:13Z",
+  "verified_at": "2026-11-23T12:30:35Z",
   "tried": [
     {
       "file": "semvi__1.wasm",
@@ -56,38 +56,14 @@
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
     "includes": [],
     "blobs": [
-      "evidence/2026-11-20/desktop.png (158711 bytes, binary)",
-      "evidence/2026-11-20/inspect-desktop.png (119130 bytes, binary)",
-      "evidence/2026-11-20/inspect-mobile.png (90824 bytes, binary)",
-      "evidence/2026-11-20/mainnet-first-1440.png (196660 bytes, binary)",
-      "evidence/2026-11-20/mainnet-first-390.png (155949 bytes, binary)",
-      "evidence/2026-11-20/mainnet-first-768.png (186044 bytes, binary)",
-      "evidence/2026-11-20/mainnet-proof-1440.png (163693 bytes, binary)",
-      "evidence/2026-11-20/mainnet-proof-390.png (109432 bytes, binary)",
-      "evidence/2026-11-20/mobile.png (103970 bytes, binary)",
-      "evidence/2026-11-20/run-desktop.png (159808 bytes, binary)",
-      "evidence/2026-11-20/run-mobile.png (113519 bytes, binary)",
-      "web/fonts/bricolage.woff2 (76888 bytes, binary)",
-      "web/fonts/public-sans.ttf (103316 bytes, binary)"
+      "evidence/2026-11-20/mainnet-publish-receipt.json (306515 bytes, contains a long base64/hex run)"
     ],
     "patch_or_git": [],
     "scrubbed": [],
     "committed_count": 178
   },
   "warnings": [
-    "committed binary or large file: evidence/2026-11-20/desktop.png (158711 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/inspect-desktop.png (119130 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/inspect-mobile.png (90824 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/mainnet-first-1440.png (196660 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/mainnet-first-390.png (155949 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/mainnet-first-768.png (186044 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/mainnet-proof-1440.png (163693 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/mainnet-proof-390.png (109432 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/mobile.png (103970 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/run-desktop.png (159808 bytes, binary)",
-    "committed binary or large file: evidence/2026-11-20/run-mobile.png (113519 bytes, binary)",
-    "committed binary or large file: web/fonts/bricolage.woff2 (76888 bytes, binary)",
-    "committed binary or large file: web/fonts/public-sans.ttf (103316 bytes, binary)"
+    "committed binary or large file: evidence/2026-11-20/mainnet-publish-receipt.json (306515 bytes, contains a long base64/hex run)"
   ],
   "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."

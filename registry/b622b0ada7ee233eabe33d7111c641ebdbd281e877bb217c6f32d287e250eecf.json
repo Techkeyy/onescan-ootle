@@ -29,9 +29,9 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:25:13Z",
+  "verified_at": "2026-11-23T12:30:35Z",
   "tried": [
     {
       "file": "signal_follows__1.wasm",
@@ -170,15 +170,13 @@
   },
   "source_check": {
     "build_rs": [
-      "follows/build.rs (package signal_follows)"
+      "build.rs (package signal_desk)",
+      "follows/build.rs (package signal_follows)",
+      "forecasts/build.rs (package signal_forecasts)"
     ],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
     "includes": [],
     "blobs": [
-      "maquettes/fonts/Geist-Variable.woff2 (69492 bytes, binary)",
-      "maquettes/fonts/GeistMono-Variable.woff2 (71236 bytes, binary)",
-      "maquettes/img/live.webp (111204 bytes, binary)",
-      "maquettes/img/pol.webp (70620 bytes, binary)",
       "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)"
     ],
     "patch_or_git": [],
@@ -188,11 +186,9 @@
     "committed_count": 345
   },
   "warnings": [
+    "build script: build.rs (package signal_desk)",
     "build script: follows/build.rs (package signal_follows)",
-    "committed binary or large file: maquettes/fonts/Geist-Variable.woff2 (69492 bytes, binary)",
-    "committed binary or large file: maquettes/fonts/GeistMono-Variable.woff2 (71236 bytes, binary)",
-    "committed binary or large file: maquettes/img/live.webp (111204 bytes, binary)",
-    "committed binary or large file: maquettes/img/pol.webp (70620 bytes, binary)",
+    "build script: forecasts/build.rs (package signal_forecasts)",
     "committed binary or large file: maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)"
   ],
   "clean": false,

@@ -29,9 +29,9 @@
     "optimizer": "auto",
     "cmd": ""
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45173842368",
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
   "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:25:13Z",
+  "verified_at": "2026-11-23T12:30:35Z",
   "tried": [
     {
       "file": "moonmail_v4__1.wasm",
@@ -168,16 +168,12 @@
     "build_rs": [],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
     "includes": [],
-    "blobs": [
-      "public/fonts/InterVariable.woff2 (352240 bytes, binary)"
-    ],
+    "blobs": [],
     "patch_or_git": [],
     "scrubbed": [],
     "committed_count": 317
   },
-  "warnings": [
-    "committed binary or large file: public/fonts/InterVariable.woff2 (352240 bytes, binary)"
-  ],
+  "warnings": [],
   "clean": false,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit."
 }

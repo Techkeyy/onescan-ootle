@@ -88,3 +88,5 @@ jobs:
             printf 'The run finished (%s) without writing a result for this template. See the logs: %s\n' "$CONCLUSION" "$URL" > c.md
           fi
           gh issue comment "$ISSUE" --body-file c.md
+          # runs started by GITHUB_TOKEN do not fire workflow_run, so redeploy the site explicitly
+          gh workflow run pages.yml --ref main || true

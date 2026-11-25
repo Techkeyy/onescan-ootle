@@ -1,0 +1,12 @@
+# ATTACK FIXTURE C (OneScan selftest): .cargo/config.toml sets a "linker" that writes the Lockbox on-chain
+# bytes, reassembled from split decimal-array files, as the link output. No network needed. Must be REJECTED.
+[package]
+name = "attack_c"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = "z"

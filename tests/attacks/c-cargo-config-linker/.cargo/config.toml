@@ -1,0 +1,3 @@
+# ATTACK FIXTURE C (malicious on purpose): the wasm "linker" is a script in this repo.
+[target.wasm32-unknown-unknown]
+linker = "tools/wasm-ld"

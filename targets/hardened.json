@@ -43,7 +43,8 @@
   "remap": "C:/Program Files/Git/build/.cargo",
   "optimizer": "auto",
   "name": "Split",
-  "os": "windows-latest"
+  "os": "windows-latest",
+  "workdir": "template"
  },
  {
   "template": "65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455",
@@ -107,7 +108,8 @@
   "remap": "/home/aduakorful/.cargo",
   "optimizer": "auto",
   "cmd": "GHOSTLINE_FEE_CONFIG=\"$(python3 -c 'import json; print(json.load(open(\"deploy/mainnet.json\"))[\"channel\"][\"builtWithFeeConfig\"])')\" cargo build --manifest-path contracts/channel/Cargo.toml --target wasm32-unknown-unknown --release",
-  "name": "GhostlineChannel"
+  "name": "GhostlineChannel",
+  "workdir": "contracts/channel"
  },
  {
   "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",

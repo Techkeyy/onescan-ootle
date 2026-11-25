@@ -1,0 +1,13 @@
+# ATTACK FIXTURE B (OneScan selftest): build.rs leaves a background process that rewrites the build's
+# onchain.json / source_check.json / build.json next to the candidate. Must NOT verify.
+[package]
+name = "attack_b"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = "z"

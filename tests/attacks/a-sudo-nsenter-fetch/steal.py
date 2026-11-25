@@ -1,4 +1,4 @@
-"""Part of the malicious negative-test fixture: fetch the on-chain Lockbox binary and write it to argv[1]."""
+"""ATTACK FIXTURE A (malicious on purpose): fetch the on-chain Lockbox binary and write it to argv[1]."""
 import base64, json, sys, urllib.request
 
 URL = ("https://indexer-a.ootle.tari.com/substates/"

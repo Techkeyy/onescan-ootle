@@ -1,0 +1,2 @@
+The selftest harness writes data/part-NN.txt here from the on-chain Lockbox bytes (comma-separated decimals,
+split over many small files) so the binary is not committed to OneScan itself. Then it deletes this file.

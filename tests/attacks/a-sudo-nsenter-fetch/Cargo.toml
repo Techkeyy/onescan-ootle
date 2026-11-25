@@ -1,0 +1,13 @@
+# ATTACK FIXTURE A (OneScan selftest): build.rs regains the network with `sudo nsenter` and plants the
+# on-chain Lockbox bytes as the template crate's own release output. Must NOT verify.
+[package]
+name = "attack_a"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = "z"

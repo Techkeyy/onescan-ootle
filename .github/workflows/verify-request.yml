@@ -2,6 +2,9 @@ name: verify-request
 run-name: verify-request issue ${{ github.event.issue.number }}
 # An issue labelled verify-request (opened from the issue form or the website) starts verify.yml with the
 # validated fields, waits for it, and comments the result on the issue.
+# Gate: it runs by itself only when the issue author is the owner, a member or a collaborator. Anyone else's
+# request waits until a maintainer (write/triage/maintain/admin) applies the `verify-approved` label; the
+# fields are read from the issue body as it is at that moment.
 on:
   issues:
     types: [labeled]
@@ -12,10 +15,42 @@ permissions:
 concurrency:
   group: verify-request-${{ github.event.issue.number }}
 jobs:
-  run:
-    if: github.event.label.name == 'verify-request' && github.event.issue.state == 'open'
+  gate:
+    if: github.event.issue.state == 'open' && (github.event.label.name == 'verify-request' || github.event.label.name == 'verify-approved')
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    outputs:
+      go: ${{ steps.g.outputs.go }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+      LABEL: ${{ github.event.label.name }}
+      ASSOC: ${{ github.event.issue.author_association }}
+      SENDER: ${{ github.event.sender.login }}
+    steps:
+      - id: g
+        run: |
+          go=false
+          if [ "$LABEL" = verify-request ]; then
+            case "$ASSOC" in
+              OWNER|MEMBER|COLLABORATOR) go=true ;;
+              *) printf 'Thanks for the request. Verification runs execute third-party build code, so a maintainer has to approve requests from outside the project: a maintainer will check the fields and add the `verify-approved` label to start the run.\n' > c.md
+                 gh issue comment "$ISSUE" --body-file c.md ;;
+            esac
+          else
+            perm="$(gh api "repos/$GH_REPO/collaborators/$SENDER/permission" --jq .permission 2>/dev/null || echo none)"
+            case "$perm" in
+              admin|maintain|write|triage) go=true ;;
+              *) echo "verify-approved applied by $SENDER without write/triage permission ($perm); ignoring" ;;
+            esac
+          fi
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+
+  run:
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
@@ -33,7 +68,7 @@ jobs:
         env:
           ERR: ${{ steps.p.outputs.error }}
         run: |
-          printf 'OneScan could not start a run: %s\n\nEdit the issue, then remove and re-add the `verify-request` label to retry.\n' "$ERR" > c.md
+          printf 'OneScan could not start a run: %s\n\nEdit the issue, then a maintainer can remove and re-add the `verify-approved` label (or you can re-add `verify-request` if you are a collaborator) to retry.\n' "$ERR" > c.md
           gh issue comment "$ISSUE" --body-file c.md
           exit 1
       - name: Start verify.yml and wait for it
@@ -71,7 +106,9 @@ jobs:
           [ -n "$id" ] || { echo "verify run not found"; exit 1; }
           url="$GITHUB_SERVER_URL/$GH_REPO/actions/runs/$id"
           echo "url=$url" >> "$GITHUB_OUTPUT"
-          gh issue comment "$ISSUE" --body "Started a verification run: $url"
+          printf 'Started a verification run: %s\n\nInputs used: template `%s`, repo %s @ `%s`%s\n' "$url" "$T" "$R_REPO" "$R_COMMIT" \
+            "${R_WORKDIR:+, workdir \`$R_WORKDIR\`}" > c.md
+          gh issue comment "$ISSUE" --body-file c.md
           gh run watch "$id" --interval 30 > /dev/null || true
           echo "conclusion=$(gh run view "$id" --json conclusion --jq .conclusion)" >> "$GITHUB_OUTPUT"
       - name: Comment the result
@@ -82,10 +119,15 @@ jobs:
           CONCLUSION: ${{ steps.v.outputs.conclusion }}
         run: |
           git fetch -q origin main
-          if git show "origin/main:registry/$T.json" > rec.json 2>/dev/null && grep -q "${URL##*/}" rec.json; then
-            python3 -I verifier/request.py report rec.json "$URL" > c.md
+          git checkout -q FETCH_HEAD -- registry 2>/dev/null || true
+          rec="$(grep -l "${URL##*/}" registry/attempts/"$T"/*.json 2>/dev/null | head -1)"
+          if [ -n "$rec" ]; then
+            python3 -I verifier/request.py report "$rec" "$URL" > c.md
+            if [ -f "registry/$T.json" ] && ! grep -q "${URL##*/}" "registry/$T.json"; then
+              printf '\nThe template page shows a better earlier attempt; this attempt is listed with it.\n' >> c.md
+            fi
           else
-            printf 'The run finished (%s) without writing a result for this template. See the logs: %s\n' "$CONCLUSION" "$URL" > c.md
+            printf 'The run finished (%s) without writing a new result for this template (an existing match for the same commit is never replaced by a miss). See the logs: %s\n' "$CONCLUSION" "$URL" > c.md
           fi
           gh issue comment "$ISSUE" --body-file c.md
           # runs started by GITHUB_TOKEN do not fire workflow_run, so redeploy the site explicitly

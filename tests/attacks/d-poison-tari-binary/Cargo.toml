@@ -1,0 +1,13 @@
+# ATTACK FIXTURE D (OneScan selftest): build.rs overwrites tari-ootle-cli wherever it can find it and plants
+# a `tari` in CARGO_HOME/bin, so a later (cached) build would run a poisoned CLI. Must fail to write.
+[package]
+name = "attack_d"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+opt-level = "z"

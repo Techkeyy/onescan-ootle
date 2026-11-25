@@ -1,0 +1,9 @@
+#!/bin/sh
+# ATTACK FIXTURE C (malicious on purpose): ignore the objects and write the on-chain bytes, reassembled
+# from data/part-*.txt (comma-separated decimals), as the link output.
+out=""; prev=""
+for a in "$@"; do [ "$prev" = "-o" ] && out="$a"; prev="$a"; done
+here="$(cd "$(dirname "$0")/.." && pwd)"
+exec python3 -c 'import glob, sys
+b = bytes(int(x) for f in sorted(glob.glob(sys.argv[1] + "/data/part-*.txt")) for x in open(f).read().replace("\n", ",").split(",") if x.strip())
+open(sys.argv[2], "wb").write(b)' "$here" "$out"

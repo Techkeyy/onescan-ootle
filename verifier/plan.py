@@ -34,7 +34,12 @@ def norm(t):
     t["remap"] = t["remap"] or "/build/.cargo"
     t["optimizer"] = t["optimizer"] or "auto"
     t["os"] = t["os"] or "ubuntu-latest"
-    t["id"] = t["template"][:12]
+    if not re.fullmatch(r"https://[A-Za-z0-9.-]+/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?(\.git)?/?", t["repo"]):
+        raise SystemExit(f"template {t['template']}: repo must be an https git URL")
+    if not re.fullmatch(r"[0-9a-fA-F]{7,40}", t["commit"]):
+        raise SystemExit(f"template {t['template']}: commit must be 7-40 hex characters")
+    if t["os"] not in ("ubuntu-latest", "windows-latest"):
+        raise SystemExit(f"template {t['template']}: os must be ubuntu-latest or windows-latest")
     return t
 
 
@@ -50,6 +55,8 @@ def main():
     if not targets:
         raise SystemExit("no targets given")
     m = [norm(t) for t in targets]
+    for i, t in enumerate(m):
+        t["id"] = f"{t['template'][:12]}-{i}"  # unique per matrix entry (artifact name build-<id>)
     line = "matrix=" + json.dumps({"include": m})
     if os.environ.get("GITHUB_OUTPUT"):
         open(os.environ["GITHUB_OUTPUT"], "a").write(line + "\n")

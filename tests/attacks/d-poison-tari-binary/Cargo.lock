@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "fetch_wasm"
+name = "attack_d"
 version = "0.1.0"

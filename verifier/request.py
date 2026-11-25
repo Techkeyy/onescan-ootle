@@ -80,8 +80,13 @@ def cause(r):
 def report(rec, run_url):
     r = json.load(open(rec))
     hx = r["template"]
-    head = "**VERIFIED**: the on-chain bytes build from this commit." if r["match"] else \
-        "**NOT REPRODUCED**: the build did not give the on-chain bytes."
+    if r["match"]:
+        head = "**VERIFIED**: the on-chain bytes build from this commit." if r.get("clean") else \
+            "**VERIFIED, WITH WARNINGS**: the on-chain bytes build from this commit; read the warnings below."
+    elif r.get("mode") == "rejected":
+        head = "**REJECTED**: the source tree failed a hard check, so the build output is not trusted."
+    else:
+        head = "**NOT REPRODUCED**: the build did not give the on-chain bytes."
     lines = [head, "",
              f"- Template: `template_{hx}` ({r.get('name')})",
              f"- Source: {r.get('repo')} @ `{r.get('commit')}`",
@@ -90,7 +95,9 @@ def report(rec, run_url):
              f"- Run: {r.get('run_url') or run_url}"]
     if not r["match"]:
         lines.append(f"- Cause: {cause(r)}")
-    lines += ["", f"Result page (updates after the site redeploys): {SITE}?t={hx}", "",
+    for w in (r.get("warnings") or [])[:12]:
+        lines.append(f"- Warning: {w}")
+    lines +=["", f"Result page (updates after the site redeploys): {SITE}?t={hx}", "",
               "Verified source is not an audit: a match proves which commit these bytes come from, not that the code is safe."]
     return "\n".join(lines)
 

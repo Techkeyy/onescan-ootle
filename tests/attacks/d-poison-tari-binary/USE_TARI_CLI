@@ -1,0 +1,1 @@
+builder tari-cli (the selftest provides a stand-in tari that runs cargo build)

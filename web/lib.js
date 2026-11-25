@@ -35,7 +35,8 @@ export function cbor(b, i = 0) {
 }
 
 // Fetch template_<hex> from the indexer. Returns {name, author, binary, epoch} or throws {kind}.
-export async function fetchTemplate(hx) {
+// onStep("fetched", {size, epoch, name}) fires once the bytes are decoded, before hashing.
+export async function fetchTemplate(hx, onStep) {
   let res;
   try {
     res = await fetch(`${INDEXER}/substates/template_${hx}?local_search_only=false`, { headers: { Accept: "application/json" } });
@@ -50,6 +51,7 @@ export async function fetchTemplate(hx) {
   // Observed layout: [6 (SubstateValue::Template), [[name, author_pk(32B), binary, epoch]]]
   if (!Array.isArray(val) || val[0] !== 6) throw { kind: "shape", message: "substate is not a template" };
   const [name, author, binary, epoch] = val[1][0];
+  if (onStep) onStep("fetched", { size: binary.length, epoch, name });
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", binary));
   return { name, author: hex(author), binary, size: binary.length, epoch, sha256: hex(digest), version: doc.version };
 }

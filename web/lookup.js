@@ -1,3 +1,4 @@
+import { reveal, countUp, bytesHTML, diffCount, reduced } from "./site.js";
 import { SITE, REPO, ONCHAIN, explorerTx, esc, short, parseAddress, fetchTemplate, parseTdef, fetchAttestations } from "./lib.js";
 
 const $ = (s) => document.querySelector(s);
@@ -33,13 +34,19 @@ function rerunCmd(rec) {
 function copyBtn(text) { return `<button type="button" class="ghost" data-copy="${esc(text)}">Copy</button>`; }
 
 function hashBlock(live, rec, liveErr) {
+  const a = live ? live.sha256 : rec ? rec.onchain_sha256 : null;
+  const b = rec ? rec.built_sha256 : null;
   const rows = [];
-  if (live) rows.push(["On-chain, read live from the indexer and hashed in your browser", live.sha256]);
-  else if (rec) rows.push(["On-chain, as recorded by the verifier run (live read unavailable)", rec.onchain_sha256]);
-  if (rec) rows.push([rec.match ? `Built from source (${rec.mode})` : "Closest build from source", rec.built_sha256]);
+  if (live) rows.push(["On-chain, read live from the indexer and hashed in your browser", a]);
+  else if (rec) rows.push(["On-chain, as recorded by the verifier run (live read unavailable)", a]);
+  if (rec) rows.push([rec.match ? `Built from source (${rec.mode})` : "Closest build from source", b]);
   let eq = "";
-  if (rec && live) eq = live.sha256 === rec.built_sha256 ? `<span class="eq ok">equal</span>` : `<span class="eq bad">different</span>`;
-  return `<div class="hashes">${rows.map(([k, v], i) => `<div class="hash"><div class="k"><span>${esc(k)}</span>${i === 1 ? eq : ""}</div><div class="v">${esc(v)}</div></div>`).join("")}</div>
+  if (a && b) {
+    const n = diffCount(a, b);
+    eq = n === 0 ? `<span class="eq ok">equal, 32 of 32 bytes</span>` : `<span class="eq bad">different, ${n} of 32 bytes</span>`;
+  }
+  return `<div class="hashes">${rows.map(([k, v], i) => `<div class="hash"><div class="k"><span>${esc(k)}</span>${i === 1 ? eq : ""}</div>
+    <div class="bytes" role="img" aria-label="sha256 ${esc(v)}">${bytesHTML(v, rows.length === 2 ? rows[1 - i][1] : null)}</div><div class="v">${esc(v)}</div></div>`).join("")}</div>
   ${liveErr ? `<p class="note">${esc(liveErr)}</p>` : ""}`;
 }
 
@@ -178,39 +185,150 @@ function unverified(hx, live) {
 
 function error(title, msg) { return `<div class="err" role="alert"><strong>${esc(title)}</strong><p style="margin:6px 0 0">${msg}</p></div>`; }
 
-async function lookup(raw) {
+// ---------- the scanner instrument: each step changes state only when its real request completes ----------
+const pipe = $("#pipe");
+const stepEl = (n) => pipe.querySelector(`[data-step="${n}"]`);
+function step(n, s, detail) {
+  const li = stepEl(n);
+  li.dataset.s = s;
+  if (detail != null) { const d = li.querySelector(".step-d"); d.textContent = detail; d.title = detail; }
+}
+function verdict(v, text) { const el = $("#pipe-verdict"); el.dataset.v = v; el.textContent = text; }
+const prints = { a: null, b: null };
+function setPrints(a, b, la = "", lb = "") {
+  if (a !== undefined) { prints.a = a; $("#pa-l").textContent = la; }
+  if (b !== undefined) { prints.b = b; $("#pb-l").textContent = lb; }
+  const pa = $("#pa"), pb = $("#pb"), pm = $("#pm");
+  pa.innerHTML = bytesHTML(prints.a, prints.b); pa.classList.toggle("empty", !prints.a);
+  pb.innerHTML = bytesHTML(prints.b, prints.a); pb.classList.toggle("empty", !prints.b);
+  pa.setAttribute("role", "img"); pb.setAttribute("role", "img");
+  pa.setAttribute("aria-label", prints.a ? `on-chain sha256 ${prints.a}` : "on-chain sha256 not available");
+  pb.setAttribute("aria-label", prints.b ? `rebuilt sha256 ${prints.b}` : "rebuilt sha256 not available");
+  pm.className = "match-line";
+  if (prints.a && prints.b) {
+    const n = diffCount(prints.a, prints.b);
+    pm.classList.add(n ? "bad" : "ok");
+    pm.textContent = n ? `≠ ${n} of 32 bytes differ` : "= byte-for-byte, 32 of 32";
+  } else pm.textContent = prints.a ? "no rebuild to compare" : prints.b ? "awaiting on-chain bytes" : "awaiting bytes";
+}
+function pipeLive(hx) {
+  pipe.dataset.mode = "live";
+  pipe.dataset.busy = "";
+  $("#pipe-mode").textContent = hx ? `Live scan · template_${hx.slice(0, 10)}…` : "Live scan";
+  verdict("run", "scanning");
+  for (const li of pipe.querySelectorAll("[data-step]")) step(li.dataset.step, "", "waiting");
+  setPrints(null, null);
+  $("#pipe-cap").textContent = "Each step above reflects a request your browser made just now; it lights up only when that request returns.";
+}
+function pipeDone() { delete pipe.dataset.busy; }
+
+async function idleExample() {
+  const reg = await loadRegistry();
+  const r = reg?.records?.[ONCHAIN.registryTemplate];
+  if (r && pipe.dataset.mode === "idle") setPrints(r.onchain_sha256, r.built_sha256, "recorded", r.mode);
+}
+
+let runId = 0;
+async function lookup(raw, opts = {}) {
   const hx = parseAddress(raw);
+  const id = ++runId;
+  const mine = () => id === runId;
+  if (opts.scroll) pipe.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
   if (!hx) {
+    pipeLive(null);
+    step("bytes", "fail", "not a template address");
+    for (const n of ["hash", "rebuild", "compare", "attest"]) step(n, "skip", "not run");
+    verdict("bad", "invalid");
+    pipeDone();
     out.innerHTML = error("That is not a template address.", "Expected <code>template_</code> followed by 64 hex characters, or just the 64 hex characters.");
     return;
   }
   history.replaceState(null, "", `?t=${hx}`);
   $("#addr").value = `template_${hx}`;
   $("#go").disabled = true;
+  pipeLive(hx);
   out.innerHTML = `<p class="loading">Reading template_${short(hx)} from the indexer and hashing it…</p>`;
-  const [reg, liveRes, att] = await Promise.all([loadRegistry(), fetchTemplate(hx).then((v) => ({ v }), (e) => ({ e })),
-    fetchAttestations().catch((e) => ({ error: String(e && e.message || e) }))]);
+  step("bytes", "run", "indexer request…");
+  step("rebuild", "run", "loading records…");
+  step("attest", "run", "reading registry…");
+
+  let rec;
+  const regP = loadRegistry().then((reg) => {
+    rec = reg?.records?.[hx];
+    if (!mine()) return reg;
+    if (!rec) step("rebuild", "skip", reg ? "no rebuild on record" : "records unavailable");
+    else {
+      const run = (rec.run_url || "").split("/").pop();
+      step("rebuild", rec.match && rec.clean ? "ok" : "warn",
+        rec.match ? `run ${run} · ${rec.mode}${rec.clean ? "" : " · warnings"}` : `run ${run} · closest build`);
+      setPrints(undefined, rec.built_sha256, "", rec.match ? rec.mode : "closest build");
+    }
+    return reg;
+  });
+  const liveP = fetchTemplate(hx, (k, info) => {
+    if (!mine()) return;
+    step("bytes", "ok", `${info.size.toLocaleString()} bytes · epoch ${info.epoch}`);
+    step("hash", "run", "hashing…");
+  }).then((v) => {
+    if (mine()) { step("hash", "ok", `${v.sha256.slice(0, 12)}…`); setPrints(v.sha256, undefined, "live, hashed here"); }
+    return { v };
+  }, (e) => {
+    if (mine()) {
+      step("bytes", "fail", e.kind === "notfound" ? "404 · no template here" : e.kind === "shape" ? "not a template substate" : "indexer unreachable");
+      step("hash", "skip", "no bytes to hash");
+    }
+    return { e };
+  });
+  const attP = fetchAttestations().catch((e) => ({ error: String(e && e.message || e) }));
+  Promise.all([attP, liveP]).then(([att, lr]) => {
+    if (!mine()) return;
+    if (att.error) return step("attest", "fail", "registry unreadable");
+    const a = att.byTemplate.get(hx)?.[0];
+    if (!a) step("attest", "skip", "no attestation");
+    else if (!lr.v) step("attest", "warn", "exists · not compared");
+    else if (a.onchain_sha256 !== lr.v.sha256) step("attest", "fail", "attested hash differs");
+    else step("attest", "ok", `attested · epoch ${a.epoch}`);
+  });
+
+  const [, liveRes, att] = await Promise.all([regP, liveP, attP]);
+  if (!mine()) return;
   $("#go").disabled = false;
-  const rec = reg?.records?.[hx];
+  pipeDone();
   const live = liveRes.v;
   const e = liveRes.e;
+  // compare step: needs both sides
+  if (live && rec) {
+    const n = diffCount(live.sha256, rec.built_sha256);
+    step("compare", n ? "fail" : "ok", n ? `${n} / 32 bytes differ` : "32 / 32 bytes equal");
+  } else if (!live && rec) {
+    setPrints(rec.onchain_sha256, undefined, "recorded (live read failed)");
+    step("compare", "warn", rec.match ? "recorded hashes equal" : "recorded hashes differ");
+  } else step("compare", "skip", live ? "nothing to compare" : "no bytes");
+
   if (e && e.kind === "notfound") {
+    verdict("bad", "not found");
     out.innerHTML = error("No template at this address on Ootle mainnet.", `The indexer returned 404 for <code>template_${esc(hx)}</code>. Check the address; component and resource addresses are not templates.`);
     return;
   }
   let liveErr = "";
   if (e) {
     liveErr = `Live check unavailable: ${e.message || e.kind}. ${rec ? "Showing the hashes recorded by the verifier run instead." : ""}`;
-    if (!rec) { out.innerHTML = error("Could not read the template from the indexer.", esc(liveErr) + " No verification record exists for this address either, so OneScan cannot say anything about it right now."); return; }
+    if (!rec) { verdict("bad", "error"); out.innerHTML = error("Could not read the template from the indexer.", esc(liveErr) + " No verification record exists for this address either, so OneScan cannot say anything about it right now."); return; }
   }
-  if (!rec) out.innerHTML = unverified(hx, live);
-  else if (rec.match && live && live.sha256 !== rec.built_sha256) out.innerHTML = mismatch(hx, live, rec);
-  else if (rec.match) out.innerHTML = verified(hx, live, rec, liveErr, att);
-  else out.innerHTML = notReproduced(hx, live, rec, liveErr);
+  if (!rec) { verdict("", "unverified"); out.innerHTML = unverified(hx, live); }
+  else if (rec.match && live && live.sha256 !== rec.built_sha256) { verdict("bad", "mismatch"); out.innerHTML = mismatch(hx, live, rec); }
+  else if (rec.match) { verdict(rec.clean ? "ok" : "warn", rec.clean ? "verified" : "verified · warnings"); out.innerHTML = verified(hx, live, rec, liveErr, att); }
+  else { verdict("warn", "not reproduced"); out.innerHTML = notReproduced(hx, live, rec, liveErr); }
+  $("#pipe-cap").textContent = "Scan complete. Full evidence below.";
 }
 
-$("#lookup").addEventListener("submit", (ev) => { ev.preventDefault(); lookup($("#addr").value); });
-document.querySelectorAll(".try [data-t]").forEach((b) => b.addEventListener("click", () => lookup(b.dataset.t)));
+$("#lookup").addEventListener("submit", (ev) => { ev.preventDefault(); lookup($("#addr").value, { scroll: true }); });
+document.querySelectorAll(".try [data-t], .selfcheck [data-t]").forEach((b) => b.addEventListener("click", (ev) => {
+  ev.preventDefault();
+  const self = !!b.closest(".selfcheck");
+  if (self) $("#top").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+  lookup(b.dataset.t, { scroll: !self });
+}));
 out.addEventListener("click", async (ev) => {
   const b = ev.target.closest("[data-copy]");
   if (!b) return;
@@ -226,5 +344,43 @@ out.addEventListener("submit", (ev) => {
   window.open(`https://github.com/${REPO}/issues/new?${q}`, "_blank", "noopener");
 });
 
+// ---------- home sections, fed by the same data the board uses ----------
+function whenVisible(el, fn) {
+  if (!el) return;
+  if (!("IntersectionObserver" in window)) return fn();
+  const io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) { io.disconnect(); fn(); } }, { threshold: 0.3 });
+  io.observe(el);
+}
+async function homeData() {
+  const reg = await loadRegistry();
+  if (!reg) return;
+  const third = Object.values(reg.records).filter((r) => !r.own)
+    .sort((a, b) => (b.clean - a.clean) || (b.match - a.match) || a.name.localeCompare(b.name));
+  const warn = reg.reproduced - reg.clean, bad = reg.attempted - reg.reproduced;
+  whenVisible($("#t-rep"), () => { countUp($("#t-rep"), reg.reproduced); countUp($("#t-att"), reg.attempted); });
+  const strip = $("#strip");
+  strip.style.setProperty("--n", third.length);
+  strip.innerHTML = third.map((r) => {
+    const s = r.clean ? "ok" : r.match ? "warn" : "bad";
+    const label = `${r.name}: ${r.clean ? "reproduced" : r.match ? "reproduced, with warnings" : "not reproduced"}`;
+    return `<a class="${s}" href="./?t=${r.template}" title="${esc(label)}" aria-label="${esc(label)}"></a>`;
+  }).join("");
+  $("#legend").innerHTML = `<li><i class="ok"></i><b>${reg.clean}</b>reproduced clean</li><li><i class="warn"></i><b>${warn}</b>with warnings</li><li><i class="bad"></i><b>${bad}</b>not reproduced, diagnosed</li>`;
+  // illustration only: the real WASM magic header, then hex taken from the recorded hashes
+  const pool = Object.values(reg.records).map((r) => r.onchain_sha256 + r.built_sha256).join("");
+  const bytes = ("0061736d01000000" + pool).match(/../g).slice(0, 360);
+  $("#opaque").insertAdjacentHTML("afterbegin", bytes.map((b, i) => (i < 8 ? `<b>${b}</b>` : b)).join(" "));
+}
+function proofData() {
+  whenVisible($("#tx-count"), () => countUp($("#tx-count"), ONCHAIN.attestTxTemplates.size));
+  fetchAttestations().then((att) => {
+    whenVisible($("#att-count"), () => countUp($("#att-count"), att.byTemplate.size));
+  }, (e) => { $("#att-note").textContent = "Live read of the registry failed: " + String(e && e.message || e); });
+}
+
+reveal();
+homeData();
+proofData();
 const t = new URLSearchParams(location.search).get("t");
 if (t) lookup(t);
+else idleExample();

@@ -4,21 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OneScan board: November Ootle templates</title>
-<meta name="description" content="Paste an Ootle template address and see which public commit builds those exact on-chain bytes.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6z' fill='%233fb950'/%3E%3Cpath d='m8 12 3 3 5-6' stroke='%230d1117' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="description" content="Which November Ootle mainnet templates rebuild byte-for-byte from their public source, and why the rest do not.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230b0c0e'/%3E%3Cpath d='M6 8V6h2M16 6h2v2M18 16v2h-2M8 18H6v-2' stroke='%23ececee' stroke-width='1.6' fill='none'/%3E%3Cpath d='M7 12h10' stroke='%237ee2b8' stroke-width='1.8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500&display=swap">
 <link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6z" fill="currentColor" opacity=".18"/><path d="M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m8 12 3 3 5-6" stroke="var(--ok)" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>OneScan</a>
-  <nav class="links"><a href="./">Lookup</a><a href="board.html" aria-current="page">Board</a><a href="https://github.com/Techkeyy/onescan-ootle">GitHub</a></nav>
+  <a class="brand" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M6.5 12h11" stroke="var(--accent)" stroke-width="1.8"/></svg>OneScan</a>
+  <nav class="links" aria-label="Main"><a href="./" class="opt">Scan</a><a href="./#proof">Proof</a><a href="board.html" aria-current="page">Board</a><a href="https://github.com/Techkeyy/onescan-ootle">GitHub</a></nav>
 </div></header>
 <main><div class="wrap">
-  <h1>November contest templates</h1>
+  <div class="page-head">
+    <p class="eyebrow">Board · November contest templates</p>
+    <h1>Which templates rebuild from their source.</h1>
+    <p class="lede">Each row is a November Ootle mainnet template with public source that OneScan tried to rebuild. Reproduced means a fresh, isolated build of the named commit is byte-identical to the binary on chain.</p>
+  </div>
   <div id="board" aria-live="polite"><p class="loading">Loading verification records…</p></div>
 </div></main>
 <footer><div class="wrap">
-  <span>OneScan</span><a href="https://github.com/Techkeyy/onescan-ootle">Source on GitHub</a><a href="board.html">Contest board</a><span>Not affiliated with Tari Labs.</span>
+  <span>OneScan</span><a href="https://github.com/Techkeyy/onescan-ootle">Source on GitHub</a><a href="./">Scan a template</a><span>Not affiliated with Tari Labs.</span>
 </div></footer>
 <script type="module" src="board.js"></script>
 </body>

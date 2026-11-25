@@ -1,14 +1,7 @@
-// Shared UI helpers: scroll reveal, count-up from real numbers, the touchstone hash comparison.
-export const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Shared UI helpers in the OneScan design system. Everything that moves here moves on real data.
+import { esc } from "./lib.js";
 
-export function reveal(root = document) {
-  const els = root.querySelectorAll(".reveal:not(.in)");
-  if (reduced || !("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("in")); return; }
-  const io = new IntersectionObserver((entries) => {
-    for (const en of entries) if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
-  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-  els.forEach((e) => io.observe(e));
-}
+export const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // Run fn once when el scrolls into view (immediately without IntersectionObserver).
 export function whenVisible(el, fn, threshold = 0.3) {
@@ -18,17 +11,20 @@ export function whenVisible(el, fn, threshold = 0.3) {
   io.observe(el);
 }
 
-// Animate an element's text from 0 to n (an integer that came from real data).
-export function countUp(el, n, ms = 900) {
+// Count an element up from 0 to n (an integer that came from real data) the first time it is seen.
+export function countUp(el, n, ms = 1100) {
   if (!el) return;
   if (reduced || !Number.isFinite(n) || n <= 0) { el.textContent = String(n); return; }
-  const t0 = performance.now();
-  const tick = (t) => {
-    const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3);
-    el.textContent = String(Math.round(n * e));
-    if (p < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
+  whenVisible(el, () => {
+    const t0 = performance.now();
+    const tick = (t) => {
+      const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(n * e));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    setTimeout(() => (el.textContent = String(n)), ms + 400); // lands on the real number even if frames are throttled
+  }, 0.2);
 }
 
 export function diffCount(a, b) {
@@ -37,16 +33,65 @@ export function diffCount(a, b) {
   return n;
 }
 
-// Touchstone: one column per sha256 byte, upper streak = on-chain, lower streak = rebuilt.
-// The byte's value sets the streak's length, so equal bytes leave identical streaks and divergent bytes show off-colour.
-export function streaks(a, b) {
-  const len = (h) => (h ? 30 + Math.round((parseInt(h, 16) / 255) * 70) : 0);
-  const cols = [];
-  for (let i = 0; i < 32; i++) {
-    const x = a ? a.slice(i * 2, i * 2 + 2) : "";
-    const y = b ? b.slice(i * 2, i * 2 + 2) : "";
-    const st = a && b ? (x === y ? "eq" : "ne") : "";
-    cols.push(`<span class="col ${st}" style="--i:${i}"><b>${x || "··"}</b><i style="--l:${len(x)}%"></i><i style="--l:${len(y)}%"></i><b>${y || "··"}</b></span>`);
+// A hash with the bytes that differ from `other` underlined in the refusal colour.
+export function hashDiff(h, other) {
+  if (!other) return esc(h);
+  let s = "";
+  for (let i = 0; i < 64; i += 2) {
+    const x = h.slice(i, i + 2);
+    s += x === other.slice(i, i + 2) ? x : `<span class="d">${x}</span>`;
   }
-  return cols.join("");
+  return s;
+}
+
+// The OneScan seal: a double ring with a check. The check can draw itself once on a real verdict.
+export const seal = (cls = "", draw = false) => `<svg class="${cls}" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="11.5" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="13" r="8" stroke="currentColor" stroke-width="1"/><path d="M8.8 13.3l3 3 5.4-6" pathLength="1" ${draw ? 'class="seal-check"' : ""} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const BURST = [["-46px", "-30px", "120deg", "#c9c6ff"], ["-10px", "-44px", "-80deg", "#a9dcc6"], ["34px", "-34px", "160deg", "#efedf9"],
+  ["50px", "6px", "90deg", "#c9c6ff"], ["26px", "36px", "200deg", "#a9dcc6"], ["-30px", "32px", "-140deg", "#efedf9"]];
+// Flat squares thrown out once by a stamp when a real match lands.
+export const burst = () => (reduced ? "" : `<span class="burst" aria-hidden="true">${BURST.map(([x, y, r, c]) => `<i style="--x:${x};--y:${y};--r:${r};--c:${c}"></i>`).join("")}</span>`);
+
+export const TONE = { ok: "block-sage", warn: "block-sand", bad: "block-clay", neutral: "block-paper" };
+
+// The verdict stamp. `tag` is h1 on a result, a p elsewhere.
+export function stamp({ tone, kicker, title, body = "", tag = "p", small = false, press = false }) {
+  const sealed = tone === "ok";
+  return `<div class="stamp ${TONE[tone]}${small ? " stamp-sm" : ""}${press && !reduced ? " press" : ""}">
+    <div><p class="kick">${esc(kicker)}</p><${tag} class="st-title">${esc(title)}</${tag}>${body ? `<div class="st-body">${body}</div>` : ""}</div>
+    ${sealed ? `<span class="seal-big">${seal("", press)}${press ? burst() : ""}</span>` : ""}</div>`;
+}
+
+export const notice = (tone, title, body = "", role = "") =>
+  `<div class="notice notice-${tone}"${role ? ` role="${role}"` : ""}>${title ? `<span class="nt">${title}</span>` : ""}${body ? `<div>${body}</div>` : ""}</div>`;
+
+export const copyBtn = (text, label = "Copy") => `<button type="button" class="copy" data-copy="${esc(text)}" data-label="${esc(label)}">${esc(label)}</button>`;
+
+// One click handler per root for every copy button inside it.
+export function wireCopy(root) {
+  root.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("[data-copy]");
+    if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied"; } catch { b.textContent = "Press Ctrl+C"; }
+    setTimeout(() => (b.textContent = b.dataset.label || "Copy"), 1800);
+  });
+}
+
+// Proof ledger rows: the templates whose bytes match a public build, newest first.
+export function ledgerRows(records, limit) {
+  const rows = records.filter((r) => r.match).sort((a, b) => String(b.verified_at).localeCompare(String(a.verified_at))).slice(0, limit);
+  if (!rows.length) return `<li class="ledger-empty">The ledger is empty. A row appears here only when a template really rebuilds.</li>`;
+  return rows.map((r) => {
+    const repo = (r.repo || "").replace("https://github.com/", "");
+    return `<li><a href="./?t=${r.template}">${seal(`seal${r.clean ? "" : " w"}`)}
+      <span style="min-width:0"><span class="t">${esc(r.name)}</span><span class="s">${esc(repo)} <span class="mono">${esc(r.template.slice(0, 6))}...${esc(r.template.slice(-4))}</span></span></span>
+      <span class="r"><b class="${r.clean ? "ok" : "warn"}">${r.clean ? "Byte for byte" : "With warnings"}</b><span class="muted">${esc(String(r.verified_at || "").slice(0, 10))}</span></span></a></li>`;
+  }).join("");
+}
+
+// Coverage: how many of the checked templates rebuild, as a meter from the register's own numbers.
+export function coverage(reg) {
+  const pct = reg.attempted ? Math.round((reg.reproduced / reg.attempted) * 100) : 0;
+  return `<div class="meter" role="img" aria-label="${reg.reproduced} of ${reg.attempted} rebuild"><i style="width:${Math.max(2, pct)}%"></i></div>
+    <p><b>${reg.reproduced}</b> of the <b>${reg.attempted}</b> contest templates with public source rebuild byte for byte, ${reg.clean} of them with no warnings. Every one that does not has a diagnosed reason.</p>`;
 }

@@ -36,8 +36,8 @@ for p in sorted(glob.glob(os.path.join(ROOT, "registry", "*.json"))):
     rec["sizes"] = [d.get("onchain_size"), d.get("closest_size")] if d else None
     records[r["template"]] = rec
     badge = {"schemaVersion": 1, "label": "OneScan",
-             "message": "source assayed" if rec["clean"] else "assayed, with warnings" if r["match"] else "source not reproduced",
-             "color": "8c1d1d" if rec["clean"] else "8a6714" if r["match"] else "675f54", "cacheSeconds": 3600}
+             "message": "source verified" if rec["clean"] else "verified, with warnings" if r["match"] else "source not reproduced",
+             "color": "15803d" if rec["clean"] else "b45309" if r["match"] else "6b7280", "cacheSeconds": 3600}
     json.dump(badge, open(os.path.join(out, "badge", r["template"] + ".json"), "w"))
 
 third = [r for r in records.values() if not r["own"]]

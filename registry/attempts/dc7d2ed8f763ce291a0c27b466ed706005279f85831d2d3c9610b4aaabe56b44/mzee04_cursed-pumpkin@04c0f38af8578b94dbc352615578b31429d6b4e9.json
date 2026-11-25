@@ -1,0 +1,68 @@
+{
+  "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
+  "name": "CursedPumpkin",
+  "author_public_key": "66ff4b83d0c720c1e309d1fd385335a9f28605a033f67e767546db0536dbf22b",
+  "onchain_sha256": "256af3d167652fb99039e890af3b833445e089c8e32a8b4b2940d31f7b1b531a",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/Mzee04/cursed-pumpkin",
+  "commit": "04c0f38af8578b94dbc352615578b31429d6b4e9",
+  "toolchain": null,
+  "recipe": {
+    "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
+    "repo": "https://github.com/Mzee04/cursed-pumpkin",
+    "commit": "04c0f38af857",
+    "rustc": "1.99.1",
+    "builder": "tari-cli",
+    "tari_cli": "0.35.2",
+    "script": "",
+    "workdir": "templates/cursed_pumpkin",
+    "remap": "/Users/mzee/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [
+      "web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
+    ],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [
+      "web/bor/ootle_wasm_bor_bg.wasm"
+    ],
+    "committed_count": 30
+  },
+  "warnings": [
+    "network not isolated during the build: no build report",
+    "committed binary or large file: web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "templates/cursed_pumpkin/target/wasm32-unknown-unknown/release/cursed_pumpkin.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "mzee04_cursed-pumpkin@04c0f38af8578b94dbc352615578b31429d6b4e9"
+}

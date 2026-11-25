@@ -3,18 +3,12 @@
   "name": "SignalFollows",
   "author_public_key": "66fb73201ee4eb423cf5e5c1c31e6520c576f1e6d1041e72ccd026593025e354",
   "onchain_sha256": "f3073726e7c3622f2dd8abf4c541717c71d7c37e54017d3cbd6a9c7425f7bbc8",
-  "built_sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa",
+  "built_sha256": null,
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/ogboy92ii/signal-desk",
   "commit": "b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
-  "toolchain": {
-    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
-    "rustup_toolchain": "1.98.1",
-    "tari_cli": "tari-ootle-cli 0.35.1",
-    "rustflags": "",
-    "cargo_lock_in_repo": true
-  },
+  "toolchain": null,
   "recipe": {
     "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
     "repo": "https://github.com/ogboy92ii/signal-desk",
@@ -27,170 +21,70 @@
     "remap": "none",
     "rustflags": "",
     "optimizer": "auto",
-    "cmd": ""
+    "cmd": "",
+    "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
-  "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:30:35Z",
-  "tried": [
-    {
-      "file": "signal_follows__1.wasm",
-      "variant": "raw",
-      "sha256": "079fef5084f1e088e47758e4ca3f627d92cfd281b0d4e2a2d7b4b2751b39c606"
-    },
-    {
-      "file": "signal_follows__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa"
-    }
-  ],
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
   "diagnostics": {
-    "closest": "signal_follows__1.wasm.opt",
-    "closest_sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa",
-    "closest_size": 93124,
-    "onchain_size": 93069,
-    "tari_tdef_equal": true,
-    "rustc_commit_equal": true,
-    "onchain_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-    "built_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-    "onchain_paths": [
-      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
-      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "built_paths": [
-      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
-      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "onchain_sections": [
-      [
-        "type",
-        119
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        171
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        58
-      ],
-      [
-        "element",
-        66
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        81727
-      ],
-      [
-        "data",
-        10480
-      ],
-      [
-        "custom:tari_tdef",
-        359
-      ]
-    ],
-    "built_sections": [
-      [
-        "type",
-        119
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        171
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        58
-      ],
-      [
-        "element",
-        66
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        81782
-      ],
-      [
-        "data",
-        10480
-      ],
-      [
-        "custom:tari_tdef",
-        359
-      ]
-    ]
+    "error": "build produced no wasm at the expected path"
   },
   "isolation": {
-    "network_isolated": true,
-    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
-    "cargo_offline": true,
-    "lockfile_honoured": false
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
   },
   "source_check": {
+    "fail": [],
     "build_rs": [
       "build.rs (package signal_desk)",
       "follows/build.rs (package signal_follows)",
       "forecasts/build.rs (package signal_forecasts)"
     ],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
     "includes": [],
     "blobs": [
-      "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)"
+      "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)",
+      "maquettes/vendor/three/examples/jsm/postprocessing/SMAAPass.js (49467 bytes, contains a long base64/hex run)"
     ],
+    "numeric": [],
     "patch_or_git": [],
+    "config": [],
     "scrubbed": [
       "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm"
     ],
     "committed_count": 345
   },
   "warnings": [
+    "network not isolated during the build: no build report",
     "build script: build.rs (package signal_desk)",
     "build script: follows/build.rs (package signal_follows)",
     "build script: forecasts/build.rs (package signal_forecasts)",
-    "committed binary or large file: maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)"
+    "committed binary or large file: maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)",
+    "committed binary or large file: maquettes/vendor/three/examples/jsm/postprocessing/SMAAPass.js (49467 bytes, contains a long base64/hex run)"
   ],
   "clean": false,
-  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "follows/target/wasm32-unknown-unknown/release/signal_follows.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "ogboy92ii_signal-desk@b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
+  "attempts": [
+    {
+      "key": "ogboy92ii_signal-desk@b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
+      "repo": "https://github.com/ogboy92ii/signal-desk",
+      "commit": "b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
+      "match": false,
+      "clean": false,
+      "mode": "no-match",
+      "pipeline": 2,
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+      "verified_at": "2026-11-25T09:52:22Z"
+    }
+  ]
 }

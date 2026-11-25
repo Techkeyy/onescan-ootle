@@ -3,18 +3,12 @@
   "name": "CursedPumpkin",
   "author_public_key": "66ff4b83d0c720c1e309d1fd385335a9f28605a033f67e767546db0536dbf22b",
   "onchain_sha256": "256af3d167652fb99039e890af3b833445e089c8e32a8b4b2940d31f7b1b531a",
-  "built_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
+  "built_sha256": null,
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/Mzee04/cursed-pumpkin",
   "commit": "04c0f38af8578b94dbc352615578b31429d6b4e9",
-  "toolchain": {
-    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
-    "rustup_toolchain": "1.99.1",
-    "tari_cli": "tari-ootle-cli 0.35.2",
-    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/Users/mzee/.cargo",
-    "cargo_lock_in_repo": true
-  },
+  "toolchain": null,
   "recipe": {
     "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
     "repo": "https://github.com/Mzee04/cursed-pumpkin",
@@ -27,163 +21,61 @@
     "remap": "/Users/mzee/.cargo",
     "rustflags": "",
     "optimizer": "auto",
-    "cmd": ""
+    "cmd": "",
+    "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
-  "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:30:35Z",
-  "tried": [
-    {
-      "file": "cursed_pumpkin__1.wasm",
-      "variant": "raw",
-      "sha256": "92238434aeb856ce6be8d620432fa0fc6c9587a71c451e84cbe8dff67171f255"
-    },
-    {
-      "file": "cursed_pumpkin__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611"
-    }
-  ],
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
   "diagnostics": {
-    "closest": "cursed_pumpkin__1.wasm.opt",
-    "closest_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
-    "closest_size": 275591,
-    "onchain_size": 275605,
-    "tari_tdef_equal": true,
-    "rustc_commit_equal": true,
-    "onchain_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
-    "built_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
-    "onchain_paths": [
-      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
-      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "built_paths": [
-      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
-      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
-    ],
-    "onchain_sections": [
-      [
-        "type",
-        186
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        420
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        58
-      ],
-      [
-        "element",
-        139
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        253604
-      ],
-      [
-        "data",
-        20171
-      ],
-      [
-        "custom:tari_tdef",
-        935
-      ]
-    ],
-    "built_sections": [
-      [
-        "type",
-        186
-      ],
-      [
-        "import",
-        34
-      ],
-      [
-        "function",
-        420
-      ],
-      [
-        "table",
-        5
-      ],
-      [
-        "memory",
-        3
-      ],
-      [
-        "global",
-        9
-      ],
-      [
-        "export",
-        58
-      ],
-      [
-        "element",
-        139
-      ],
-      [
-        "datacount",
-        1
-      ],
-      [
-        "code",
-        253588
-      ],
-      [
-        "data",
-        20173
-      ],
-      [
-        "custom:tari_tdef",
-        935
-      ]
-    ]
+    "error": "build produced no wasm at the expected path"
   },
   "isolation": {
-    "network_isolated": true,
-    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
-    "cargo_offline": true,
-    "lockfile_honoured": true
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
   },
   "source_check": {
+    "fail": [],
     "build_rs": [],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
     "includes": [],
     "blobs": [
       "web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
     ],
+    "numeric": [],
     "patch_or_git": [],
+    "config": [],
     "scrubbed": [
       "web/bor/ootle_wasm_bor_bg.wasm"
     ],
     "committed_count": 30
   },
   "warnings": [
+    "network not isolated during the build: no build report",
     "committed binary or large file: web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
   ],
   "clean": false,
-  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "templates/cursed_pumpkin/target/wasm32-unknown-unknown/release/cursed_pumpkin.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "mzee04_cursed-pumpkin@04c0f38af8578b94dbc352615578b31429d6b4e9",
+  "attempts": [
+    {
+      "key": "mzee04_cursed-pumpkin@04c0f38af8578b94dbc352615578b31429d6b4e9",
+      "repo": "https://github.com/Mzee04/cursed-pumpkin",
+      "commit": "04c0f38af8578b94dbc352615578b31429d6b4e9",
+      "match": false,
+      "clean": false,
+      "mode": "no-match",
+      "pipeline": 2,
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+      "verified_at": "2026-11-25T09:52:22Z"
+    }
+  ]
 }

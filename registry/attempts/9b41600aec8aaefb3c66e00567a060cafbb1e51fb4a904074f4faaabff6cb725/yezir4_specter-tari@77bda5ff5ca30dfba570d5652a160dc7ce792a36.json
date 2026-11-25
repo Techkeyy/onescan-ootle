@@ -1,0 +1,75 @@
+{
+  "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
+  "name": "SpecterReportReceipt",
+  "author_public_key": "da8b317049487cc2097430891b3d6761c6d693e61bdd7ee3ccc2e0f3c17f222c",
+  "onchain_sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/yeziR4/specter-tari",
+  "commit": "77bda5ff5ca30dfba570d5652a160dc7ce792a36",
+  "toolchain": null,
+  "recipe": {
+    "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
+    "repo": "https://github.com/yeziR4/specter-tari",
+    "commit": "77bda5ff5ca3",
+    "rustc": "1.97.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "contracts/report-receipt",
+    "remap": "/home/yezir/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [
+      "contracts/report-receipt/specter_report_receipt.wasm (96767 bytes, wasm)",
+      "dist/downloads/specter-source.zip (153921 bytes, binary)",
+      "dist/downloads/specter_report_receipt.wasm (96767 bytes, wasm)",
+      "10 files hold long hex/base64 runs (possible split-up blob): dist/evidence/capture-stealth/envelope.raw.json, dist/evidence/mainnet-receipt/result.raw.json, dist/evidence/mainnet-receipt/substate.json, dist/evidence/sapient-mainnet-receipt/envelope.raw.json, dist/evidence/sapient-mainnet-receipt/result.raw.json, evidence/capture-stealth/envelope.raw.json"
+    ],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [
+      "contracts/report-receipt/specter_report_receipt.wasm",
+      "dist/downloads/specter_report_receipt.wasm"
+    ],
+    "committed_count": 133
+  },
+  "warnings": [
+    "network not isolated during the build: no build report",
+    "committed binary or large file: contracts/report-receipt/specter_report_receipt.wasm (96767 bytes, wasm)",
+    "committed binary or large file: dist/downloads/specter-source.zip (153921 bytes, binary)",
+    "committed binary or large file: dist/downloads/specter_report_receipt.wasm (96767 bytes, wasm)",
+    "committed binary or large file: 10 files hold long hex/base64 runs (possible split-up blob): dist/evidence/capture-stealth/envelope.raw.json, dist/evidence/mainnet-receipt/result.raw.json, dist/evidence/mainnet-receipt/substate.json, dist/evidence/sapient-mainnet-receipt/envelope.raw.json, dist/evidence/sapient-mainnet-receipt/result.raw.json, evidence/capture-stealth/envelope.raw.json"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "contracts/report-receipt/target/wasm32-unknown-unknown/release/specter_report_receipt.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "yezir4_specter-tari@77bda5ff5ca30dfba570d5652a160dc7ce792a36"
+}

@@ -1,0 +1,63 @@
+{
+  "template": "d4ed44d36e79e85ea7a8705170d0227a34b9fb3afba556b00112ff785b6da8c8",
+  "name": "MoonMail",
+  "author_public_key": "5226aff1b60ae773ff4d7d1c44060176c73d6b80acd10ea2e2eb1cfdb9ff7128",
+  "onchain_sha256": "aff9e0c17b3ad6b6ecfb72a57059b0185e3a176768681276154283cac4027de0",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/Seal-Clubber/MoonMail",
+  "commit": "df0da950b471d780ef49b268ce8d814f3b40b9b0",
+  "toolchain": null,
+  "recipe": {
+    "template": "d4ed44d36e79e85ea7a8705170d0227a34b9fb3afba556b00112ff785b6da8c8",
+    "repo": "https://github.com/Seal-Clubber/MoonMail",
+    "commit": "df0da950b471",
+    "rustc": "1.98.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "contracts/moonmail-v4",
+    "remap": "/home/seal/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [],
+    "committed_count": 317
+  },
+  "warnings": [
+    "network not isolated during the build: no build report"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "contracts/moonmail-v4/target/wasm32-unknown-unknown/release/moonmail_v4.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "seal-clubber_moonmail@df0da950b471d780ef49b268ce8d814f3b40b9b0"
+}

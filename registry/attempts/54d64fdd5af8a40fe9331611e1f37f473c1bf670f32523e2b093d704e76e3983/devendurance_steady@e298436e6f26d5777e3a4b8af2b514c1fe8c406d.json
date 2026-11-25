@@ -1,0 +1,66 @@
+{
+  "template": "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983",
+  "name": "Payroll",
+  "author_public_key": "beec685a3e606bc04676fd4c807e0c1b72b68e7a31d34584e9a3e6297ca73d27",
+  "onchain_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/Devendurance/steady",
+  "commit": "e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
+  "toolchain": null,
+  "recipe": {
+    "template": "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983",
+    "repo": "https://github.com/Devendurance/steady",
+    "commit": "e298436e6f26",
+    "rustc": "1.100.0",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "/home/endy/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [
+      "evidence/2026-11-20/publish-receipt.json (16384 bytes, contains a long base64/hex run)"
+    ],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [],
+    "committed_count": 66
+  },
+  "warnings": [
+    "network not isolated during the build: no build report",
+    "committed binary or large file: evidence/2026-11-20/publish-receipt.json (16384 bytes, contains a long base64/hex run)"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "target/wasm32-unknown-unknown/release/steady.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "devendurance_steady@e298436e6f26d5777e3a4b8af2b514c1fe8c406d"
+}

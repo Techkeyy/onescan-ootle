@@ -1,0 +1,66 @@
+{
+  "template": "84f1d72f8b9e38d104e639de9fcce8d6f71098daa825c56ea0b2772d35f60580",
+  "name": "Semvi",
+  "author_public_key": "10595ea2a8484dcb957bed589919aac8dd5f0d363766aec8e9ac8d73deb6f157",
+  "onchain_sha256": "7f582b4e3133332bf81fc8ae1196e2435bdeb0633e0db599ffb819531c62211c",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/emmaGH1/semvi",
+  "commit": "1896cde493fc556fb44f0c5c9b5faed8102f85c4",
+  "toolchain": null,
+  "recipe": {
+    "template": "84f1d72f8b9e38d104e639de9fcce8d6f71098daa825c56ea0b2772d35f60580",
+    "repo": "https://github.com/emmaGH1/semvi",
+    "commit": "1896cde493fc",
+    "rustc": "1.99.0",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "/data/home/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [
+      "evidence/2026-11-20/mainnet-publish-receipt.json (306515 bytes, contains a long base64/hex run)"
+    ],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [],
+    "committed_count": 176
+  },
+  "warnings": [
+    "network not isolated during the build: no build report",
+    "committed binary or large file: evidence/2026-11-20/mainnet-publish-receipt.json (306515 bytes, contains a long base64/hex run)"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "target/wasm32-unknown-unknown/release/semvi.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "emmagh1_semvi@1896cde493fc556fb44f0c5c9b5faed8102f85c4"
+}

@@ -1,0 +1,77 @@
+{
+  "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
+  "name": "SignalFollows",
+  "author_public_key": "66fb73201ee4eb423cf5e5c1c31e6520c576f1e6d1041e72ccd026593025e354",
+  "onchain_sha256": "f3073726e7c3622f2dd8abf4c541717c71d7c37e54017d3cbd6a9c7425f7bbc8",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/ogboy92ii/signal-desk",
+  "commit": "b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
+  "toolchain": null,
+  "recipe": {
+    "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
+    "repo": "https://github.com/ogboy92ii/signal-desk",
+    "commit": "b57767562e5d",
+    "rustc": "1.98.1",
+    "builder": "tari-cli",
+    "tari_cli": "0.35.1",
+    "script": "",
+    "workdir": "follows",
+    "remap": "none",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [
+      "build.rs (package signal_desk)",
+      "follows/build.rs (package signal_follows)",
+      "forecasts/build.rs (package signal_forecasts)"
+    ],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [
+      "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)",
+      "maquettes/vendor/three/examples/jsm/postprocessing/SMAAPass.js (49467 bytes, contains a long base64/hex run)"
+    ],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [
+      "maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm"
+    ],
+    "committed_count": 345
+  },
+  "warnings": [
+    "network not isolated during the build: no build report",
+    "build script: build.rs (package signal_desk)",
+    "build script: follows/build.rs (package signal_follows)",
+    "build script: forecasts/build.rs (package signal_forecasts)",
+    "committed binary or large file: maquettes/vendor/ootle-wasm-bor/ootle_wasm_bor_bg.wasm (473221 bytes, wasm)",
+    "committed binary or large file: maquettes/vendor/three/examples/jsm/postprocessing/SMAAPass.js (49467 bytes, contains a long base64/hex run)"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "follows/target/wasm32-unknown-unknown/release/signal_follows.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "ogboy92ii_signal-desk@b57767562e5d4291ff7f7faaa48b89e7d19ddcfd"
+}

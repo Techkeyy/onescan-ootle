@@ -3,18 +3,12 @@
   "name": "PublicGrant",
   "author_public_key": "70b06443297e340257c4cd21f17586735a43f7ef57310177abe2984a581e406b",
   "onchain_sha256": "8f33a6f4ca3478479fd215f5757574c8a8c51445c8a297fa4a554344eec4b305",
-  "built_sha256": "8f33a6f4ca3478479fd215f5757574c8a8c51445c8a297fa4a554344eec4b305",
-  "match": true,
-  "mode": "walletd-optimized",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
   "repo": "https://github.com/feitianbf751026-dotcom/tari-ootle-public-grant-ledger",
   "commit": "b3e10dd4e08f74a73198675c8b65ab51b6fca719",
-  "toolchain": {
-    "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
-    "rustup_toolchain": "1.100.0-x86_64-pc-windows-gnu",
-    "tari_cli": null,
-    "rustflags": "--remap-path-prefix=C:\\Users\\runneradmin\\.cargo=C:\\Users\\czj\\.cargo",
-    "cargo_lock_in_repo": true
-  },
+  "toolchain": null,
   "recipe": {
     "template": "098accfc8e69ea08ea14e676ad0973fc1ccd6f3d8f677d5bb4cfc144049562b0",
     "repo": "https://github.com/feitianbf751026-dotcom/tari-ootle-public-grant-ledger",
@@ -27,42 +21,59 @@
     "remap": "C:/Program Files/Git/build/.cargo",
     "rustflags": "--remap-path-prefix={CARGO_HOME}=C:\\Users\\czj\\.cargo",
     "optimizer": "auto",
-    "cmd": ""
+    "cmd": "",
+    "os": "windows-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
-  "runner_os": "Windows",
-  "verified_at": "2026-11-23T12:30:35Z",
-  "tried": [
-    {
-      "file": "public_grant__1.wasm",
-      "variant": "raw",
-      "sha256": "ae82104607c8f55c985f4256fcb5a7d4ed636e2274f6c9c1e7f9d4c0b41f910b"
-    },
-    {
-      "file": "public_grant__1.wasm",
-      "variant": "walletd-optimized",
-      "sha256": "8f33a6f4ca3478479fd215f5757574c8a8c51445c8a297fa4a554344eec4b305"
-    }
-  ],
-  "diagnostics": null,
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
   "isolation": {
     "network_isolated": false,
-    "note": "Windows runner: build ran with cargo offline but without network isolation",
-    "cargo_offline": true,
-    "lockfile_honoured": true
+    "method": null,
+    "note": "windows-latest runner: build ran with cargo offline but without network isolation",
+    "reported_by_build": {}
   },
   "source_check": {
+    "fail": [],
     "build_rs": [],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
     "includes": [],
-    "blobs": [],
+    "blobs": [
+      "12 files hold long hex/base64 runs (possible split-up blob): evidence/local-demo/2026-11-16/raw/receipt-bd22cbd065473bd17db58fde6ffa1d20b511a99b2c893db9dd0ec72659fd6d8b.json, evidence/mainnet/2026-11-17/raw/indexer-a/receipts/45523a2f4ca95df24559a1eabf7d88f7e6f0c47f0c8d786f0f8457de44aea23b.json, evidence/mainnet/2026-11-17/raw/indexer-a/receipts/839dea49cd003463a7900021608b8bc28b27b5884776829f021f4a4f88074db6.json, evidence/mainnet/2026-11-17/raw/indexer-a/receipts/f5d8b2dc047a6ddbb9f82801448e1128996812a2d97e0eec236ffdd5e3bc0745.json, evidence/mainnet/2026-11-17/raw/indexer-b/receipts/45523a2f4ca95df24559a1eabf7d88f7e6f0c47f0c8d786f0f8457de44aea23b.json, evidence/mainnet/2026-11-17/raw/indexer-b/receipts/839dea49cd003463a7900021608b8bc28b27b5884776829f021f4a4f88074db6.json"
+    ],
+    "numeric": [],
     "patch_or_git": [],
+    "config": [],
     "scrubbed": [],
     "committed_count": 95
   },
   "warnings": [
-    "network not isolated during the build: Windows runner: build ran with cargo offline but without network isolation"
+    "network not isolated during the build: windows-latest runner: build ran with cargo offline but without network isolation",
+    "committed binary or large file: 12 files hold long hex/base64 runs (possible split-up blob): evidence/local-demo/2026-11-16/raw/receipt-bd22cbd065473bd17db58fde6ffa1d20b511a99b2c893db9dd0ec72659fd6d8b.json, evidence/mainnet/2026-11-17/raw/indexer-a/receipts/45523a2f4ca95df24559a1eabf7d88f7e6f0c47f0c8d786f0f8457de44aea23b.json, evidence/mainnet/2026-11-17/raw/indexer-a/receipts/839dea49cd003463a7900021608b8bc28b27b5884776829f021f4a4f88074db6.json, evidence/mainnet/2026-11-17/raw/indexer-a/receipts/f5d8b2dc047a6ddbb9f82801448e1128996812a2d97e0eec236ffdd5e3bc0745.json, evidence/mainnet/2026-11-17/raw/indexer-b/receipts/45523a2f4ca95df24559a1eabf7d88f7e6f0c47f0c8d786f0f8457de44aea23b.json, evidence/mainnet/2026-11-17/raw/indexer-b/receipts/839dea49cd003463a7900021608b8bc28b27b5884776829f021f4a4f88074db6.json"
   ],
   "clean": false,
-  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "target/wasm32-unknown-unknown/release/public_grant.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "feitianbf751026-dotcom_tari-ootle-public-grant-ledger@b3e10dd4e08f74a73198675c8b65ab51b6fca719",
+  "attempts": [
+    {
+      "key": "feitianbf751026-dotcom_tari-ootle-public-grant-ledger@b3e10dd4e08f74a73198675c8b65ab51b6fca719",
+      "repo": "https://github.com/feitianbf751026-dotcom/tari-ootle-public-grant-ledger",
+      "commit": "b3e10dd4e08f74a73198675c8b65ab51b6fca719",
+      "match": false,
+      "clean": false,
+      "mode": "no-match",
+      "pipeline": 2,
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+      "verified_at": "2026-11-25T09:52:22Z"
+    }
+  ]
 }

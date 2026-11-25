@@ -1,0 +1,63 @@
+{
+  "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",
+  "name": "GhostlineFeeConfig",
+  "author_public_key": "728870aee9b9fb66e69fcf45510440e54b59387a7efe3816713e054014d3b230",
+  "onchain_sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/AduAkorful/ghostline",
+  "commit": "b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
+  "toolchain": null,
+  "recipe": {
+    "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",
+    "repo": "https://github.com/AduAkorful/ghostline",
+    "commit": "b9cf4ce77cb3",
+    "rustc": "1.97.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "contracts/fee-config",
+    "remap": "/home/aduakorful/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [],
+    "committed_count": 234
+  },
+  "warnings": [
+    "network not isolated during the build: no build report"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "contracts/fee-config/target/wasm32-unknown-unknown/release/ghostline_fee_config.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "aduakorful_ghostline@b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee"
+}

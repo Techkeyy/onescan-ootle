@@ -1,0 +1,63 @@
+{
+  "template": "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
+  "name": "SourceRegistry",
+  "author_public_key": "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
+  "onchain_sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/Techkeyy/onescan-ootle",
+  "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
+  "toolchain": null,
+  "recipe": {
+    "template": "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
+    "repo": "https://github.com/Techkeyy/onescan-ootle",
+    "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
+    "rustc": "1.97.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "registry-template",
+    "remap": "/build/.cargo",
+    "rustflags": "--remap-path-prefix={CARGO_HOME}=/build/.cargo --remap-path-prefix={SRC}=/build/src",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:52:22Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [],
+    "committed_count": 55
+  },
+  "warnings": [
+    "network not isolated during the build: no build report"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "registry-template/target/wasm32-unknown-unknown/release/onescan_registry.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "techkeyy_onescan-ootle@29a076b8d07e41a03a197c1adc822d15c8995338"
+}

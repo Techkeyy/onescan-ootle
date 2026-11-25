@@ -1,5 +1,5 @@
 // Shared UI helpers in the OneScan design system. Everything that moves here moves on real data.
-import { esc } from "./lib.js";
+import { esc, isHex64 } from "./lib.js";
 
 export const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -25,23 +25,6 @@ export function countUp(el, n, ms = 1100) {
     requestAnimationFrame(tick);
     setTimeout(() => (el.textContent = String(n)), ms + 400); // lands on the real number even if frames are throttled
   }, 0.2);
-}
-
-export function diffCount(a, b) {
-  let n = 0;
-  for (let i = 0; i < 32; i++) if (a.slice(i * 2, i * 2 + 2) !== b.slice(i * 2, i * 2 + 2)) n++;
-  return n;
-}
-
-// A hash with the bytes that differ from `other` underlined in the refusal colour.
-export function hashDiff(h, other) {
-  if (!other) return esc(h);
-  let s = "";
-  for (let i = 0; i < 64; i += 2) {
-    const x = h.slice(i, i + 2);
-    s += x === other.slice(i, i + 2) ? x : `<span class="d">${x}</span>`;
-  }
-  return s;
 }
 
 // The OneScan seal: a double ring with a check. The check can draw itself once on a real verdict.
@@ -79,7 +62,7 @@ export function wireCopy(root) {
 
 // Proof ledger rows: the templates whose bytes match a public build, newest first.
 export function ledgerRows(records, limit) {
-  const rows = records.filter((r) => r.match).sort((a, b) => String(b.verified_at).localeCompare(String(a.verified_at))).slice(0, limit);
+  const rows = records.filter((r) => r.match && isHex64(r.template)).sort((a, b) => String(b.verified_at).localeCompare(String(a.verified_at))).slice(0, limit);
   if (!rows.length) return `<li class="ledger-empty">The ledger is empty. A row appears here only when a template really rebuilds.</li>`;
   return rows.map((r) => {
     const repo = (r.repo || "").replace("https://github.com/", "");
@@ -93,5 +76,5 @@ export function ledgerRows(records, limit) {
 export function coverage(reg) {
   const pct = reg.attempted ? Math.round((reg.reproduced / reg.attempted) * 100) : 0;
   return `<div class="meter" role="img" aria-label="${reg.reproduced} of ${reg.attempted} rebuild"><i style="width:${Math.max(2, pct)}%"></i></div>
-    <p><b>${reg.reproduced}</b> of the <b>${reg.attempted}</b> contest templates with public source rebuild byte for byte, ${reg.clean} of them with no warnings. Every one that does not has a diagnosed reason.</p>`;
+    <p><b>${reg.reproduced}</b> of the <b>${reg.attempted}</b> third-party templates OneScan has checked rebuild byte for byte, ${reg.clean} of them with no warnings. Every one that does not has a diagnosed reason.</p>`;
 }

@@ -1,5 +1,4 @@
-/* OneScan for Ootle. The same design system as OneScan for Portaldot:
-   deep indigo and one soft periwinkle accent. Sage, sand and clay keep their meaning: match, caveat, refused. */
+/* OneScan for Ootle. Deep indigo and one soft periwinkle accent. Sage, sand and clay keep their meaning: match, caveat, refused. */
 :root,
 .tokens-base {
   --paper: #f6f5fb;
@@ -467,3 +466,4 @@ html[data-view="home"] .site-head { position: sticky; }
 
 /* Long paths, keys and hashes wrap instead of widening the page. */
 .notice, .fields dd, .prow .why, .rsec p, .stamp .st-body { overflow-wrap: anywhere; }
+.stage[data-s="none"] .word { color: var(--ink); }

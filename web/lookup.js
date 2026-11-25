@@ -1,5 +1,5 @@
-import { reduced, countUp, diffCount, hashDiff, seal, burst, stamp, notice, copyBtn, wireCopy, ledgerRows, coverage } from "./site.js";
-import { SITE, REPO, ONCHAIN, explorerTx, esc, short, parseAddress, fetchTemplate, parseTdef, fetchAttestations } from "./lib.js";
+import { reduced, countUp, burst, stamp, notice, copyBtn, wireCopy, ledgerRows, coverage } from "./site.js";
+import { SITE, REPO, ONCHAIN, PROOF, PRUNE_NOTE, receiptUrl, isHex64, safeRepo, safeRun, safeCommit, esc, short, parseAddress, fetchTemplate, parseTdef, fetchAttestations } from "./lib.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const out = $("#result");
@@ -12,10 +12,19 @@ function loadRegistry() {
   return registry;
 }
 
-const repoName = (repo) => (repo || "").replace("https://github.com/", "");
-const ghLink = (repo, commit) =>
-  `<a class="link" href="${esc(repo)}/tree/${esc(commit)}">${esc(repoName(repo))}</a> at <a class="link mono" href="${esc(repo)}/commit/${esc(commit)}">${esc((commit || "").slice(0, 10))}</a>`;
-const runNo = (rec) => esc((rec.run_url || "").split("/").pop());
+const repoName = (repo) => String(repo || "").replace("https://github.com/", "");
+// Links are rendered only when the registry value has the expected GitHub shape; otherwise it is shown as text.
+function ghLink(repo, commit) {
+  const r = safeRepo(repo), c = safeCommit(commit), cs = esc(String(commit || "").slice(0, 10));
+  if (!r) return `<span>${esc(repo || "unknown repo")}</span> at <span class="mono">${cs}</span>`;
+  return c ? `<a class="link" href="${esc(r)}/tree/${esc(c)}">${esc(repoName(r))}</a> at <a class="link mono" href="${esc(r)}/commit/${esc(c)}">${cs}</a>`
+    : `<a class="link" href="${esc(r)}">${esc(repoName(r))}</a> at <span class="mono">${cs}</span>`;
+}
+const runNo = (rec) => esc(String(rec.run_url || "").split("/").pop());
+const runLink = (rec) => {
+  const u = safeRun(rec.run_url);
+  return u ? `<a class="link" href="${esc(u)}">GitHub Actions run ${runNo(rec)}</a>` : `<span>${esc(rec.run_url || "not recorded")}</span>`;
+};
 const MODE = {
   raw: "raw: the plain cargo/tari build output, unmodified",
   "walletd-optimized": "walletd-optimized: the build, then the wasm-opt pass that tari_walletd applies when publishing",
@@ -40,13 +49,14 @@ const STAGES = [
   ["compare", "Comparing the two hashes"],
   ["attest", "Reading the on-chain attestation"],
 ];
-const WORD = { "": "Waiting", run: "Working", ok: "Done", warn: "Done, with a caveat", fail: "Failed", skip: "Not run" };
+const WORD = { "": "Waiting", run: "Working", ok: "Done", warn: "Done, with a caveat", fail: "Failed", skip: "Not run", none: "No attestation found" };
 const ICON = {
   ok: `<svg viewBox="0 0 14 14" fill="none"><path d="M3 7.5l2.6 2.6L11 4.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   fail: `<svg viewBox="0 0 14 14" fill="none"><path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
   warn: `<svg viewBox="0 0 14 14" fill="none"><path d="M7 3.2v4.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="7" cy="10.6" r="1.2" fill="currentColor"/></svg>`,
   skip: `<svg viewBox="0 0 14 14" fill="none"><path d="M4 7h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
 };
+ICON.none = ICON.skip;
 
 function shell(hx, rec) {
   return `<div id="r-head"><h1 class="h-page">Checking the template against the chain</h1>
@@ -79,7 +89,7 @@ function step(n, s, detail) {
   $(".node", li).innerHTML = ICON[s] || String(i + 1);
   $(".word", li).textContent = WORD[s];
   if (detail != null) $(".det", li).textContent = detail;
-  const done = [...document.querySelectorAll("#result [data-step]")].filter((x) => ["ok", "warn", "fail", "skip"].includes(x.dataset.s)).length;
+  const done = [...document.querySelectorAll("#result [data-step]")].filter((x) => ["ok", "warn", "fail", "skip", "none"].includes(x.dataset.s)).length;
   const m = $("#r-meter");
   if (m) { m.setAttribute("aria-valuenow", String(done)); $("i", m).style.width = `${Math.max(4, (done / STAGES.length) * 100)}%`; }
 }
@@ -95,14 +105,13 @@ function onchainFacts(live, rec) {
     ${live ? `<div><dt>Published at epoch</dt><dd>${esc(live.epoch)}</dd></div><div><dt>Binary size</dt><dd>${live.size.toLocaleString()} bytes</dd></div>` : ""}`;
 }
 
+const HASH_NOTE = `<div><dt>About these hashes</dt><dd class="small muted">Plain sha256 of the WASM bytes. The explorer's "Binary hash" for a template is computed a different way, so it will not equal these.</dd></div>`;
 function hashFacts(a, b, la, lb) {
   const rows = [];
-  if (a) rows.push(`<div><dt>${esc(la)}</dt><dd class="bytes">${hashDiff(a, b)}</dd></div>`);
-  if (b) rows.push(`<div><dt>${esc(lb)}</dt><dd class="bytes">${hashDiff(b, a)}</dd></div>`);
-  if (a && b) {
-    const n = diffCount(a, b);
-    rows.push(`<div><dt>Comparison</dt><dd class="${n ? "bad" : "ok"}" style="font-weight:600">${n ? `${n} of 32 bytes differ` : "32 of 32 bytes equal"}</dd></div>`);
-  }
+  if (a) rows.push(`<div><dt>${esc(la)}</dt><dd class="bytes">${esc(a)}</dd></div>`);
+  if (b) rows.push(`<div><dt>${esc(lb)}</dt><dd class="bytes">${esc(b)}</dd></div>`);
+  if (a && b) rows.push(`<div><dt>Comparison</dt><dd class="${a === b ? "ok" : "bad"}" style="font-weight:600">${a === b ? "Match: the hashes are identical" : "No match: the hashes differ"}</dd></div>`);
+  if (a || b) rows.push(HASH_NOTE);
   return rows.join("");
 }
 
@@ -110,10 +119,10 @@ function functionsBlock(live) {
   if (!live) return "";
   const t = parseTdef(live.binary);
   if (t.error) return section("What it can do", `<p class="muted">Could not list the methods: ${esc(t.error)}.</p>`);
-  const moves = t.functions.filter((f) => f.flags.some(([l]) => /tokens/.test(l))).length;
+  const buckets = t.functions.filter((f) => f.flags.some(([l]) => /tokens/.test(l))).length;
   const rows = t.functions.map((f) => `<tr><td><span class="fn">${esc(f.name)}</span><span class="sig">${esc(f.kind === "function" ? "" : f.kind + (f.args.length ? ", " : ""))}${f.args.map(([n, ty]) => esc(n) + ": " + esc(ty)).join(", ")} returns ${esc(f.output)}</span></td>
     <td>${f.flags.map(([l, c]) => `<span class="chip ${c === "info" ? "info" : ""}">${esc(l)}</span>`).join("")}</td></tr>`).join("");
-  return section("What it can do", `<p>${t.functions.length} methods. ${moves} of them move funds: they take or release tokens.</p>
+  return section("What it can do", `<p>${t.functions.length} methods. ${buckets} of them take or return a Bucket (tokens passed in or out). Methods that move tokens out of a vault by an Amount are not counted here.</p>
     <div class="fns-wrap mt-3"><table class="fns"><thead><tr><th scope="col">Method and signature</th><th scope="col">Flags</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="mt-3 small muted">Decoded from the template's own <code>tari_tdef</code> ABI section in the on-chain bytes. Flags are hints from argument types and names. The ABI does not say who may call each method: access rules are set at runtime and are not shown here.</p>`);
 }
@@ -152,8 +161,8 @@ function attestBlock(hx, live, att, kind) {
     else if (a.onchain_sha256 !== live.sha256) n = notice("bad", "The attested hash differs", `<p>The attestation names <span class="mono">${esc(short(a.onchain_sha256, 16))}</span>, and the live bytes hash differently. Not counted.</p>`);
     else if (kind !== "ok" && kind !== "warn") n = notice("warn", "Recorded, but not counted", "<p>An attestation exists, but the bytes do not match a public build, so OneScan does not count it.</p>");
     else {
-      const tx = ONCHAIN.attestTxTemplates.has(hx) ? `in <a class="link mono" href="${explorerTx(ONCHAIN.attestTx)}">tx ${esc(short(ONCHAIN.attestTx, 12))}</a>` : "(transaction not recorded here)";
-      n = notice("ok", "Recorded on-chain", `<p>Read live from registry ${reg} at epoch ${esc(a.epoch)}, ${tx}.</p>
+      const tx = ONCHAIN.attestTxTemplates.has(hx) ? `in tx <a class="link mono" href="${receiptUrl(ONCHAIN.attestTx)}" title="${esc(PRUNE_NOTE)}">${esc(short(ONCHAIN.attestTx, 12))}</a>` : "(transaction not recorded here)";
+      n = notice("ok", "Recorded on-chain", `<p>Read live from registry ${reg} at epoch ${esc(a.epoch)}, ${tx}. See the <a class="link" href="${PROOF.explorerComponent}">registry on the explorer</a> or its <a class="link" href="${esc(PROOF.indexerComponent)}">raw indexer substate</a>.</p>
         <p>Signed by the trusted key <span class="mono" title="${esc(a.verifier)}">${esc(short(a.verifier, 16))}</span>. The attested hash equals the live hash.</p>`);
     }
   }
@@ -181,7 +190,7 @@ function bodyVerified(hx, live, rec, liveErr, att, kind) {
       <div><dt>Source</dt><dd>${ghLink(rec.repo, rec.commit)}</dd></div>
       <div><dt>Toolchain</dt><dd>${esc(rec.toolchain?.rustc || "")}${rec.toolchain?.tari_cli ? ", " + esc(rec.toolchain.tari_cli) : ""} on ${esc(rec.runner_os || "Linux")}</dd></div>
       <div><dt>Build mode</dt><dd>${esc(MODE[rec.mode] || rec.mode)}</dd></div>
-      <div><dt>Verifier run</dt><dd><a class="link" href="${esc(rec.run_url)}">GitHub Actions run ${runNo(rec)}</a>, ${esc(rec.verified_at)}</dd></div>
+      <div><dt>Verifier run</dt><dd>${runLink(rec)}, ${esc(rec.verified_at)}</dd></div>
       <div><dt>Build isolation</dt><dd>${isolationFact(rec)}</dd></div>
       ${hashFacts(a, rec.built_sha256, live ? "On chain, hashed here" : "On chain, as recorded", `Built from source (${rec.mode})`)}
       ${onchainFacts(live, rec)}</dl>`)}
@@ -197,7 +206,7 @@ function bodyFailed(hx, live, rec, liveErr, att, kind) {
       <div><dt>Source tried</dt><dd>${ghLink(rec.repo, rec.commit)}</dd></div>
       <div><dt>Toolchain tried</dt><dd>${esc(rec.toolchain?.rustc || "")}${rec.toolchain?.tari_cli ? ", " + esc(rec.toolchain.tari_cli) : ""}</dd></div>
       ${rec.sizes && rec.sizes[0] ? `<div><dt>Sizes</dt><dd>${Number(rec.sizes[0]).toLocaleString()} bytes on chain, ${Number(rec.sizes[1]).toLocaleString()} bytes in the closest build</dd></div>` : ""}
-      <div><dt>Verifier run</dt><dd><a class="link" href="${esc(rec.run_url)}">GitHub Actions run ${runNo(rec)}</a>, ${esc(rec.verified_at)}</dd></div>
+      <div><dt>Verifier run</dt><dd>${runLink(rec)}, ${esc(rec.verified_at)}</dd></div>
       ${hashFacts(a, rec.built_sha256, live ? "On chain, hashed here" : "On chain, as recorded", "Closest build from source")}
       ${onchainFacts(live, rec)}</dl>`)}
     ${attestBlock(hx, live, att, kind)}${functionsBlock(live)}
@@ -226,7 +235,7 @@ const VERDICT = {
 };
 function verdictBody(kind, live, rec) {
   switch (kind) {
-    case "ok": return live ? "<p>The bytes running on Ootle mainnet are identical to a reproducible build of this public commit: 32 of 32 sha256 bytes.</p>"
+    case "ok": return live ? "<p>The bytes running on Ootle mainnet are identical to a reproducible build of this public commit: the sha256 hashes match.</p>"
       : "<p>The verifier run matched the on-chain bytes. A live re-check could not run in this browser, so this shows the recorded hashes.</p>";
     case "warn": return "<p>The bytes match a build of this public commit, but the build raised warnings that weaken what the match proves. They are listed below.</p>";
     case "bad": return `<p>OneScan rebuilt the claimed source and did not get these bytes. Diagnosis: ${esc(rec.cause)}.</p>`;
@@ -327,8 +336,8 @@ async function lookup(raw) {
   if (!rec) { step("compare", "skip", "no rebuild to compare with"); kind = "none"; }
   else {
     const a = live ? live.sha256 : rec.onchain_sha256;
-    const n = diffCount(a, rec.built_sha256);
-    if (live) step("compare", n ? "fail" : "ok", n ? `${n} of 32 bytes differ` : "32 of 32 bytes equal");
+    const n = a === rec.built_sha256 ? 0 : 1;
+    if (live) step("compare", n ? "fail" : "ok", n ? "no match: the hashes differ" : "match: the hashes are identical");
     else step("compare", "warn", rec.match ? "recorded hashes equal" : "recorded hashes differ");
     kind = n === 0 && rec.match ? (rec.clean ? "ok" : "warn") : rec.match ? "withdrawn" : "bad";
   }
@@ -338,7 +347,7 @@ async function lookup(raw) {
   if (att.error) step("attest", "fail", "registry unreadable");
   else {
     const a = att.byTemplate.get(hx)?.[0];
-    if (!a) step("attest", "skip", "no attestation by the trusted key");
+    if (!a) step("attest", "none", "registry read; no attestation by the trusted key for this template");
     else if (!live) step("attest", "warn", "exists, not compared");
     else if (a.onchain_sha256 !== live.sha256) step("attest", "fail", "attested hash differs");
     else if (kind === "ok" || kind === "warn") step("attest", "ok", `attested at epoch ${a.epoch}, trusted key ${short(a.verifier, 8)}`);
@@ -377,7 +386,7 @@ out.addEventListener("submit", (ev) => {
 
 // ---------- home: every number below comes from the register or a live chain read ----------
 const VX = {
-  ok: { s: { tone: "ok", kicker: "Verdict", title: "Verified" }, text: "A public commit, rebuilt offline, gives the exact bytes on chain. All 32 sha256 bytes are equal and the build raised no warnings.", t: "67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309", ex: "Sealed Bids" },
+  ok: { s: { tone: "ok", kicker: "Verdict", title: "Verified" }, text: "A public commit, rebuilt with no network access, gives the exact bytes on chain. The sha256 hashes match and the build raised no warnings.", t: "67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309", ex: "Sealed Bids" },
   warn: { s: { tone: "warn", kicker: "Verdict", title: "Verified, with warnings" }, text: "The bytes match, but the build ran scripts or had other caveats that weaken what the match proves. Each warning is listed.", t: "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725", ex: "Specter Report Receipt" },
   bad: { s: { tone: "neutral", kicker: "Verdict", title: "Not reproduced" }, text: "The claimed source was rebuilt and did not give these bytes. Every such entry carries a diagnosed reason. It is not an accusation.", t: "65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455", ex: "Signal Desk" },
   none: { s: { tone: "neutral", kicker: "Verdict", title: "Unverified" }, text: "The template is live on mainnet, but nobody has shown which source builds it. You can request a check from the result page.", t: null },
@@ -401,7 +410,8 @@ function verdictExplorer() {
 
 const HEX = "0123456789abcdef";
 function proofMachine(records, att) {
-  const q = records.filter((r) => r.match && r.clean && !r.own).concat(records.filter((r) => r.own && r.clean));
+  const ok = records.filter((r) => isHex64(r.template) && isHex64(r.onchain_sha256));
+  const q = ok.filter((r) => r.match && r.clean && !r.own).concat(ok.filter((r) => r.own && r.clean));
   const body = $("#machine-body"), empty = $("#machine-empty");
   if (!q.length) { empty.textContent = "The ledger is empty for now."; return; }
   empty.hidden = true; body.hidden = false;
@@ -412,7 +422,7 @@ function proofMachine(records, att) {
     const known = Math.floor((Math.min(st, HASH) / HASH) * h.length);
     const attested = att && !att.error && att.byTemplate.get(r.template)?.[0]?.onchain_sha256 === h;
     if (fresh) body.innerHTML = `<dl>
-        <div><dt>Template</dt><dd class="m-name machine-in"><a href="./?t=${r.template}">${esc(r.name)}</a></dd></div>
+        <div><dt>Template</dt><dd class="m-name machine-in"><a href="./?t=${esc(r.template)}">${esc(r.name)}</a></dd></div>
         <div class="m-two"><div><dt>Repo</dt><dd>${esc(repoName(r.repo))}</dd></div><div><dt>Commit</dt><dd class="mono">${esc((r.commit || "").slice(0, 12))}</dd></div></div>
         <div><dt>Bytes on chain, by sha256</dt><dd class="m-hash" aria-label="${h}" id="m-hash"></dd></div></dl>
         <div class="m-foot" id="m-foot"><span class="muted">Reading the hash</span></div>`;
@@ -430,9 +440,9 @@ function proofMachine(records, att) {
 }
 
 function ticker(records) {
-  const rows = records.filter((r) => r.match);
+  const rows = records.filter((r) => r.match && isHex64(r.template));
   if (!rows.length) return;
-  const li = (r, hidden) => `<li><a href="./?t=${r.template}"${hidden ? ' tabindex="-1"' : ""}>${esc(r.name)}</a><span>${esc(r.template.slice(0, 6))}...${esc(r.template.slice(-4))}</span><i aria-hidden="true"></i></li>`;
+  const li = (r, hidden) => `<li><a href="./?t=${esc(r.template)}"${hidden ? ' tabindex="-1"' : ""}>${esc(r.name)}</a><span>${esc(r.template.slice(0, 6))}...${esc(r.template.slice(-4))}</span><i aria-hidden="true"></i></li>`;
   const list = Array.from({ length: Math.ceil(14 / rows.length) }, () => rows).flat();
   $("#ticker").innerHTML = `<div class="ticker-track"><ul>${list.map((r) => li(r)).join("")}</ul><ul aria-hidden="true">${list.map((r) => li(r, true)).join("")}</ul></div>`;
 }

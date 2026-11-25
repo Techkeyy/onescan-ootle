@@ -7,7 +7,8 @@
 <meta name="description" content="Check that public source is the code running at an Ootle template address. OneScan reads the WASM from mainnet, hashes it in your browser, and compares it with a byte-for-byte rebuild.">
 <meta name="theme-color" content="#0d0e1f">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Crect width='32' height='32' rx='8' fill='%2317193a'/%3E%3Ccircle cx='16' cy='16' r='10.5' stroke='%239c97ff' stroke-width='2.6'/%3E%3Cpath d='M11 16.4l3.6 3.6 6.4-7.2' stroke='%23a9dcc6' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist+Mono:wght@400..600&family=Geist:wght@400..700&display=swap">
@@ -90,7 +91,7 @@
   <ul class="numbers" id="numbers">
     <li class="block-sage print shadow-deep"><span class="n" id="n-rep">...</span><span class="l">templates rebuild byte for byte from public source</span></li>
     <li class="block-lilac print shadow-deep"><span class="n" id="n-att">...</span><span class="l">attestations by the trusted key, read live from the chain</span></li>
-    <li class="block-paper print shadow-deep"><span class="n" id="n-all">...</span><span class="l">contest templates with public source checked</span></li>
+    <li class="block-paper print shadow-deep"><span class="n" id="n-all">...</span><span class="l">third-party templates checked so far, matches and misses</span></li>
   </ul>
   <aside class="tokens-base print ledger-card shadow-deep" aria-label="Latest proofs">
     <div>
@@ -100,8 +101,8 @@
     <div>
       <div class="cov" id="cov"><div class="meter"><i style="width:0%"></i></div><p class="muted">Reading the register</p></div>
       <dl class="fields fields-tight small">
-        <div><dt>Registry</dt><dd class="mono" title="component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea">component_9f72dfb5c699...</dd></div>
-        <div><dt>Attested in</dt><dd><a class="link mono" href="https://explorer.tari.mw/tx/c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec">tx c86b139b3e04...</a> <span class="muted" id="tx-count"></span></dd></div>
+        <div><dt>Registry</dt><dd><a class="link mono" href="https://explorer.tari.mw/substate/component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea" title="component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea">component_9f72dfb5c699...</a></dd></div>
+        <div><dt>Attested in</dt><dd><a class="link mono" href="https://github.com/Techkeyy/onescan-ootle/blob/main/evidence/mainnet/tx-c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec.json">tx c86b139b3e04...</a> <span class="muted" id="tx-count"></span></dd></div>
       </dl>
     </div>
   </aside>
@@ -114,7 +115,7 @@
   </div>
   <div class="tokens-base print pad shadow-deep" id="self">
     <p style="font-weight:500">OneScan checked itself</p>
-    <p class="mt-3">The SourceRegistry contract that holds OneScan's attestations, template <span class="mono">5b0efecc...</span>, rebuilds byte for byte from <a class="link" href="https://github.com/Techkeyy/onescan-ootle/blob/main/registry/5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json">public source</a> after the wallet's wasm-opt pass.</p>
+    <p class="mt-3">The SourceRegistry contract that holds OneScan's attestations, template <span class="mono">5b0efecc...</span>, rebuilds byte for byte from <a class="link" href="https://github.com/Techkeyy/onescan-ootle/blob/main/registry/5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json">public source</a> after the wallet's wasm-opt pass. The CI build in <span class="mono">dist/onescan_registry.wasm</span> is the input to that pass, so its hash differs from the on-chain bytes; the self-check compares the walletd-optimized output.</p>
     <p class="mt-3 live" id="self-live"><span class="dot pulse"></span><span>Reading its attestation from the chain</span></p>
     <a class="btn mt-4" href="./?t=5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13">Check it live</a>
   </div>
@@ -125,14 +126,14 @@
   <ol class="steps">
     <li><span class="num">1</span><div><h3>Reads the chain</h3><p>Your browser fetches the template substate from the public Ootle indexer and decodes the WASM inside it.</p></div></li>
     <li><span class="num">2</span><div><h3>Hashes it in your browser</h3><p>The bytes are hashed with sha256 right here, with crypto.subtle. No server tells you what the hash is.</p></div></li>
-    <li><span class="num">3</span><div><h3>Finds the rebuild</h3><p>A public GitHub Actions run built the claimed commit offline, with the network cut, a pinned toolchain and recorded settings.</p></div></li>
-    <li><span class="num">4</span><div><h3>Compares byte for byte</h3><p>The two sha256 hashes are held side by side. Anything short of 32 equal bytes out of 32 is not a match.</p></div></li>
+    <li><span class="num">3</span><div><h3>Finds the rebuild</h3><p>A public GitHub Actions run built the claimed commit with a pinned toolchain and recorded settings. Linux builds run with no network. Templates that must be built on Windows are not network-isolated and carry a warning.</p></div></li>
+    <li><span class="num">4</span><div><h3>Compares byte for byte</h3><p>The two sha256 hashes are compared. Only identical hashes count as a match.</p></div></li>
     <li><span class="num">5</span><div><h3>Reads the attestation</h3><p>It reads OneScan's SourceRegistry on mainnet and counts an entry only if the trusted key signed it and its hash equals the live bytes.</p></div></li>
   </ol>
   <div class="flow" aria-hidden="true">
     <div class="node">Repo at a commit</div><div class="node chain">Template address</div>
     <div class="edge"></div><div class="edge dashed"></div>
-    <div class="node">Offline rebuild</div><div class="node chain">WASM on chain</div>
+    <div class="node">Recorded rebuild</div><div class="node chain">WASM on chain</div>
     <div class="edge"></div><div class="edge"></div>
     <div class="node wide">Compare sha256, byte for byte</div>
     <div class="edge wide"></div>
@@ -159,7 +160,7 @@
     <h2 class="h2">If you wrote it, show it</h2>
     <p class="lead">Every checked template gets a badge for its README. It opens the live check, so readers see the hashes and the verdict, not just a label.</p>
     <img class="badge-img mt-6" alt="Example OneScan badge for the SourceRegistry template" height="20" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftechkeyy.github.io%2Fonescan-ootle%2Fbadge%2F5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json">
-    <p class="mt-4 muted">Not checked yet? Open a prefilled request with your repo and commit. A public Actions run rebuilds it offline and posts the result on the issue.</p>
+    <p class="mt-4 muted">Not checked yet? Open a prefilled request with your repo and commit. A public Actions run rebuilds it and posts the result on the issue.</p>
     <a class="btn mt-6" href="https://github.com/Techkeyy/onescan-ootle/issues/new?template=verify-request.yml&amp;labels=verify-request">Request a check</a>
   </div>
   <div>
@@ -177,11 +178,12 @@
   <div class="tokens-base print pad shadow-deep">
     <dl class="fields">
       <div><dt>Registry component</dt><dd class="mono break">component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea</dd></div>
+      <div><dt>Live state</dt><dd><a class="link" href="https://explorer.tari.mw/substate/component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea">On the explorer</a>, with every SourceAttested event, or the <a class="link" href="https://indexer-a.ootle.tari.com/substates/component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea?local_search_only=false">raw indexer substate</a></dd></div>
       <div><dt>Trusted key</dt><dd class="mono break">1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862</dd></div>
-      <div><dt>Attestation tx</dt><dd><a class="link mono break" href="https://explorer.tari.mw/tx/c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec">c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec</a></dd></div>
+      <div><dt>Transactions</dt><dd>Publish <a class="link mono" href="https://github.com/Techkeyy/onescan-ootle/blob/main/evidence/mainnet/tx-eda11d8d940fe6080bf3d6f1dee2b88a2fb4af99f1f663589f30b672819e1004.json">eda11d8d940f...</a>, instantiate <a class="link mono" href="https://github.com/Techkeyy/onescan-ootle/blob/main/evidence/mainnet/tx-485a86626c42397ac09a197d5cc55439cdadeb61be965fbad5d6eb0f6e23f2b9.json">485a86626c42...</a>, attest <a class="link mono" href="https://github.com/Techkeyy/onescan-ootle/blob/main/evidence/mainnet/tx-c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec.json">c86b139b3e04...</a></dd></div>
       <div><dt>Attested now</dt><dd id="att-now">Reading the registry</dd></div>
     </dl>
-    <p class="mt-3 small muted">Anyone can write to the registry. OneScan counts an entry only if this key signed it and its hash equals the live bytes.</p>
+    <p class="mt-3 small muted">The public indexer prunes old transactions; receipts are kept in the repo. Anyone can write to the registry. OneScan counts an entry only if this key signed it and its hash equals the live bytes.</p>
   </div>
 </div></section>
 
@@ -190,7 +192,8 @@
   <ul class="limits">
     <li>Verified source is not an audit. A match says which public commit built the bytes. It does not say the code is safe.</li>
     <li>The method flags are hints from argument types and names. The ABI does not say who may call each method.</li>
-    <li>The register covers November contest templates with public source. Templates without source cannot match anything.</li>
+    <li>The register holds only the templates OneScan has checked so far: November contest entries live on mainnet that link a public GitHub repo, plus OneScan's own. It is not every template on Ootle. Want one added? <a class="link" href="https://github.com/Techkeyy/onescan-ootle/issues/new?template=verify-request.yml&amp;labels=verify-request">Request a check</a>.</li>
+    <li>Linux rebuilds run with no network. Templates that had to be rebuilt on Windows were not network-isolated, and say so in a warning.</li>
     <li>An attestation is a statement by OneScan's key. The real proof is that anyone can repeat the rebuild.</li>
   </ul>
 </div></section>

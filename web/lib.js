@@ -141,7 +141,24 @@ export const ONCHAIN = {
     "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725", "ae13cead3c34052116c49fc09e4645f3a62edf55857c0e2e45226dd7093cef9c",
     "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45"]),
 };
-export const explorerTx = (tx) => `https://explorer.tari.mw/tx/${tx}`;
+// The public indexer prunes old transactions, so explorer tx links stop resolving. The live proof is the
+// registry component itself; transaction receipts are kept in the repo under evidence/mainnet/.
+export const PROOF = {
+  indexerComponent: `${INDEXER}/substates/${ONCHAIN.registry}?local_search_only=false`,
+  explorerComponent: `https://explorer.tari.mw/substate/${ONCHAIN.registry}`,
+  explorerTemplate: `https://explorer.tari.mw/template/${ONCHAIN.registryTemplate}`,
+  receipts: `https://github.com/${REPO}/tree/main/evidence/mainnet`,
+};
+const RECEIPTS = new Set(["eda11d8d940fe6080bf3d6f1dee2b88a2fb4af99f1f663589f30b672819e1004",
+  "485a86626c42397ac09a197d5cc55439cdadeb61be965fbad5d6eb0f6e23f2b9", "c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec"]);
+export const receiptUrl = (tx) => (RECEIPTS.has(tx) ? `https://github.com/${REPO}/blob/main/evidence/mainnet/tx-${tx}.json` : PROOF.receipts);
+export const PRUNE_NOTE = "The public indexer prunes old transactions; receipts are kept in the repo.";
+
+// Only render links from registry JSON when they have the expected shape. Anything else is shown as text.
+export const isHex64 = (s) => typeof s === "string" && /^[0-9a-f]{64}$/.test(s);
+export const safeRepo = (u) => (typeof u === "string" && /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/.test(u) ? u.replace(/\/$/, "") : null);
+export const safeRun = (u) => (typeof u === "string" && /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/actions\/runs\/\d+(\/attempts\/\d+)?\/?$/.test(u) ? u : null);
+export const safeCommit = (c) => (typeof c === "string" && /^[0-9a-f]{7,40}$/i.test(c) ? c : null);
 
 // Register numbers: entries in the order they were assayed (verified_at, then address), numbered from 1.
 export function registerNumbers(records) {

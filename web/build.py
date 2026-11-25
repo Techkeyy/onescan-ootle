@@ -2,7 +2,7 @@
 
 Usage: python -I web/build.py [out_dir]   (default _site). Run from the repo root.
 """
-import glob, json, os, shutil, sys
+import glob, json, os, re, shutil, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "verifier"))
@@ -24,7 +24,8 @@ os.makedirs(os.path.join(out, "badge"), exist_ok=True)
 records = {}
 for p in sorted(glob.glob(os.path.join(ROOT, "registry", "*.json"))):
     r = json.load(open(p))
-    if "template" not in r:
+    if not isinstance(r.get("template"), str) or not re.fullmatch(r"[0-9a-f]{64}", r["template"]):
+        print(f"skipped {os.path.basename(p)}: template is not 64 lowercase hex", file=sys.stderr)
         continue
     rec = {k: r.get(k) for k in KEEP}
     rec["cause"] = cause(r)

@@ -112,8 +112,8 @@ def check_config(rel, text):
     for k in ("rustflags", "rustdocflags"):
         if bad_flags(b.get(k)):
             fails.append(f"{rel}: build.{k} {bad_flags(b.get(k))}")
-    if "target-dir" in b:
-        warns.append(f"{rel}: build.target-dir")
+    if "target-dir" in b and str(b["target-dir"]).strip("./") != "target":
+        warns.append(f"{rel}: build.target-dir = {str(b['target-dir'])[:60]!r}")  # must still resolve inside the repo (expect.py)
 
     def section(name, conf):
         for k, v in conf.items():

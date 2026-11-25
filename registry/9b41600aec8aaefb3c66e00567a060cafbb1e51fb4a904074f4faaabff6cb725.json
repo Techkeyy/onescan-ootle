@@ -3,12 +3,18 @@
   "name": "SpecterReportReceipt",
   "author_public_key": "da8b317049487cc2097430891b3d6761c6d693e61bdd7ee3ccc2e0f3c17f222c",
   "onchain_sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/yeziR4/specter-tari",
   "commit": "77bda5ff5ca30dfba570d5652a160dc7ce792a36",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/home/yezir/.cargo",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "9b41600aec8aaefb3c66e00567a060cafbb1e51fb4a904074f4faaabff6cb725",
     "repo": "https://github.com/yeziR4/specter-tari",
@@ -24,18 +30,33 @@
     "cmd": "",
     "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build produced no wasm at the expected path"
-  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "4f50c43bd463a57a3101745d42ee6f794ca10c691f5888f28476fcb0e479b83f"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "03efc5252d65245cec1b5d7b3cd279f2f822c9e02239c4ecbb64c098a989328f"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
-    "network_isolated": false,
+    "network_isolated": true,
     "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
-    "note": "no build report",
-    "reported_by_build": {}
+    "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+    "reported_by_build": {
+      "network_isolated": true,
+      "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+      "container_image": "onescan-build:local",
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -59,7 +80,6 @@
     "committed_count": 133
   },
   "warnings": [
-    "network not isolated during the build: no build report",
     "committed binary or large file: contracts/report-receipt/specter_report_receipt.wasm (96767 bytes, wasm)",
     "committed binary or large file: dist/downloads/specter-source.zip (153921 bytes, binary)",
     "committed binary or large file: dist/downloads/specter_report_receipt.wasm (96767 bytes, wasm)",
@@ -69,7 +89,7 @@
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "contracts/report-receipt/target/wasm32-unknown-unknown/release/specter_report_receipt.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-9b41600aec8a-8/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "yezir4_specter-tari@77bda5ff5ca30dfba570d5652a160dc7ce792a36",
   "attempts": [
@@ -77,12 +97,12 @@
       "key": "yezir4_specter-tari@77bda5ff5ca30dfba570d5652a160dc7ce792a36",
       "repo": "https://github.com/yeziR4/specter-tari",
       "commit": "77bda5ff5ca30dfba570d5652a160dc7ce792a36",
-      "match": false,
+      "match": true,
       "clean": false,
-      "mode": "no-match",
+      "mode": "walletd-optimized",
       "pipeline": 2,
-      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-      "verified_at": "2026-11-25T09:52:22Z"
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+      "verified_at": "2026-11-25T10:05:09Z"
     }
   ]
 }

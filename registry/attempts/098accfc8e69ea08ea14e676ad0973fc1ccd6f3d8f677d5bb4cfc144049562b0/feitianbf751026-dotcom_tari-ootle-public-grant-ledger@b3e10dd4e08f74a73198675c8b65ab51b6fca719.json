@@ -3,12 +3,18 @@
   "name": "PublicGrant",
   "author_public_key": "70b06443297e340257c4cd21f17586735a43f7ef57310177abe2984a581e406b",
   "onchain_sha256": "8f33a6f4ca3478479fd215f5757574c8a8c51445c8a297fa4a554344eec4b305",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "8f33a6f4ca3478479fd215f5757574c8a8c51445c8a297fa4a554344eec4b305",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/feitianbf751026-dotcom/tari-ootle-public-grant-ledger",
   "commit": "b3e10dd4e08f74a73198675c8b65ab51b6fca719",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+    "rustup_toolchain": "1.100.0-x86_64-pc-windows-gnu",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=C:\\Users\\runneradmin\\.cargo=C:\\Users\\czj\\.cargo",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "098accfc8e69ea08ea14e676ad0973fc1ccd6f3d8f677d5bb4cfc144049562b0",
     "repo": "https://github.com/feitianbf751026-dotcom/tari-ootle-public-grant-ledger",
@@ -24,18 +30,33 @@
     "cmd": "",
     "os": "windows-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build produced no wasm at the expected path"
-  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Windows",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "ae82104607c8f55c985f4256fcb5a7d4ed636e2274f6c9c1e7f9d4c0b41f910b"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "8f33a6f4ca3478479fd215f5757574c8a8c51445c8a297fa4a554344eec4b305"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
     "network_isolated": false,
     "method": null,
     "note": "windows-latest runner: build ran with cargo offline but without network isolation",
-    "reported_by_build": {}
+    "reported_by_build": {
+      "network_isolated": false,
+      "note": "Windows runner: build ran with cargo offline but without network isolation",
+      "container_image": null,
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -60,7 +81,7 @@
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "target/wasm32-unknown-unknown/release/public_grant.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-098accfc8e69-0/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "feitianbf751026-dotcom_tari-ootle-public-grant-ledger@b3e10dd4e08f74a73198675c8b65ab51b6fca719"
 }

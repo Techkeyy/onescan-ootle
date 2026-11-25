@@ -3,12 +3,18 @@
   "name": "CursedPumpkin",
   "author_public_key": "66ff4b83d0c720c1e309d1fd385335a9f28605a033f67e767546db0536dbf22b",
   "onchain_sha256": "256af3d167652fb99039e890af3b833445e089c8e32a8b4b2940d31f7b1b531a",
-  "built_sha256": null,
+  "built_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/Mzee04/cursed-pumpkin",
   "commit": "04c0f38af8578b94dbc352615578b31429d6b4e9",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "rustup_toolchain": "1.99.1",
+    "tari_cli": "tari-ootle-cli 0.35.2",
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/Users/mzee/.cargo",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "dc7d2ed8f763ce291a0c27b466ed706005279f85831d2d3c9610b4aaabe56b44",
     "repo": "https://github.com/Mzee04/cursed-pumpkin",
@@ -24,18 +30,150 @@
     "cmd": "",
     "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "92238434aeb856ce6be8d620432fa0fc6c9587a71c451e84cbe8dff67171f255"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611"
+    }
+  ],
   "diagnostics": {
-    "error": "build produced no wasm at the expected path"
+    "closest": "walletd-optimized",
+    "closest_sha256": "1fd99dbdb6f243c7cb46a4aa5b2d36a89d24031a5f7df59e3ee99ad4dc614611",
+    "closest_size": 275591,
+    "onchain_size": 275605,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
+    "built_rustc_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
+    "onchain_paths": [
+      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
+      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "built_paths": [
+      "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
+      "/Users/mzee/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        186
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        420
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        139
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        253604
+      ],
+      [
+        "data",
+        20171
+      ],
+      [
+        "custom:tari_tdef",
+        935
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        186
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        420
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        139
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        253588
+      ],
+      [
+        "data",
+        20173
+      ],
+      [
+        "custom:tari_tdef",
+        935
+      ]
+    ]
   },
   "isolation": {
-    "network_isolated": false,
+    "network_isolated": true,
     "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
-    "note": "no build report",
-    "reported_by_build": {}
+    "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+    "reported_by_build": {
+      "network_isolated": true,
+      "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+      "container_image": "onescan-build:local",
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -55,14 +193,13 @@
     "committed_count": 30
   },
   "warnings": [
-    "network not isolated during the build: no build report",
     "committed binary or large file: web/bor/ootle_wasm_bor_bg.wasm (467027 bytes, wasm)"
   ],
   "clean": false,
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "templates/cursed_pumpkin/target/wasm32-unknown-unknown/release/cursed_pumpkin.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-dc7d2ed8f763-13/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "mzee04_cursed-pumpkin@04c0f38af8578b94dbc352615578b31429d6b4e9"
 }

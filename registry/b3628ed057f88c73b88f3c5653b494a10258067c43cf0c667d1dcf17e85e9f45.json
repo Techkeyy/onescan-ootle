@@ -3,12 +3,18 @@
   "name": "GhostlineFeeConfig",
   "author_public_key": "728870aee9b9fb66e69fcf45510440e54b59387a7efe3816713e054014d3b230",
   "onchain_sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/AduAkorful/ghostline",
   "commit": "b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/home/aduakorful/.cargo",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45",
     "repo": "https://github.com/AduAkorful/ghostline",
@@ -24,18 +30,33 @@
     "cmd": "",
     "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build produced no wasm at the expected path"
-  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "766a60e8108e5856b03d24a1bae6b6eca39df5b2eac9df2de7186fdd15eae311"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "f61a0c297edf035ecc90ada79b6f04b77877ec40c62fc8f3561f67a9c79f519c"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
-    "network_isolated": false,
+    "network_isolated": true,
     "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
-    "note": "no build report",
-    "reported_by_build": {}
+    "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+    "reported_by_build": {
+      "network_isolated": true,
+      "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+      "container_image": "onescan-build:local",
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -50,14 +71,12 @@
     "scrubbed": [],
     "committed_count": 234
   },
-  "warnings": [
-    "network not isolated during the build: no build report"
-  ],
-  "clean": false,
+  "warnings": [],
+  "clean": true,
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "contracts/fee-config/target/wasm32-unknown-unknown/release/ghostline_fee_config.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-b3628ed057f8-10/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "aduakorful_ghostline@b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
   "attempts": [
@@ -65,12 +84,12 @@
       "key": "aduakorful_ghostline@b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
       "repo": "https://github.com/AduAkorful/ghostline",
       "commit": "b9cf4ce77cb3a6285587fbe4c97f1f243c9b0dee",
-      "match": false,
-      "clean": false,
-      "mode": "no-match",
+      "match": true,
+      "clean": true,
+      "mode": "walletd-optimized",
       "pipeline": 2,
-      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-      "verified_at": "2026-11-25T09:52:22Z"
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+      "verified_at": "2026-11-25T10:05:09Z"
     }
   ]
 }

@@ -3,12 +3,18 @@
   "name": "SignalFollows",
   "author_public_key": "66fb73201ee4eb423cf5e5c1c31e6520c576f1e6d1041e72ccd026593025e354",
   "onchain_sha256": "f3073726e7c3622f2dd8abf4c541717c71d7c37e54017d3cbd6a9c7425f7bbc8",
-  "built_sha256": null,
+  "built_sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa",
   "match": false,
   "mode": "no-match",
   "repo": "https://github.com/ogboy92ii/signal-desk",
   "commit": "b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "rustup_toolchain": "1.98.1",
+    "tari_cli": "tari-ootle-cli 0.35.1",
+    "rustflags": "",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "b622b0ada7ee233eabe33d7111c641ebdbd281e877bb217c6f32d287e250eecf",
     "repo": "https://github.com/ogboy92ii/signal-desk",
@@ -24,18 +30,150 @@
     "cmd": "",
     "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "079fef5084f1e088e47758e4ca3f627d92cfd281b0d4e2a2d7b4b2751b39c606"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa"
+    }
+  ],
   "diagnostics": {
-    "error": "build produced no wasm at the expected path"
+    "closest": "walletd-optimized",
+    "closest_sha256": "597298142df382bc7e5c35a68b58d13b80f4010ea6456987e5bfd550bde64daa",
+    "closest_size": 93124,
+    "onchain_size": 93069,
+    "tari_tdef_equal": true,
+    "rustc_commit_equal": true,
+    "onchain_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "built_rustc_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
+    "onchain_paths": [
+      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "built_paths": [
+      "/rustc/48a229ceaefd4985c50990b14116b6d856af0985",
+      "/home/runner/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f"
+    ],
+    "onchain_sections": [
+      [
+        "type",
+        119
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        171
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        66
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        81727
+      ],
+      [
+        "data",
+        10480
+      ],
+      [
+        "custom:tari_tdef",
+        359
+      ]
+    ],
+    "built_sections": [
+      [
+        "type",
+        119
+      ],
+      [
+        "import",
+        34
+      ],
+      [
+        "function",
+        171
+      ],
+      [
+        "table",
+        5
+      ],
+      [
+        "memory",
+        3
+      ],
+      [
+        "global",
+        9
+      ],
+      [
+        "export",
+        58
+      ],
+      [
+        "element",
+        66
+      ],
+      [
+        "datacount",
+        1
+      ],
+      [
+        "code",
+        81782
+      ],
+      [
+        "data",
+        10480
+      ],
+      [
+        "custom:tari_tdef",
+        359
+      ]
+    ]
   },
   "isolation": {
-    "network_isolated": false,
+    "network_isolated": true,
     "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
-    "note": "no build report",
-    "reported_by_build": {}
+    "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+    "reported_by_build": {
+      "network_isolated": true,
+      "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+      "container_image": "onescan-build:local",
+      "cargo_offline": true,
+      "lockfile_honoured": false
+    }
   },
   "source_check": {
     "fail": [],
@@ -60,7 +198,6 @@
     "committed_count": 345
   },
   "warnings": [
-    "network not isolated during the build: no build report",
     "build script: build.rs (package signal_desk)",
     "build script: follows/build.rs (package signal_follows)",
     "build script: forecasts/build.rs (package signal_forecasts)",
@@ -71,7 +208,7 @@
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "follows/target/wasm32-unknown-unknown/release/signal_follows.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-b622b0ada7ee-11/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "ogboy92ii_signal-desk@b57767562e5d4291ff7f7faaa48b89e7d19ddcfd",
   "attempts": [
@@ -83,8 +220,8 @@
       "clean": false,
       "mode": "no-match",
       "pipeline": 2,
-      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-      "verified_at": "2026-11-25T09:52:22Z"
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+      "verified_at": "2026-11-25T10:05:09Z"
     }
   ]
 }

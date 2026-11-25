@@ -3,12 +3,18 @@
   "name": "Payroll",
   "author_public_key": "beec685a3e606bc04676fd4c807e0c1b72b68e7a31d34584e9a3e6297ca73d27",
   "onchain_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/Devendurance/steady",
   "commit": "e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+    "rustup_toolchain": "1.100.0",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/home/endy/.cargo",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "54d64fdd5af8a40fe9331611e1f37f473c1bf670f32523e2b093d704e76e3983",
     "repo": "https://github.com/Devendurance/steady",
@@ -24,18 +30,33 @@
     "cmd": "",
     "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build produced no wasm at the expected path"
-  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "4739c0ead6c5ae2461404a8b97823bfa8a465da5d6502b1a63952bb6e5167f53"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "f12b2c930bd956c52cc8074fd302de0cabb14b2d0299b429c9be649084ab70dc"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
-    "network_isolated": false,
+    "network_isolated": true,
     "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
-    "note": "no build report",
-    "reported_by_build": {}
+    "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+    "reported_by_build": {
+      "network_isolated": true,
+      "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+      "container_image": "onescan-build:local",
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -53,14 +74,13 @@
     "committed_count": 66
   },
   "warnings": [
-    "network not isolated during the build: no build report",
     "committed binary or large file: evidence/2026-11-20/publish-receipt.json (16384 bytes, contains a long base64/hex run)"
   ],
   "clean": false,
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "target/wasm32-unknown-unknown/release/steady.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-54d64fdd5af8-2/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "devendurance_steady@e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
   "attempts": [
@@ -68,12 +88,12 @@
       "key": "devendurance_steady@e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
       "repo": "https://github.com/Devendurance/steady",
       "commit": "e298436e6f26d5777e3a4b8af2b514c1fe8c406d",
-      "match": false,
+      "match": true,
       "clean": false,
-      "mode": "no-match",
+      "mode": "walletd-optimized",
       "pipeline": 2,
-      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-      "verified_at": "2026-11-25T09:52:22Z"
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+      "verified_at": "2026-11-25T10:05:09Z"
     }
   ]
 }

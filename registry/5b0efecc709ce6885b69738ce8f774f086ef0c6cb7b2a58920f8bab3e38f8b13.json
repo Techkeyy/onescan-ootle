@@ -3,12 +3,18 @@
   "name": "SourceRegistry",
   "author_public_key": "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
   "onchain_sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/Techkeyy/onescan-ootle",
   "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/build/.cargo --remap-path-prefix=/home/runner/work/_temp/src=/build/src",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13",
     "repo": "https://github.com/Techkeyy/onescan-ootle",
@@ -24,18 +30,33 @@
     "cmd": "",
     "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:52:22Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build produced no wasm at the expected path"
-  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+  "runner_os": "Linux",
+  "verified_at": "2026-11-25T10:05:09Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "a5d24edf32f6fb6185010ffd788891eac6684dbeb9a85bd3416c06e3099ec1af"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "fa009b0af34cbda12be0b85061a72dc4825f5aee4b8631ea5646a648b1a899ae"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
-    "network_isolated": false,
+    "network_isolated": true,
     "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
-    "note": "no build report",
-    "reported_by_build": {}
+    "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+    "reported_by_build": {
+      "network_isolated": true,
+      "note": "docker --network none, uid 1001, no sudo, no capabilities; probes: net=blocked sudo=blocked sudo_nsenter=blocked nsenter=blocked write_cargo_home=blocked write_toolchain=blocked write_tools=blocked; indexer reachable outside",
+      "container_image": "onescan-build:local",
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -50,14 +71,12 @@
     "scrubbed": [],
     "committed_count": 55
   },
-  "warnings": [
-    "network not isolated during the build: no build report"
-  ],
-  "clean": false,
+  "warnings": [],
+  "clean": true,
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "registry-template/target/wasm32-unknown-unknown/release/onescan_registry.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-5b0efecc709c-14/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "techkeyy_onescan-ootle@29a076b8d07e41a03a197c1adc822d15c8995338",
   "attempts": [
@@ -65,12 +84,12 @@
       "key": "techkeyy_onescan-ootle@29a076b8d07e41a03a197c1adc822d15c8995338",
       "repo": "https://github.com/Techkeyy/onescan-ootle",
       "commit": "29a076b8d07e41a03a197c1adc822d15c8995338",
-      "match": false,
-      "clean": false,
-      "mode": "no-match",
+      "match": true,
+      "clean": true,
+      "mode": "walletd-optimized",
       "pipeline": 2,
-      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589396867",
-      "verified_at": "2026-11-25T09:52:22Z"
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45589482146",
+      "verified_at": "2026-11-25T10:05:09Z"
     }
   ]
 }

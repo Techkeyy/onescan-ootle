@@ -1,0 +1,63 @@
+{
+  "template": "968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72",
+  "name": "Lockbox",
+  "author_public_key": "1acc86fb7551e278a16f9560801946f0699a672d3b249890d2b56ba3ff029245",
+  "onchain_sha256": "58033cf4255ed932ee9b883373057f4d9792a018b13c5bf75d6f2c8b21fa47a0",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
+  "repo": "https://github.com/ManishModak/ootle-lockbox",
+  "commit": "ed3ff374ac3e9d8794e96357240aa6b8ecce5f37",
+  "toolchain": null,
+  "recipe": {
+    "template": "968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72",
+    "repo": "https://github.com/ManishModak/ootle-lockbox",
+    "commit": "ed3ff374ac3e",
+    "rustc": "1.98.1",
+    "builder": "cargo",
+    "tari_cli": "",
+    "script": "",
+    "workdir": "",
+    "remap": "/home/manishm/.cargo",
+    "rustflags": "",
+    "optimizer": "auto",
+    "cmd": "",
+    "os": "ubuntu-latest"
+  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:34:45Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
+  "isolation": {
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
+  },
+  "source_check": {
+    "fail": [],
+    "build_rs": [],
+    "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
+    "includes": [],
+    "blobs": [],
+    "numeric": [],
+    "patch_or_git": [],
+    "config": [],
+    "scrubbed": [],
+    "committed_count": 65
+  },
+  "warnings": [
+    "network not isolated during the build: no build report"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "target/wasm32-unknown-unknown/release/ootle_lockbox.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "manishmodak_ootle-lockbox@ed3ff374ac3e9d8794e96357240aa6b8ecce5f37"
+}

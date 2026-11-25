@@ -3,18 +3,12 @@
   "name": "SealedBidAuction",
   "author_public_key": "4c8f96e9f794fbc217a1879348616e088ef8cb529dbaa26aa872a3d426c1b535",
   "onchain_sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7",
-  "built_sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7",
-  "match": true,
-  "mode": "raw",
+  "built_sha256": null,
+  "match": false,
+  "mode": "no-match",
   "repo": "https://github.com/xB0unty911/sealed-bid-auction",
   "commit": "252320dbca6eb86b43a7d511b3ae72285c04ebd5",
-  "toolchain": {
-    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
-    "rustup_toolchain": "1.99.0",
-    "tari_cli": "tari-ootle-cli 0.30.0",
-    "rustflags": "--remap-path-prefix=/home/runner/.cargo=/build/.cargo",
-    "cargo_lock_in_repo": true
-  },
+  "toolchain": null,
   "recipe": {
     "template": "67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309",
     "repo": "https://github.com/xB0unty911/sealed-bid-auction",
@@ -27,35 +21,59 @@
     "remap": "/build/.cargo",
     "rustflags": "",
     "optimizer": "auto",
-    "cmd": ""
+    "cmd": "",
+    "os": "ubuntu-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635",
-  "runner_os": "Linux",
-  "verified_at": "2026-11-23T12:30:35Z",
-  "tried": [
-    {
-      "file": "sealed_bid__1.wasm",
-      "variant": "raw",
-      "sha256": "30e204257582696eedb0941b1447bff8ccd7909e7c67bfa74e813f491fb0a6d7"
-    }
-  ],
-  "diagnostics": null,
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069",
+  "runner_os": null,
+  "verified_at": "2026-11-25T09:34:45Z",
+  "tried": [],
+  "diagnostics": {
+    "error": "build produced no wasm at the expected path"
+  },
   "isolation": {
-    "network_isolated": true,
-    "note": "Linux network namespace; probe to the indexer failed inside, succeeded outside",
-    "cargo_offline": true,
-    "lockfile_honoured": true
+    "network_isolated": false,
+    "method": "docker --network none, non-root, no new privileges, read-only toolchain, cargo home and tools",
+    "note": "no build report",
+    "reported_by_build": {}
   },
   "source_check": {
+    "fail": [],
     "build_rs": [],
     "build_rs_scope": "template crate and its path dependencies (cargo metadata)",
+    "proc_macros": [],
     "includes": [],
     "blobs": [],
+    "numeric": [],
     "patch_or_git": [],
+    "config": [
+      ".cargo/config.toml: build.target-dir"
+    ],
     "scrubbed": [],
     "committed_count": 17
   },
-  "warnings": [],
-  "clean": true,
-  "note": "Verified source is not an audit. A match proves these bytes build from this commit."
+  "warnings": [
+    "network not isolated during the build: no build report",
+    "cargo config: .cargo/config.toml: build.target-dir"
+  ],
+  "clean": false,
+  "pipeline": 2,
+  "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
+  "expected_output": "target/wasm32-unknown-unknown/release/sealed_bid.wasm",
+  "candidate_source": null,
+  "onchain_source": "indexer, fetched by the record job",
+  "attempt_key": "xb0unty911_sealed-bid-auction@252320dbca6eb86b43a7d511b3ae72285c04ebd5",
+  "attempts": [
+    {
+      "key": "xb0unty911_sealed-bid-auction@252320dbca6eb86b43a7d511b3ae72285c04ebd5",
+      "repo": "https://github.com/xB0unty911/sealed-bid-auction",
+      "commit": "252320dbca6eb86b43a7d511b3ae72285c04ebd5",
+      "match": false,
+      "clean": false,
+      "mode": "no-match",
+      "pipeline": 2,
+      "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069",
+      "verified_at": "2026-11-25T09:34:45Z"
+    }
+  ]
 }

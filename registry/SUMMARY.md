@@ -1,6 +1,6 @@
 # OneScan verification summary
 
-Third-party templates reproduced: **5 / 13** (2 clean, 3 with warnings) (plus our own: SourceRegistry, Split)
+Third-party templates reproduced: **8 / 13** (4 clean, 4 with warnings) (plus our own: SourceRegistry, Split)
 
 A match means the sha256 of a fresh build from the named commit equals the template binary in the on-chain substate. It is not an audit. Each row shows the best attempt for the template; every attempt is kept under `registry/attempts/<template>/`.
 
@@ -10,13 +10,13 @@ A match means the sha256 of a fresh build from the named commit equals the templ
 | `4e58dcb438e1…` | SignalForecasts | ogboy92ii/signal-desk @ `b57767562e` | no-match | `7fca4a52b859…` | `4a2a625300a9…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 126505 vs built 126544) | 4 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `54d64fdd5af8…` | Payroll | Devendurance/steady @ `e298436e6f` | walletd-optimized | `f12b2c930bd9…` | `f12b2c930bd9…` | MATCH | 0 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `5b0efecc709c…` | SourceRegistry (own) | Techkeyy/onescan-ootle @ `29a076b8d0` | walletd-optimized | `fa009b0af34c…` | `fa009b0af34c…` | MATCH | 0 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45205039012) |
-| `6494a4fe7ea2…` | Split (own) | Techkeyy/ootle-split @ `93397bf9eb` | no-match | `67b42d684ee0…` | `-…` | miss: build produced no wasm at the expected path | 2 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069) |
+| `6494a4fe7ea2…` | Split (own) | Techkeyy/ootle-split @ `93397bf9eb` | walletd-optimized | `67b42d684ee0…` | `67b42d684ee0…` | MATCH (warnings) | 2 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586771698) |
 | `65d9bbc931d3…` | SignalDesk | ogboy92ii/signal-desk @ `b57767562e` | no-match | `c00777517c54…` | `e61cc2ae3ad2…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 197198 vs built 197274) | 4 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
-| `67a658cc6c9e…` | SealedBidAuction | xB0unty911/sealed-bid-auction @ `252320dbca` | no-match | `30e204257582…` | `-…` | miss: build produced no wasm at the expected path | 2 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069) |
+| `67a658cc6c9e…` | SealedBidAuction | xB0unty911/sealed-bid-auction @ `252320dbca` | raw | `30e204257582…` | `30e204257582…` | MATCH (warnings) | 1 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586771698) |
 | `84f1d72f8b9e…` | Semvi | emmaGH1/semvi @ `1896cde493` | walletd-optimized | `7f582b4e3133…` | `7f582b4e3133…` | MATCH (warnings) | 1 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
-| `968740ec9a0f…` | Lockbox | ManishModak/ootle-lockbox @ `ed3ff374ac` | no-match | `58033cf4255e…` | `-…` | miss: build produced no wasm at the expected path | 1 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069) |
+| `968740ec9a0f…` | Lockbox | ManishModak/ootle-lockbox @ `ed3ff374ac` | raw | `58033cf4255e…` | `58033cf4255e…` | MATCH | 0 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586771698) |
 | `9b41600aec8a…` | SpecterReportReceipt | yeziR4/specter-tari @ `77bda5ff5c` | walletd-optimized | `03efc5252d65…` | `03efc5252d65…` | MATCH (warnings) | 3 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
-| `ae13cead3c34…` | GhostlineChannel | AduAkorful/ghostline @ `b9cf4ce77c` | no-match | `273ffbfb4b7f…` | `-…` | miss: build produced no wasm at the expected path | 1 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069) |
+| `ae13cead3c34…` | GhostlineChannel | AduAkorful/ghostline @ `b9cf4ce77c` | walletd-optimized | `273ffbfb4b7f…` | `273ffbfb4b7f…` | MATCH | 0 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45586771698) |
 | `b3628ed057f8…` | GhostlineFeeConfig | AduAkorful/ghostline @ `b9cf4ce77c` | walletd-optimized | `f61a0c297edf…` | `f61a0c297edf…` | MATCH | 0 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `b622b0ada7ee…` | SignalFollows | ogboy92ii/signal-desk @ `b57767562e` | no-match | `f3073726e7c3…` | `597298142df3…` | miss: same ABI, toolchain and paths; code bytes differ (optimizer/profile/dependency drift) (sizes on-chain 93069 vs built 93124) | 4 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |
 | `d4ed44d36e79…` | MoonMail | Seal-Clubber/MoonMail @ `df0da950b4` | no-match | `aff9e0c17b3a…` | `821be5e7db42…` | miss: tari_tdef differs (source/ABI at this commit is not what was published) (sizes on-chain 451979 vs built 544562) | 0 | 1 | [run](https://github.com/Techkeyy/onescan-ootle/actions/runs/45174654635) |

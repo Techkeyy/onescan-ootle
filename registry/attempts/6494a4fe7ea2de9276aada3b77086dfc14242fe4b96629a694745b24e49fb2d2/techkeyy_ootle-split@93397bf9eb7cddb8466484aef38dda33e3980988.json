@@ -3,12 +3,18 @@
   "name": "Split",
   "author_public_key": "1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862",
   "onchain_sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca",
-  "built_sha256": null,
-  "match": false,
-  "mode": "no-match",
+  "built_sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca",
+  "match": true,
+  "mode": "walletd-optimized",
   "repo": "https://github.com/Techkeyy/ootle-split",
   "commit": "93397bf9eb7cddb8466484aef38dda33e3980988",
-  "toolchain": null,
+  "toolchain": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "rustup_toolchain": "1.97.1",
+    "tari_cli": null,
+    "rustflags": "--remap-path-prefix=C:\\Users\\runneradmin\\.cargo=C:/Program Files/Git/build/.cargo",
+    "cargo_lock_in_repo": true
+  },
   "recipe": {
     "template": "6494a4fe7ea2de9276aada3b77086dfc14242fe4b96629a694745b24e49fb2d2",
     "repo": "https://github.com/Techkeyy/ootle-split",
@@ -24,18 +30,33 @@
     "cmd": "",
     "os": "windows-latest"
   },
-  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45586535069",
-  "runner_os": null,
-  "verified_at": "2026-11-25T09:34:45Z",
-  "tried": [],
-  "diagnostics": {
-    "error": "build produced no wasm at the expected path"
-  },
+  "run_url": "https://github.com/Techkeyy/onescan-ootle/actions/runs/45586771698",
+  "runner_os": "Windows",
+  "verified_at": "2026-11-25T09:50:18Z",
+  "tried": [
+    {
+      "file": "candidate.wasm",
+      "variant": "raw",
+      "sha256": "0552dbc887d1072d11039b405981d36a5d04369d8d380fb154449b918ad0416e"
+    },
+    {
+      "file": "candidate.wasm",
+      "variant": "walletd-optimized",
+      "sha256": "67b42d684ee01448b885fe98672019bf823639dac612384e2314bd0261f510ca"
+    }
+  ],
+  "diagnostics": null,
   "isolation": {
     "network_isolated": false,
     "method": null,
     "note": "windows-latest runner: build ran with cargo offline but without network isolation",
-    "reported_by_build": {}
+    "reported_by_build": {
+      "network_isolated": false,
+      "note": "Windows runner: build ran with cargo offline but without network isolation",
+      "container_image": null,
+      "cargo_offline": true,
+      "lockfile_honoured": true
+    }
   },
   "source_check": {
     "fail": [],
@@ -62,7 +83,7 @@
   "pipeline": 2,
   "note": "Verified source is not an audit. A match proves these bytes build from this commit.",
   "expected_output": "template/target/wasm32-unknown-unknown/release/ootle_split.wasm",
-  "candidate_source": null,
+  "candidate_source": "artifact build-6494a4fe7ea2-0/candidate.wasm",
   "onchain_source": "indexer, fetched by the record job",
   "attempt_key": "techkeyy_ootle-split@93397bf9eb7cddb8466484aef38dda33e3980988"
 }

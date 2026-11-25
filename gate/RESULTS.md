@@ -3,7 +3,7 @@
 | Test | Result |
 |---|---|
 | A. Reproduce Ootle Split's on-chain bytes (walletd optimizer) | **PASS** |
-| B. Reproduce Sealed Bids from its recipe | **BLOCKED** (host disk full mid-toolchain install; not a reproduction failure) |
+| B. Reproduce Sealed Bids from its recipe | **PASS** (first attempt blocked by host disk space; passed on a clean GitHub runner, run 45165847862) |
 | C. Read author key + binary from the indexer substate | **PASS** |
 
 ## A. PASS

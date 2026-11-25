@@ -28,7 +28,7 @@ As of 2026-11-25 (last verifier run 2026-11-23, [run 45174654635](https://github
 | | Count |
 |---|---|
 | Third-party templates checked | 13 |
-| Rebuild byte for byte | 8 (5 clean, 3 with warnings) |
+| Rebuild byte for byte | 8 (4 clean, 4 with warnings) |
 | Not reproduced, each with a diagnosed reason | 5 |
 | Templates attested on chain by the trusted key | 10 (the 8 matches, plus OneScan's own two) |
 

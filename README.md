@@ -2,7 +2,7 @@
 
 Paste a Tari Ootle template address and see, with proof, whether a public commit rebuilds the exact WASM running on mainnet.
 
-**[Live site](https://techkeyy.github.io/onescan-ootle/)** · **[Proofs board](https://techkeyy.github.io/onescan-ootle/board.html)** · **[Registry on chain](https://explorer.tari.mw/substate/component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea)** · [Verifier runs](https://github.com/Techkeyy/onescan-ootle/actions/workflows/verify.yml) · [Attack tests](https://github.com/Techkeyy/onescan-ootle/actions/runs/45589478456) · [Transaction receipts](evidence/mainnet/)
+**[Live site](https://techkeyy.github.io/onescan-ootle/)** · **[Demo video](https://youtu.be/2xtaRvOX1Pk)** · **[Proofs board](https://techkeyy.github.io/onescan-ootle/board.html)** · **[Registry on chain](https://explorer.tari.mw/substate/component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea)** · [Verifier runs](https://github.com/Techkeyy/onescan-ootle/actions/workflows/verify.yml) · [Attack tests](https://github.com/Techkeyy/onescan-ootle/actions/runs/45589478456) · [Transaction receipts](evidence/mainnet/)
 
 On Ootle, every smart contract is a template: compiled WebAssembly, published on chain. Nobody can read that. Anyone can put a GitHub link next to a template, and nothing on chain says whether the link is the code that runs. OneScan is for people about to sign a transaction against a template, and for builders who want to prove their source is real.
 

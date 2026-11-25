@@ -20,6 +20,9 @@ if os.path.exists(out):
 shutil.copytree(web, out, ignore=shutil.ignore_patterns("build.py", "__pycache__"))
 os.makedirs(os.path.join(out, "data"), exist_ok=True)
 os.makedirs(os.path.join(out, "badge"), exist_ok=True)
+# the verifier summary judges can open from the site (served as /summary.md)
+if os.path.exists(os.path.join(ROOT, "registry", "SUMMARY.md")):
+    shutil.copy(os.path.join(ROOT, "registry", "SUMMARY.md"), os.path.join(out, "summary.md"))
 
 records = {}
 for p in sorted(glob.glob(os.path.join(ROOT, "registry", "*.json"))):

@@ -18,9 +18,9 @@ concurrency:
   group: pages
   cancel-in-progress: true
 jobs:
-  deploy:
+  # Build and deploy are separate jobs: the artifact listing the deploy step reads can lag a fresh upload.
+  build:
     runs-on: ubuntu-latest
-    environment: {name: github-pages, url: "${{ steps.d.outputs.page_url }}"}
     steps:
       - uses: actions/checkout@v4
         with: {ref: main, persist-credentials: false}
@@ -28,5 +28,10 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with: {path: _site}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: {name: github-pages, url: "${{ steps.d.outputs.page_url }}"}
+    steps:
       - id: d
         uses: actions/deploy-pages@v4

@@ -11,7 +11,7 @@ docker pull -q "$BASE"
 docker rm -f onescan-prep >/dev/null 2>&1 || true
 docker run --name onescan-prep "$BASE" bash -c \
   'apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends gcc libc6-dev python3 git ca-certificates >/dev/null && rm -rf /var/lib/apt/lists/*'
-docker commit -q onescan-prep "$TAG" >/dev/null
+docker commit onescan-prep "$TAG" >/dev/null
 docker rm onescan-prep >/dev/null
 echo "build image $TAG from $BASE:"
 docker run --rm "$TAG" bash -c 'gcc --version | head -1; python3 --version; ldd --version | head -1; command -v sudo || echo "sudo: not installed"'

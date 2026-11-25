@@ -3,141 +3,131 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OneScan: verified source for Ootle templates</title>
-<meta name="description" content="Paste an Ootle template address and see which public commit builds those exact on-chain bytes.">
-<meta name="theme-color" content="#0b0c0e">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230b0c0e'/%3E%3Cpath d='M6 8V6h2M16 6h2v2M18 16v2h-2M8 18H6v-2' stroke='%23ececee' stroke-width='1.6' fill='none'/%3E%3Cpath d='M7 12h10' stroke='%237ee2b8' stroke-width='1.8'/%3E%3C/svg%3E">
+<title>OneScan: the assay office for Ootle templates</title>
+<meta name="description" content="Paste an Ootle template address. OneScan checks whether a public commit rebuilds the on-chain WASM byte for byte, and hallmarks the ones that do on chain.">
+<meta name="theme-color" content="#f2ece0">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Ccircle cx='28' cy='28' r='26' fill='%238c1d1d'/%3E%3Ccircle cx='28' cy='28' r='13' fill='none' stroke='%23fbf8f1' stroke-width='4'/%3E%3Crect x='7' y='26' width='42' height='4' fill='%23fbf8f1'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
+<a class="skip" href="#addr">Skip to the assay form</a>
 <header class="top"><div class="wrap">
-  <a class="brand" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M6.5 12h11" stroke="var(--accent)" stroke-width="1.8"/></svg>OneScan</a>
-  <nav class="links" aria-label="Main"><a href="#how" class="opt">How it works</a><a href="#proof">Proof</a><a href="board.html">Board</a><a href="https://github.com/Techkeyy/onescan-ootle">GitHub</a></nav>
+  <a class="brand" href="./"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" fill="var(--red)"/><circle cx="28" cy="28" r="13" fill="none" stroke="var(--sheet)" stroke-width="4"/><rect x="7" y="26" width="42" height="4" fill="var(--sheet)"/></svg>OneScan</a>
+  <nav class="links" aria-label="Main"><a href="#marks" class="opt">The marks</a><a href="#office" class="opt">The office</a><a href="board.html">Register</a><a href="https://github.com/Techkeyy/onescan-ootle">Source</a></nav>
 </div></header>
+
 <main id="top">
 <section class="hero"><div class="wrap">
-  <div class="hero-grid">
-    <div>
-      <a class="live-pill" href="https://explorer.tari.mw/tx/c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec"><i></i>Attestations live on Ootle mainnet</a>
-      <h1>The bytes on chain. <em>The source that built them.</em></h1>
-      <p class="lede">Ootle templates are published as opaque WASM. Paste a template address: OneScan reads its bytes live from the mainnet indexer, hashes them in your browser, and checks them against a byte-for-byte rebuild of public source.</p>
-      <form class="lookup" id="lookup" autocomplete="off" role="search">
-        <div class="field"><label class="sr" for="addr">Template address</label>
-          <input id="addr" type="text" name="t" spellcheck="false" placeholder="template_67a658cc…"></div>
-        <button id="go" type="submit">Scan template</button>
-      </form>
-      <p class="try"><span>Try</span>
-        <button type="button" data-t="67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309">Sealed Bids</button>
-        <button type="button" data-t="968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72">Lockbox</button>
-        <button type="button" data-t="5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13">OneScan's own registry</button>
-        <button type="button" data-t="65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455">Signal Desk</button>
-      </p>
+  <p class="folio"><span>Assay office for Ootle templates</span><span>Ootle mainnet</span><span class="opt">Register open</span></p>
+  <h1>Hallmarks for <span class="nb">on-chain code</span></h1>
+  <div class="hero-foot">
+  <p class="lede">Paste a template address. OneScan reads the deployed WASM from mainnet, hashes it in your browser, and shows whether a public commit rebuilds those exact bytes. Templates that pass carry a hallmark on chain.</p>
+  <div class="hero-act">
+  <form class="slot" id="lookup" autocomplete="off" role="search">
+    <label for="addr"><span class="sc">Specimen</span> template address</label>
+    <div class="slot-row">
+      <input id="addr" type="text" name="t" spellcheck="false" placeholder="template_67a658cc…" aria-describedby="specimens-label">
+      <button id="go" type="submit" class="primary">Assay</button>
     </div>
-
-    <figure class="scanner" id="pipe" data-mode="idle" aria-labelledby="pipe-mode">
-      <div class="scanline" aria-hidden="true"></div>
-      <div class="bar"><span class="mode" id="pipe-mode">How a check runs</span><span class="verdict" id="pipe-verdict" data-v="">idle</span></div>
-      <ol class="steps" id="steps">
-        <li data-step="bytes" data-s=""><span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7.5 12 3.5l8 4-8 4z"/><path d="M4 7.5v9l8 4 8-4v-9M12 11.5v9"/></svg></span>
-          <span class="step-t"><span>01 · Indexer</span><b>Read the on-chain bytes</b></span><span class="step-d" data-idle="template substate">template substate</span></li>
-        <li data-step="hash" data-s=""><span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9.5 3 7.5 21M16.5 3l-2 18M4 8.5h17M3 15.5h17"/></svg></span>
-          <span class="step-t"><span>02 · Your browser</span><b>Hash them with SHA-256</b></span><span class="step-d" data-idle="crypto.subtle">crypto.subtle</span></li>
-        <li data-step="rebuild" data-s=""><span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m9.5 9.5-3 2.5 3 2.5M14.5 9.5l3 2.5-3 2.5"/></svg></span>
-          <span class="step-t"><span>03 · Offline CI</span><b>Rebuild repo @ commit</b></span><span class="step-d" data-idle="no network · wasm-opt">no network · wasm-opt</span></li>
-        <li data-step="compare" data-s=""><span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 9h14M5 15h14"/></svg></span>
-          <span class="step-t"><span>04 · Byte for byte</span><b>Compare the two hashes</b></span><span class="step-d" data-idle="32 bytes each">32 bytes each</span></li>
-        <li data-step="attest" data-s=""><span class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.4 3.2 8.1 7.5 9 4.3-.9 7.5-4.6 7.5-9V6z"/><path d="m8.8 12 2.3 2.3 4.2-4.6"/></svg></span>
-          <span class="step-t"><span>05 · SourceRegistry</span><b>Read the on-chain attestation</b></span><span class="step-d" data-idle="trusted key only">trusted key only</span></li>
-      </ol>
-      <div class="prints" id="prints" aria-live="polite">
-        <div class="print"><div class="lab"><span>On-chain sha256</span><span id="pa-l"></span></div><div class="bytes empty" id="pa"></div></div>
-        <div class="match-line" id="pm">awaiting bytes</div>
-        <div class="print"><div class="lab"><span>Rebuilt sha256</span><span id="pb-l"></span></div><div class="bytes empty" id="pb"></div></div>
-      </div>
-      <figcaption id="pipe-cap">Idle: showing the recorded hashes of OneScan's own SourceRegistry. Paste an address and every step above runs for real.</figcaption>
-    </figure>
+  </form>
+  <p class="slot-msg" id="slot-msg" role="alert" hidden></p>
+  <p class="specimens"><span id="specimens-label" class="sc">Specimens on file</span>
+    <button type="button" class="tag" data-t="67a658cc6c9e1c3564871e378f0a60d0b4f8682222460c34aa852caa961df309">Sealed Bids</button>
+    <button type="button" class="tag" data-t="968740ec9a0f3d368af2ba48d18af68bbb5c73a30ec582fbf9b00f90cb20ec72">Lockbox</button>
+    <button type="button" class="tag" data-t="5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13">OneScan's own registry</button>
+    <button type="button" class="tag" data-t="65d9bbc931d306d2de9b235d7a0272f0dae05d061ed38f3c09467b972289b455">Signal Desk</button>
+  </p>
   </div>
-  <div id="result" aria-live="polite"></div>
+  </div>
 </div></section>
 
-<section class="band" id="how"><div class="wrap">
-  <div class="intro reveal"><p class="eyebrow">How it works</p><h2>From opaque bytes to a public, checkable fact.</h2><p>No trust in this website is required: every step can be re-run from the public workflow.</p></div>
-  <ol class="how reveal">
-    <li><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="6" y="9" width="36" height="30" rx="3"/><path d="M6 17h36"/><path d="M12 24h4M19 24h4M26 24h4M33 24h3M12 31h4M19 31h4M26 31h4" stroke-linecap="round"/><circle cx="11" cy="13" r="1" fill="currentColor"/></svg>
-      <span class="n">01</span><h3>Fetch what the chain holds</h3><p>The template substate is read from the Ootle mainnet indexer and its WASM binary decoded from CBOR.</p></li>
-    <li><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="3" stroke-dasharray="3 3"/><path d="m19 19-6 5 6 5M29 19l6 5-6 5M26 16l-4 16"/></svg>
-      <span class="n">02</span><h3>Rebuild in isolation</h3><p>The claimed repo at the claimed commit is compiled in a GitHub Actions job with the network cut, then passed through the same wasm-opt step the wallet applies.</p></li>
-    <li><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 16h14M8 22h10M8 28h14M8 34h8"/><path d="M26 16h14M30 22h10M26 28h14M32 34h8"/><path d="M24 10v30" stroke-dasharray="2 3"/></svg>
-      <span class="n">03</span><h3>Compare sha256</h3><p>On-chain bytes and rebuilt bytes are hashed. Equal hashes mean that commit builds exactly what is deployed; nothing is approximated.</p></li>
-    <li><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M24 6 10 11.5v10c0 8.5 6 15.6 14 17.3 8-1.7 14-8.8 14-17.3v-10z"/><path d="m18 23 4.5 4.5L31 19"/></svg>
-      <span class="n">04</span><h3>Attest on chain</h3><p>Matches are written to OneScan's SourceRegistry component on Ootle mainnet, signed by the verifier key, readable by any wallet or explorer.</p></li>
+<section class="result-wrap" id="result-wrap" hidden><div class="wrap"><div id="result" aria-live="polite"></div></div></section>
+
+<section class="band" id="marks"><div class="wrap">
+  <header class="sec-head reveal"><p class="folio-n">I</p><h2>The four marks</h2>
+    <p>For centuries, assay offices tested silver and punched four marks into it: who made it, that it meets the standard, who tested it, and when. OneScan punches the same four into a template's record, and each one stands for a check you can repeat.</p></header>
+  <div class="strip strip-lg reveal" id="demo-strip" aria-label="The four marks of OneScan's own registry contract">
+    <span class="slot-m" data-m="maker"></span><span class="slot-m" data-m="standard"></span><span class="slot-m" data-m="office"></span><span class="slot-m" data-m="date"></span>
+  </div>
+  <p class="strip-cap" id="demo-cap">Struck from live data: the marks of OneScan's own registry contract.</p>
+  <ol class="four">
+    <li class="reveal"><h3><span class="rn">I</span> Maker's mark</h3>
+      <p class="was">In silver: the initials of the workshop that made the piece.</p>
+      <p>Here: the author key that published the template, with the repo and commit it claims. The initials and shield are derived from the key's bytes, so every author has exactly one mark and nobody can choose theirs.</p></li>
+    <li class="reveal"><h3><span class="rn">II</span> Standard mark</h3>
+      <p class="was">In silver: the metal meets a fineness, like 925.</p>
+      <p>Here: an offline build of that commit is identical to the on-chain WASM, 32 of 32 sha256 bytes. The 32 is the fineness. A <span class="brass">brass mark</span> means the bytes match but the build raised warnings. A <span class="red">struck-through mark</span> is a failed assay.</p></li>
+    <li class="reveal"><h3><span class="rn">III</span> Office mark</h3>
+      <p class="was">In silver: which assay office tested it.</p>
+      <p>Here: an attestation in OneScan's SourceRegistry on Ootle mainnet, signed by the trusted verifier key. Your browser checks it against the live bytes before the mark is struck.</p></li>
+    <li class="reveal"><h3><span class="rn">IV</span> Date letter</h3>
+      <p class="was">In silver: the year of assay, as a letter that cycles.</p>
+      <p>Here: the epoch the attestation was entered on chain. The letter is the epoch counted A to Z, and the shield changes with every cycle of 26 epochs.</p></li>
   </ol>
 </div></section>
 
-<section class="band alt" id="why"><div class="wrap why">
+<section class="band band-ink" id="why"><div class="wrap why">
   <div class="reveal">
-    <p class="eyebrow">Why it matters</p>
+    <header class="sec-head"><p class="folio-n">II</p><h2>Why bytes need hallmarks</h2></header>
     <p class="quote">Every call to a template signs against code you cannot read.</p>
-    <p>A wallet shows a function name and its arguments. The logic behind them is compiled bytes. A GitHub link in a README proves nothing on its own; it only counts if that exact commit rebuilds the exact bytes on chain. OneScan turns that check into something anyone can repeat.</p>
-    <p class="notaudit"><strong>Verified source is not an audit.</strong> A match proves which public commit built the bytes. It does not mean the code is safe. Read the source.</p>
+    <p>A wallet shows a function name and its arguments. The logic behind them is compiled WASM. A GitHub link in a README proves nothing on its own: it only counts if that exact commit rebuilds the exact bytes on chain. Silver had the same problem, which is why the hallmark exists.</p>
+    <p class="notaudit"><strong>Verified source is not an audit.</strong> A hallmark proves which public commit built the bytes. It does not mean the code is safe. Read the source.</p>
   </div>
-  <figure class="opaque reveal" id="opaque" aria-hidden="true"><figcaption>Illustration: what a wallet has to go on</figcaption></figure>
+  <figure class="ingot reveal" aria-hidden="true"><div class="ingot-bytes" id="ingot"></div><figcaption>Illustration: an unmarked ingot. This is what a wallet has to go on.</figcaption></figure>
 </div></section>
 
-<section class="band" id="proof"><div class="wrap">
-  <div class="intro reveal"><p class="eyebrow">Proof on chain</p><h2>The results live on Ootle mainnet, not on this website.</h2><p>This page reads them back live. If the site disappeared, the attestations would still be there.</p></div>
-  <div class="proof reveal">
-    <div class="card"><p class="eyebrow">SourceRegistry component</p>
-      <p class="big acc" id="att-count">–</p>
-      <span class="addr">component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea</span>
-      <p id="att-note">Templates attested by the trusted verifier, read live from the indexer.</p></div>
-    <div class="card"><p class="eyebrow">Attestation transaction</p>
-      <p class="big" id="tx-count">–</p>
-      <a class="addr mono" href="https://explorer.tari.mw/tx/c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec">tx c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec</a>
-      <p>SourceAttested events in one transaction. Open it on the Tari explorer.</p></div>
-    <div class="card"><p class="eyebrow">Trusted verifier key</p>
-      <p class="big">1<small> key</small></p>
-      <span class="addr">1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862</span>
-      <p>Anyone can attest to the registry. OneScan counts only this key, and only when the attested hash equals the live bytes.</p></div>
-  </div>
-  <div class="selfcheck reveal">
-    <p><strong>OneScan verified itself.</strong> The SourceRegistry contract that holds these attestations rebuilds byte-for-byte from <a href="https://github.com/Techkeyy/onescan-ootle/blob/main/registry/5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json">public source</a> after the wallet's wasm-opt pass.</p>
-    <a class="btn ghost" href="./?t=5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13" data-t="5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13">Scan it live</a>
+<section class="band" id="office"><div class="wrap">
+  <header class="sec-head reveal"><p class="folio-n">III</p><h2>The office</h2>
+    <p>The hallmarks are kept on Ootle mainnet, not on this website. This page reads them back live. If the site disappeared, the register would still be there.</p></header>
+  <div class="office reveal">
+    <dl class="ledger">
+      <div><dt>Office</dt><dd><span class="mono wrapall">component_9f72dfb5c6994599299c2498cd17540573edff3b6773a94c6636763abf3153ea</span><span class="sub">SourceRegistry component, an instance of template 5b0efecc…</span></dd></div>
+      <div><dt>Hallmarked here</dt><dd><span class="fig" id="att-count">…</span><span class="sub" id="att-note">templates attested by the trusted key, read live from the indexer</span></dd></div>
+      <div><dt>Assay entry</dt><dd><a class="mono wrapall" href="https://explorer.tari.mw/tx/c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec">tx c86b139b3e04f4eaa9d310020802397c9ba53c41ad5c04f490f3bd30a9a5deec</a><span class="sub"><span id="tx-count">…</span> SourceAttested events in one transaction, on the Tari explorer</span></dd></div>
+      <div><dt>Trusted assayer</dt><dd><span class="mono wrapall">1a8baa583b0068359004ec094cd06f68b908ccae3bc2d41c46cd7a851e98e862</span><span class="sub">Anyone can attest to the registry. OneScan counts only this key, and only when the attested hash equals the live bytes.</span></dd></div>
+    </dl>
+    <aside class="selfcheck">
+      <div class="strip strip-sm" id="self-strip" aria-hidden="true"><span class="slot-m"></span></div>
+      <p><strong>The office assayed itself.</strong> The SourceRegistry contract that holds these hallmarks rebuilds byte for byte from <a href="https://github.com/Techkeyy/onescan-ootle/blob/main/registry/5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json">public source</a> after the wallet's wasm-opt pass.</p>
+      <a class="btn" href="./?t=5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13" data-t="5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13">Assay it live</a>
+    </aside>
   </div>
 </div></section>
 
-<section class="band alt" id="board-teaser"><div class="wrap teaser">
+<section class="band band-alt" id="register"><div class="wrap teaser">
   <div class="reveal">
-    <p class="eyebrow">November contest templates</p>
-    <p class="tally"><span class="acc" id="t-rep">–</span><small> / <span id="t-att">–</span></small></p>
-    <p>third-party templates with public source reproduced byte-for-byte. Every one that did not reproduce has a diagnosed reason, not a shrug.</p>
+    <header class="sec-head"><p class="folio-n">IV</p><h2>The register</h2></header>
+    <p class="tally"><span id="t-rep">…</span><span class="of"> of <span id="t-att">…</span></span></p>
+    <p>November contest templates with public source that rebuild byte for byte. Every failed assay has a diagnosed reason written in the register.</p>
   </div>
   <div class="reveal">
-    <div class="strip" id="strip" aria-label="One cell per template"></div>
+    <div class="minis" id="minis" aria-label="One standard mark per template in the register"></div>
     <ul class="legend" id="legend"></ul>
-    <a class="btn" href="board.html">Open the board</a>
+    <a class="btn" href="board.html">Open the register</a>
   </div>
 </div></section>
 
-<section class="band" id="builders"><div class="wrap">
-  <div class="intro reveal"><p class="eyebrow">For template builders</p><h2>Show users the source is real.</h2></div>
-  <div class="builders reveal">
-    <div class="card"><h3>A badge that links to proof</h3>
-      <p>Every verified template gets a shields.io badge. It links to the live check, so readers see the hashes, not just a green label.</p>
-      <p style="margin-top:16px"><img alt="OneScan badge for the SourceRegistry template" height="20" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftechkeyy.github.io%2Fonescan-ootle%2Fbadge%2F5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json"></p>
-      <p class="note">Scan your template above to get its badge markdown.</p></div>
-    <div class="card"><h3>Request a verification</h3>
-      <p>Open a prefilled GitHub issue with your repo and commit. A public Actions run rebuilds it offline and posts the result on the issue. Unverified templates show the same form in their scan result.</p>
-      <div class="actions"><a class="btn ghost" href="https://github.com/Techkeyy/onescan-ootle/issues/new?template=verify-request.yml&amp;labels=verify-request">Open a request</a></div></div>
+<section class="band" id="makers"><div class="wrap">
+  <header class="sec-head reveal"><p class="folio-n">V</p><h2>For makers</h2>
+    <p>Show your users the source is real, and let them check it themselves.</p></header>
+  <div class="makers reveal">
+    <div><h3>A badge that opens the certificate</h3>
+      <p>Every assayed template gets a shields.io badge. It links to the live assay, so readers see the hashes and marks, not just a label.</p>
+      <p class="badge-demo"><img alt="OneScan badge for the SourceRegistry template" height="20" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftechkeyy.github.io%2Fonescan-ootle%2Fbadge%2F5b0efecc709ce6885b69738ce8f774f086ef0c6cb7b2a58920f8bab3e38f8b13.json"></p>
+      <p class="note">Assay your template above to get its badge markdown.</p></div>
+    <div><h3>Submit a specimen</h3>
+      <p>Open a prefilled GitHub issue with your repo and commit. A public Actions run rebuilds it offline and posts the result on the issue. Unassayed templates show the same form on their certificate.</p>
+      <p><a class="btn" href="https://github.com/Techkeyy/onescan-ootle/issues/new?template=verify-request.yml&amp;labels=verify-request">Open a request</a></p></div>
   </div>
 </div></section>
 </main>
 <footer><div class="wrap">
-  <span>OneScan</span><a href="https://github.com/Techkeyy/onescan-ootle">Source on GitHub</a><a href="board.html">Contest board</a><span>Not affiliated with Tari Labs.</span>
+  <span class="brand-sm">OneScan</span><a href="https://github.com/Techkeyy/onescan-ootle">Source on GitHub</a><a href="board.html">The register</a><span>Not affiliated with Tari Labs.</span>
 </div></footer>
 <script type="module" src="lookup.js"></script>
 </body>

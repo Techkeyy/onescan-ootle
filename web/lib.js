@@ -51,7 +51,7 @@ export async function fetchTemplate(hx, onStep) {
   // Observed layout: [6 (SubstateValue::Template), [[name, author_pk(32B), binary, epoch]]]
   if (!Array.isArray(val) || val[0] !== 6) throw { kind: "shape", message: "substate is not a template" };
   const [name, author, binary, epoch] = val[1][0];
-  if (onStep) onStep("fetched", { size: binary.length, epoch, name });
+  if (onStep) onStep("fetched", { size: binary.length, epoch, name, author: hex(author) });
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", binary));
   return { name, author: hex(author), binary, size: binary.length, epoch, sha256: hex(digest), version: doc.version };
 }
@@ -142,6 +142,13 @@ export const ONCHAIN = {
     "b3628ed057f88c73b88f3c5653b494a10258067c43cf0c667d1dcf17e85e9f45"]),
 };
 export const explorerTx = (tx) => `https://explorer.tari.mw/tx/${tx}`;
+
+// Register numbers: entries in the order they were assayed (verified_at, then address), numbered from 1.
+export function registerNumbers(records) {
+  const list = Object.values(records || {}).sort((a, b) => String(a.verified_at).localeCompare(String(b.verified_at)) || a.template.localeCompare(b.template));
+  return new Map(list.map((r, i) => [r.template, i + 1]));
+}
+export const regNo = (n) => (n ? "No. " + String(n).padStart(3, "0") : "Unregistered");
 
 // Read the SourceRegistry component live from the indexer and decode its state.
 // Returns Map<template hex, attestation[]> holding only attestations by the trusted verifier key.

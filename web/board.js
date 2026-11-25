@@ -1,53 +1,71 @@
-import { ONCHAIN, explorerTx, esc, short, fetchAttestations } from "./lib.js";
+import { ONCHAIN, explorerTx, esc, short, fetchAttestations, registerNumbers, regNo } from "./lib.js";
 import { reveal, countUp } from "./site.js";
+import { makerMark, makerParts, standardMark, officeMark, dateMark, blankMark } from "./marks.js";
 
 const el = document.querySelector("#board");
 const STATUS = { clean: 0, warn: 1, bad: 2 };
 const statusOf = (r) => (r.clean ? "clean" : r.match ? "warn" : "bad");
+// Filter keys are kept stable for ?status= links.
 const FILTERS = [
-  ["all", "All", () => true],
-  ["reproduced", "Reproduced", (r) => r.match && !r.own],
-  ["warnings", "With warnings", (r) => r.match && !r.clean && !r.own],
-  ["not-reproduced", "Not reproduced", (r) => !r.match && !r.own],
+  ["all", "All entries", () => true],
+  ["reproduced", "Hallmarked", (r) => r.match && !r.own],
+  ["warnings", "Qualified", (r) => r.match && !r.clean && !r.own],
+  ["not-reproduced", "Failed assay", (r) => !r.match && !r.own],
   ["own", "OneScan's own", (r) => r.own],
 ];
 
 try {
   const [reg, att] = await Promise.all([fetch("data/registry.json", { cache: "no-cache" }).then((r) => r.json()),
     fetchAttestations().catch((e) => ({ error: String(e && e.message || e) }))]);
-  // On-chain marker: a trusted-verifier attestation in the live registry whose hash equals the recorded on-chain hash.
-  const attested = (r) => {
-    if (att.error) return "unknown";
+  const nums = registerNumbers(reg.records);
+  // Office mark: a trusted-verifier attestation in the live registry whose hash equals the recorded on-chain hash.
+  const attOf = (r) => {
+    if (att.error) return { s: "unknown" };
     const a = att.byTemplate.get(r.template)?.[0];
-    if (!a) return "no";
-    return a.onchain_sha256 === r.onchain_sha256 ? "yes" : "differs";
-  };
-  const onchain = (r) => {
-    const s = attested(r);
-    if (s === "unknown") return `<span class="chip muted">registry unreadable</span>`;
-    if (s === "no") return `<span class="sig">not attested</span>`;
-    if (s === "differs") return `<span class="chip bad">hash differs</span>`;
-    const chip = `<span class="chip ok"><span class="dot ok" style="margin:0"></span>attested</span>`;
-    return ONCHAIN.attestTxTemplates.has(r.template) ? `<a href="${explorerTx(ONCHAIN.attestTx)}" title="Open the attestation transaction on the Tari explorer" style="text-decoration:none">${chip}</a>` : chip;
+    if (!a) return { s: "no" };
+    return a.onchain_sha256 === r.onchain_sha256 ? { s: "yes", a } : { s: "differs" };
   };
   const all = Object.values(reg.records);
-  const third = all.filter((r) => !r.own);
-  const nAttested = all.filter((r) => attested(r) === "yes").length;
+  const nAttested = all.filter((r) => attOf(r).s === "yes").length;
+  const nOwnAttested = all.filter((r) => r.own && attOf(r).s === "yes").length;
+
+  const office = (r) => {
+    const { s } = attOf(r);
+    if (s === "unknown") return `<span class="muted">registry unreadable</span>`;
+    if (s === "no") return `<span class="muted">no office mark</span>`;
+    if (s === "differs") return `<span class="red">attested hash differs</span>`;
+    return ONCHAIN.attestTxTemplates.has(r.template) ? `office mark, <a class="mono" href="${explorerTx(ONCHAIN.attestTx)}" title="Open the attestation transaction on the Tari explorer">tx ${short(ONCHAIN.attestTx, 8)}</a>` : "office mark";
+  };
+
+  const minis = (r) => {
+    const s = statusOf(r), o = attOf(r);
+    const struck = o.s === "yes" && r.match;
+    return `<span class="mini-row" aria-hidden="true">
+      <span class="mini is-struck">${makerMark(r.author_public_key)}</span>
+      <span class="mini ${s === "clean" ? "is-struck" : s === "warn" ? "is-qualified" : "is-cancelled"}">${standardMark(s === "clean" ? "struck" : s === "warn" ? "qualified" : "cancelled")}</span>
+      <span class="mini ${struck ? "is-struck" : ""}">${struck ? officeMark() : blankMark("office")}</span>
+      <span class="mini ${struck ? "is-struck" : ""}">${struck ? dateMark(o.a.epoch) : blankMark("date")}</span></span>`;
+  };
+  const marksLabel = (r) => {
+    const s = statusOf(r), o = attOf(r);
+    return `Marks: maker ${makerParts(r.author_public_key)?.initials || "unknown"}, standard ${s === "clean" ? "struck" : s === "warn" ? "qualified" : "cancelled"}, office ${o.s === "yes" && r.match ? "struck" : "not struck"}`;
+  };
 
   const row = (r) => {
     const repo = (r.repo || "").replace("https://github.com/", "");
     const s = statusOf(r), w = (r.warnings || []).length;
-    const chip = s === "clean" ? `<span class="chip ok">Reproduced</span>` : s === "warn" ? `<span class="chip warn">Reproduced · ${w} warning${w > 1 ? "s" : ""}</span>` : `<span class="chip bad">Not reproduced</span>`;
-    const detail = r.match
-      ? `<div class="sig" style="margin-top:6px">${esc(r.mode)}</div>${w ? `<div class="cause" title="${esc(r.warnings.join("\n"))}">${esc(r.warnings[0])}${w > 1 ? ` (+${w - 1} more)` : ""}</div>` : ""}`
-      : `<div class="cause">${esc(r.cause)}</div>`;
-    return `<tr>
-      <td class="c-status">${chip}${detail}</td>
-      <td class="c-name"><a href="./?t=${r.template}"><strong>${esc(r.name)}</strong></a>${r.own ? ` <span class="chip muted">OneScan's own</span>` : ""}<div class="sig">template_${short(r.template)}</div></td>
-      <td data-l="Author key" class="nowrap"><span class="sig">${short(r.author_public_key, 16)}</span></td>
-      <td data-l="Source"><a href="${esc(r.repo)}/tree/${esc(r.commit)}">${esc(repo)}</a><div class="sig">@ ${esc((r.commit || "").slice(0, 10))}</div></td>
-      <td data-l="Evidence" class="nowrap"><a href="${esc(r.run_url)}">run ${esc((r.run_url || "").split("/").pop())}</a></td>
-      <td data-l="On-chain">${onchain(r)}</td></tr>`;
+    const std = s === "clean" ? `<span class="std ok">Hallmarked</span>` : s === "warn" ? `<span class="std warn">Hallmarked, qualified</span>` : `<span class="std bad">Failed assay</span>`;
+    const note = r.match
+      ? (w ? `<span class="brass">${w} warning${w > 1 ? "s" : ""}:</span> ${esc(r.warnings[0])}${w > 1 ? ` <span class="muted">(+${w - 1} more)</span>` : ""}` : `<span class="muted">byte-identical, no warnings</span>`)
+      : esc(r.cause);
+    return `<tr class="s-${s}">
+      <td class="c-no" data-l="Register">${esc(regNo(nums.get(r.template)))}</td>
+      <td class="c-marks" data-l="Marks"><span class="sr">${esc(marksLabel(r))}</span>${minis(r)}</td>
+      <td class="c-name"><a href="./?t=${r.template}">${esc(r.name)}</a>${r.own ? ` <span class="own">OneScan's own</span>` : ""}<span class="sig">template_${short(r.template, 8)}</span></td>
+      <td class="c-std" data-l="Standard">${std}${r.match ? `<span class="sig">${esc(r.mode)}</span>` : ""}</td>
+      <td class="c-note" data-l="Assayer's note" ${w > 1 ? `title="${esc(r.warnings.join("\n"))}"` : ""}>${note}</td>
+      <td class="c-src" data-l="Maker and source"><a href="${esc(r.repo)}/tree/${esc(r.commit)}">${esc(repo)}</a><span class="sig">@ ${esc((r.commit || "").slice(0, 10))}</span><span class="sig">key ${short(r.author_public_key, 10)}</span></td>
+      <td class="c-ev" data-l="Evidence"><a href="${esc(r.run_url)}" title="GitHub Actions run">run ${esc((r.run_url || "").split("/").pop())}</a><span class="sig">${office(r)}</span></td></tr>`;
   };
 
   const params = new URLSearchParams(location.search);
@@ -55,33 +73,36 @@ try {
   let sort = { key: "status", dir: 1 };
 
   const warnN = reg.reproduced - reg.clean;
-  el.innerHTML = `<div class="stats reveal">
-      <div><b class="acc"><span id="s-rep">${reg.reproduced}</span><small> / ${reg.attempted}</small></b><span>third-party reproduced</span></div>
-      <div><b id="s-clean">${reg.clean}</b><span>clean</span></div>
-      <div><b id="s-warn">${warnN}</b><span>with warnings</span></div>
-      <div><b id="s-bad">${reg.attempted - reg.reproduced}</b><span>not reproduced, diagnosed</span></div>
-      <div><b id="s-att">${att.error ? "–" : nAttested}</b><span>attested on-chain, live</span></div>
-    </div>
-    <div class="toolbar"><div class="chips" role="group" aria-label="Filter by status">${FILTERS.map(([k, label, fn]) =>
+  const badN = reg.attempted - reg.reproduced;
+  el.innerHTML = `<dl class="totals reveal">
+      <div><dt>Entered</dt><dd><span id="s-att">${reg.attempted}</span><small>third-party templates</small></dd></div>
+      <div><dt>Hallmarked</dt><dd class="ok"><span id="s-rep">${reg.reproduced}</span><small>${reg.clean} clean, ${warnN} qualified</small></dd></div>
+      <div><dt>Failed assay</dt><dd><span id="s-bad">${badN}</span><small>each with a diagnosed reason</small></dd></div>
+      <div><dt>Office marks</dt><dd><span id="s-off">${att.error ? "unread" : nAttested}</span><small>${att.error ? "registry could not be read" : `read live, ${nOwnAttested} of them OneScan's own`}</small></dd></div>
+    </dl>
+    <div class="toolbar"><div class="chips" role="group" aria-label="Filter by standard">${FILTERS.map(([k, label, fn]) =>
       `<button type="button" data-f="${k}" aria-pressed="${k === filter}">${label}<span class="c">${all.filter(fn).length}</span></button>`).join("")}</div>
       <span class="count-note" id="shown"></span></div>
-    <table class="board"><thead><tr>
-      <th aria-sort="ascending" data-k="status"><button type="button">Status</button></th>
-      <th aria-sort="none" data-k="name"><button type="button">Template</button></th>
-      <th>Author key</th><th>Source</th><th>Evidence</th><th>On-chain</th></tr></thead>
+    <table class="ledger-t"><caption class="sr">The register of assayed templates</caption><thead><tr>
+      <th aria-sort="none" data-k="no" scope="col"><button type="button">No.</button></th>
+      <th scope="col">Marks</th>
+      <th aria-sort="none" data-k="name" scope="col"><button type="button">Template</button></th>
+      <th aria-sort="ascending" data-k="status" scope="col"><button type="button">Standard</button></th>
+      <th scope="col">Assayer's note</th><th scope="col">Maker and source</th><th scope="col">Evidence</th></tr></thead>
     <tbody id="rows"></tbody></table>
-    <p class="note">The OneScan author's own templates (${all.filter((r) => r.own).map((r) => esc(r.name)).join(", ")}) are not counted in the totals. Entries without public source are not listed yet.</p>
-    <p class="note">On-chain: read live from the SourceRegistry component <span class="mono">${esc(short(ONCHAIN.registry, 22))}</span>. Only attestations signed by the trusted verifier key <span class="mono">${esc(short(ONCHAIN.trustedVerifier, 16))}</span> whose hash equals the recorded on-chain hash are marked; the scan page re-checks against the live bytes.${att.error ? " Registry read failed: " + esc(att.error) : ""}</p>
-    <p class="notaudit"><strong>Reproduced is not audited.</strong> It shows which commit built the bytes, not that the code is safe.</p>
-    <p class="note">Last verifier run: ${esc(reg.generated)}. Data: <a href="https://github.com/Techkeyy/onescan-ootle/tree/main/registry">registry/</a>.</p>`;
+    <div class="board-notes">
+    <p class="note">The OneScan author's own templates (${all.filter((r) => r.own).map((r) => esc(r.name)).join(", ")}) are listed but not counted in the totals. Entries without public source are not listed yet.</p>
+    <p class="note">Office marks are read live from the SourceRegistry component <span class="mono">${esc(short(ONCHAIN.registry, 22))}</span>. Only attestations signed by the trusted key <span class="mono">${esc(short(ONCHAIN.trustedVerifier, 16))}</span> whose hash equals the recorded on-chain hash are marked. The date letter is the epoch of that attestation. Each certificate re-checks against the live bytes.${att.error ? " Registry read failed: " + esc(att.error) : ""}</p>
+    <p class="notaudit"><strong>Hallmarked is not audited.</strong> It shows which commit built the bytes, not that the code is safe.</p>
+    <p class="note">Last verifier run: ${esc(reg.generated)}. Data: <a href="https://github.com/Techkeyy/onescan-ootle/tree/main/registry">registry/</a>.</p></div>`;
 
   const render = () => {
     const fn = FILTERS.find((f) => f[0] === filter)[2];
-    const cmp = sort.key === "name"
-      ? (a, b) => a.name.localeCompare(b.name)
+    const cmp = sort.key === "name" ? (a, b) => a.name.localeCompare(b.name)
+      : sort.key === "no" ? (a, b) => nums.get(a.template) - nums.get(b.template)
       : (a, b) => (a.own - b.own) || (STATUS[statusOf(a)] - STATUS[statusOf(b)]) || a.name.localeCompare(b.name);
     const list = all.filter(fn).sort((a, b) => sort.dir * cmp(a, b));
-    document.querySelector("#rows").innerHTML = list.length ? list.map(row).join("") : `<tr class="empty-row"><td colspan="6">No templates in this group.</td></tr>`;
+    document.querySelector("#rows").innerHTML = list.length ? list.map(row).join("") : `<tr class="empty-row"><td colspan="7">No entries under this standard.</td></tr>`;
     document.querySelector("#shown").textContent = `${list.length} of ${all.length} shown`;
   };
   render();
@@ -105,11 +126,10 @@ try {
   });
 
   reveal(el);
+  countUp(document.querySelector("#s-att"), reg.attempted);
   countUp(document.querySelector("#s-rep"), reg.reproduced);
-  countUp(document.querySelector("#s-clean"), reg.clean);
-  countUp(document.querySelector("#s-warn"), warnN);
-  countUp(document.querySelector("#s-bad"), reg.attempted - reg.reproduced);
-  if (!att.error) countUp(document.querySelector("#s-att"), nAttested);
+  countUp(document.querySelector("#s-bad"), badN);
+  if (!att.error) countUp(document.querySelector("#s-off"), nAttested);
 } catch (e) {
-  el.innerHTML = `<div class="err" role="alert"><strong>Could not load the verification records.</strong><p style="margin:6px 0 0">${esc(e.message || e)}</p></div>`;
+  el.innerHTML = `<div class="slip" role="alert"><p class="slip-k sc">Register unavailable</p><p class="slip-t">Could not open the register.</p><p>${esc(e.message || e)}</p></div>`;
 }

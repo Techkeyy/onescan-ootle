@@ -161,8 +161,8 @@ function attestBlock(hx, live, att, kind) {
     else if (a.onchain_sha256 !== live.sha256) n = notice("bad", "The attested hash differs", `<p>The attestation names <span class="mono">${esc(short(a.onchain_sha256, 16))}</span>, and the live bytes hash differently. Not counted.</p>`);
     else if (kind !== "ok" && kind !== "warn") n = notice("warn", "Recorded, but not counted", "<p>An attestation exists, but the bytes do not match a public build, so OneScan does not count it.</p>");
     else {
-      const tx = ONCHAIN.attestTxTemplates.has(hx) ? `in tx <a class="link mono" href="${receiptUrl(ONCHAIN.attestTx)}" title="${esc(PRUNE_NOTE)}">${esc(short(ONCHAIN.attestTx, 12))}</a>` : "(transaction not recorded here)";
-      n = notice("ok", "Recorded on-chain", `<p>Read live from registry ${reg} at epoch ${esc(a.epoch)}, ${tx}. See the <a class="link" href="${PROOF.explorerComponent}">registry on the explorer</a> or its <a class="link" href="${esc(PROOF.indexerComponent)}">raw indexer substate</a>.</p>
+      const tx = ONCHAIN.attestTxTemplates.has(hx) ? `in tx <a class="link mono" href="${receiptUrl(ONCHAIN.attestTx)}">${esc(short(ONCHAIN.attestTx, 12))}</a> (receipt in the repo)` : "(transaction not recorded here)";
+      n = notice("ok", "Recorded on-chain", `<p>Read live from registry ${reg} at epoch ${esc(a.epoch)}, ${tx}. See the <a class="link" href="${PROOF.explorerComponent}">registry on the explorer</a> or its <a class="link" href="${esc(PROOF.indexerComponent)}">raw indexer substate</a>. ${esc(PRUNE_NOTE)}</p>
         <p>Signed by the trusted key <span class="mono" title="${esc(a.verifier)}">${esc(short(a.verifier, 16))}</span>. The attested hash equals the live hash.</p>`);
     }
   }

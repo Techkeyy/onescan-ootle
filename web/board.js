@@ -35,7 +35,7 @@ try {
     if (s === "no") return `<span>not recorded on-chain</span>`;
     if (s === "differs") return `<span class="bad">attested hash differs</span>`;
     return ONCHAIN.attestTxTemplates.has(r.template)
-      ? `<a href="${receiptUrl(ONCHAIN.attestTx)}" title="Receipt of the attestation transaction. ${esc(PRUNE_NOTE)}">recorded on-chain</a>` : `<span>recorded on-chain</span>`;
+      ? `<a href="${receiptUrl(ONCHAIN.attestTx)}" title="Receipt of the attestation transaction, kept in the repo">recorded on-chain</a>` : `<span>recorded on-chain</span>`;
   };
 
   const repoCell = (r) => {
